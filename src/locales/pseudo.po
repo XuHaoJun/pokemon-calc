@@ -13,10 +13,22 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/[lang]/page.tsx:9
+#: src/app/[lang]/page.tsx:11
 msgid "Click me"
+msgstr ""
+
+#: src/components/LangSwitcher.tsx:13
+msgid "English"
 msgstr ""
 
 #: src/app/[lang]/layout.tsx:26
 msgid "Translation Demo"
+msgstr ""
+
+#: src/components/LangSwitcher.tsx:15
+msgid "简体中文"
+msgstr ""
+
+#: src/components/LangSwitcher.tsx:14
+msgid "繁體中文"
 msgstr ""
