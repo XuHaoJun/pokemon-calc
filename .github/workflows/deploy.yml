@@ -57,6 +57,7 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+        if: ${{ steps.detect-package-manager.outputs.manager == 'pnpm' }}
         with:
           version: 9.5.0
 
