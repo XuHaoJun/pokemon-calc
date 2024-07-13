@@ -55,10 +55,15 @@ jobs:
             exit 1
           fi
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.5.0
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: "lts/iron"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Setup Pages
