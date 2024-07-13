@@ -1,45 +1,47 @@
-import React, { ReactNode } from 'react'
-import { allI18nInstances } from './appRouterI18n'
-import { setI18n } from '@lingui/react/server'
+import React, { ReactNode } from "react";
+import { setI18n } from "@lingui/react/server";
+import { getAllI18nInstances } from "./appRouterI18n";
 
 export type PageLangParam = {
-  params: { lang: string }
-}
+  params: { lang: string };
+};
 
 type PageProps = PageLangParam & {
-  searchParams?: any // in query
-}
+  searchParams?: any; // in query
+};
 
 type LayoutProps = PageLangParam & {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
-type PageExposedToNextJS<Props extends PageProps> = (props: Props) => ReactNode
+type PageExposedToNextJS<Props extends PageProps> = (props: Props) => ReactNode;
 
 export const withLinguiPage = <Props extends PageProps>(
   AppRouterPage: React.ComponentType<PageLangParam & Props>
 ): PageExposedToNextJS<Props> => {
-  return function WithLingui(props) {
-    const lang = props.params.lang
-    const i18n = allI18nInstances[lang]!
-    setI18n(i18n)
+  return async function WithLingui(props) {
+    const lang = props.params.lang;
+    const allI18nInstances = await getAllI18nInstances();
+    const i18n = allI18nInstances[lang]!;
+    setI18n(i18n);
 
-    return <AppRouterPage {...props} lang={lang} />
-  }
-}
+    return <AppRouterPage {...props} lang={lang} />;
+  };
+};
 
 type LayoutExposedToNextJS<Props extends LayoutProps> = (
   props: Props
-) => ReactNode
+) => ReactNode;
 
 export const withLinguiLayout = <Props extends LayoutProps>(
   AppRouterPage: React.ComponentType<PageLangParam & Props>
 ): LayoutExposedToNextJS<Props> => {
-  return function WithLingui(props) {
-    const lang = props.params.lang
-    const i18n = allI18nInstances[lang]!
-    setI18n(i18n)
+  return async function WithLingui(props) {
+    const lang = props.params.lang;
+    const allI18nInstances = await getAllI18nInstances();
+    const i18n = allI18nInstances[lang]!;
+    setI18n(i18n);
 
-    return <AppRouterPage {...props} lang={lang} />
-  }
-}
+    return <AppRouterPage {...props} lang={lang} />;
+  };
+};

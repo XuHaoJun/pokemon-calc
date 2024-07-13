@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/[lang]/layout.tsx:25
+#: src/app/[lang]/page.tsx:9
+msgid "Click me"
+msgstr "Click me"
+
+#: src/app/[lang]/layout.tsx:26
 msgid "Translation Demo"
 msgstr "Translation Demo"
