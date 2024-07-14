@@ -30,10 +30,10 @@ export function MainNav() {
           <Trans>Type Calculator</Trans>
         </Link>
         <Link
-          href="/pokemon"
+          href="/pokedex"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname.startsWith("/pokemon")
+            pathname.startsWith("/pokedex")
               ? "text-foreground"
               : "text-foreground/60"
           )}

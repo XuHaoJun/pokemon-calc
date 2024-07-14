@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Treemap</title>
+    <style>
+        .node {
+            border: solid 1px white;
+            font: 10px sans-serif;
+            line-height: 12px;
+            overflow: hidden;
+            text-indent: 2px;
+        }
+        #treemap {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<div id="treemap"></div>
+<script>
+// Function to generate random color
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+// Function to generate random data
+function generateRandomData(numDirs) {
+    const data = [];
+    for (let i = 1; i <= numDirs; i++) {
+        data.push({
+            name: `dir${i}`,
+            size: Math.floor(Math.random() * 10000) + 100,  // Random size between 100 and 10000
+            color1: getRandomColor(),
+            color2: getRandomColor()
+        });
+    }
+    return data;
+}
+
+// Generate 30 directories with random sizes and colors
+const data = generateRandomData(30);
+
+// Set dimensions
+const aspectRatio = 2; // 800 / 400
+const width = document.body.clientWidth;
+const height = width / aspectRatio;
+
+// Create a root node
+const root = d3.hierarchy({values: data}, d => d.values)
+    .sum(d => d.size)
+    .sort((a, b) => b.value - a.value);  // Sort to have bigger boxes on top and left
+
+// Create a treemap layout
+d3.treemap()
+    .size([width, height])
+    .padding(10)
+    (root);
+
+// Select the div and append an SVG element
+const svg = d3.select("#treemap")
+    .append("svg")
+    .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .style("width", "100%")
+    .style("height", "auto");
+
+// Define gradients
+const defs = svg.append("defs");
+
+root.leaves().forEach((d, i) => {
+    const gradient = defs.append("linearGradient")
+        .attr("id", `grad${i}`)
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "0%")
+        .attr("y2", "100%");
+
+    gradient.append("stop")
+        .attr("offset", "50%")
+        .attr("stop-color", d.data.color1);
+
+    gradient.append("stop")
+        .attr("offset", "50%")
+        .attr("stop-color", d.data.color2);
+});
+
+// Create nodes
+const nodes = svg.selectAll(".node")
+    .data(root.leaves())
+    .enter().append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+// Append rectangles
+nodes.append("rect")
+    .attr("width", d => d.x1 - d.x0)
+    .attr("height", d => d.y1 - d.y0)
+    .attr("fill", (d, i) => `url(#grad${i})`);
+
+// Append text
+nodes.append("text")
+.attr("dx", function(d) {
+console.log(d)
+    return  (d.x1 - d.x0) / 2;
+})
+.attr("dy", function(d) {
+    return  (d.y1 - d.y0) / 2;
+})
+.attr("text-anchor", "middle")
+.attr("dominant-baseline", "middle")
+      .attr("stroke", "white")
+      .attr("stroke-width", "1.1px")
+.attr("font-size", "34px")
+    .text(d => d.data.name);
+</script>
+
+</body>
+</html>
