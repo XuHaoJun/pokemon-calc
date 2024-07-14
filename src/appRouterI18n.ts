@@ -1,19 +1,20 @@
 // import 'server-only'
 
-import linguiConfig from "../lingui.config";
-import { I18n, Messages, setupI18n } from "@lingui/core";
+import { I18n, Messages, setupI18n } from "@lingui/core"
 
-const { locales } = linguiConfig;
+import linguiConfig from "../lingui.config"
+
+const { locales } = linguiConfig
 // optionally use a stricter union type
-type SupportedLocales = string;
+type SupportedLocales = string
 
 async function loadCatalog(locale: SupportedLocales): Promise<{
-  [k: string]: Messages;
+  [k: string]: Messages
 }> {
-  const { messages } = await import(`./locales/${locale}.po`);
+  const { messages } = await import(`./locales/${locale}.po`)
   return {
     [locale]: messages,
-  };
+  }
 }
 // const catalogs = await Promise.all(locales.map(loadCatalog));
 
@@ -23,13 +24,13 @@ async function loadCatalog(locale: SupportedLocales): Promise<{
 // }, {});
 
 export async function getAllMessages() {
-  const catalogs = await Promise.all(locales.map(loadCatalog));
+  const catalogs = await Promise.all(locales.map(loadCatalog))
   return catalogs.reduce((acc: any, oneCatalog: any) => {
-    return { ...acc, ...oneCatalog };
-  }, {});
+    return { ...acc, ...oneCatalog }
+  }, {})
 }
 
-type AllI18nInstances = { [K in SupportedLocales]: I18n };
+type AllI18nInstances = { [K in SupportedLocales]: I18n }
 
 // export const allI18nInstances: AllI18nInstances = locales.reduce(
 //   (acc: any, locale: any) => {
@@ -44,13 +45,13 @@ type AllI18nInstances = { [K in SupportedLocales]: I18n };
 // );
 
 export async function getAllI18nInstances(): Promise<AllI18nInstances> {
-  const allMessages = await getAllMessages();
+  const allMessages = await getAllMessages()
   return locales.reduce((acc: any, locale: any) => {
-    const messages = allMessages[locale] ?? {};
+    const messages = allMessages[locale] ?? {}
     const i18n = setupI18n({
       locale,
       messages: { [locale]: messages },
-    });
-    return { ...acc, [locale]: i18n };
-  }, {});
+    })
+    return { ...acc, [locale]: i18n }
+  }, {})
 }

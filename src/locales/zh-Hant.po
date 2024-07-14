@@ -13,22 +13,30 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/[lang]/page.tsx:11
+#: src/app/[lang]/page.tsx:12
 msgid "Click me"
 msgstr "點擊我"
 
-#: src/components/LangSwitcher.tsx:13
+#: src/components/LangSwitcher.tsx:23
 msgid "English"
 msgstr "English"
 
-#: src/app/[lang]/layout.tsx:26
-msgid "Translation Demo"
-msgstr "Translation Demo"
+#: src/components/MainNav.tsx:41
+msgid "Pokédex"
+msgstr "寶可夢圖鑑"
 
-#: src/components/LangSwitcher.tsx:15
+#: src/app/[lang]/layout.tsx:30
+msgid "Pokemon Calc"
+msgstr "寶可夢計算機"
+
+#: src/components/MainNav.tsx:30
+msgid "Type Calculator"
+msgstr "屬性計算機"
+
+#: src/components/LangSwitcher.tsx:25
 msgid "简体中文"
 msgstr "简体中文"
 
-#: src/components/LangSwitcher.tsx:14
+#: src/components/LangSwitcher.tsx:24
 msgid "繁體中文"
 msgstr "繁體中文"
