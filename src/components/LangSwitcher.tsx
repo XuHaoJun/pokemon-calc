@@ -15,7 +15,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/select"
 
-import { Button, buttonVariants } from "./ui/button"
+import { buttonVariants } from "./ui/button"
 
 type LOCALES = "en" | "sr" | "es" | "pseudo"
 
@@ -23,6 +23,8 @@ const languages = {
   en: msg`English`,
   "zh-Hant": msg`繁體中文`,
   "zh-Hans": msg`简体中文`,
+  "ja": msg`日本語`,
+  "ko": msg`한국어`,
 } as const
 
 export function LangSwitcher() {
