@@ -1,40 +1,91 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokemon Calc
 
-## Getting Started
+Live Demo => [xuhaojun.github.io/pokemon-calc](https://xuhaojun.github.io/pokemon-calc/)
 
-First, run the development server:
+Welcome to Pokemon Calc! This project is an open-source web application that provides type calculations (to determine strengths and weaknesses), a Pokédex (for searching and viewing Pokémon details), and more. The source code is available on GitHub for anyone to contribute to or modify.
+
+Pokédex data is from [PokéAPI](https://pokeapi.co/).
+
+Inspired by [Pokemon Types with Heat Map](https://plotapi.com/docs/pokemon-types-with-heatmap/), [Pokémon Type Calculator](https://www.pkmn.help/more/), [TradingView Stock Heatmap](https://www.tradingview.com/heatmap/stock/).
+
+## Features
+
+- **Type Calculations**: Determine the strengths and weaknesses of Pokémon types against each other.
+- **Pokédex**: Search for Pokémon and view detailed information about them, including stats, abilities, evolutions, and more.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Multilingual**: en, zh-Hant, zh-Hans, ja, ko
+
+## Technologies Used
+
+nodejs, static website
+
+- **Framework**: [Next.js (SSG)](https://nextjs.org/)
+- **UI**: [shadcn](https://shadcn.dev/) and [D3.js](https://d3js.org/)
+- **Locales**: [lingui](https://lingui.dev/)
+
+Setup Next.js SSG work with Github page,actions by [gregrickaby/nextjs-github-pages](https://github.com/gregrickaby/nextjs-github-pages)
+
+## Development
+
+- nodejs: 20(lts/iron)
+- pnpm: 9
 
 ```bash
+pnpm install
+## next.js dev
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## open http://localhost:3000/pokemon-calc
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Update pokemon data:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+node download-pokemon-data.js
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Contributing
 
-## Learn More
+Contributions are welcome! To contribute:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Fork the repository**.
+2. **Create a new branch**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Make your changes**.
+4. **Commit your changes**:
 
-## Deploy on Vercel
+   ```bash
+   git commit -m 'Add some feature'
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Push to the branch**:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   git push origin feature/your-feature-name
+   ```
 
-## Notes
+6. **Create a Pull Request**.
 
-- https://github.com/gregrickaby/nextjs-github-pages
+### Adding Locales
+
+To add translations:
+
+1. Navigate to the `src/locales/` directory.
+2. Add or update the `.po` files for the language you are contributing to.
+3. Follow the standard steps above to commit and push your changes.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+If you have any questions, feel free to reach out:
+
+- **Email**: <xuhaojuntw@gmail.com>
+- **GitHub**: [XuHaoJun](https://github.com/xuhaojun)

@@ -21,16 +21,25 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: src/components/MainNav.tsx:41
+#: src/components/MainNav.tsx:43
 msgid "Pokédex"
 msgstr ""
 
 #: src/app/[lang]/layout.tsx:30
+#: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr ""
 
-#: src/components/MainNav.tsx:30
+#: src/components/MainNav.tsx:32
 msgid "Type Calculator"
+msgstr ""
+
+#: src/components/LangSwitcher.tsx:27
+msgid "한국어"
+msgstr ""
+
+#: src/components/LangSwitcher.tsx:26
+msgid "日本語"
 msgstr ""
 
 #: src/components/LangSwitcher.tsx:25

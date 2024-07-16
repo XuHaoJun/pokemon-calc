@@ -1,15 +1,16 @@
 "use client"
 
 import NextLink from "next/link"
-import { FaGithub, FaLanguage } from "react-icons/fa6"
+import { FaGithub } from "react-icons/fa6"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 
-import { LangSwitcher } from "./LangSwitcher"
+import { LangSwitch } from "./LangSwitcher"
 import { MainNav } from "./MainNav"
 import { MobileNav } from "./MobileNav"
-import { Button, buttonVariants } from "./ui/button"
+import { ThemeModeSwitch } from "./ThemeModeSwitch"
+import { buttonVariants } from "./ui/button"
 
 export function SiteHeader() {
   return (
@@ -37,11 +38,8 @@ export function SiteHeader() {
                 <span className="sr-only">GitHub</span>
               </div>
             </NextLink>
-            <LangSwitcher />
-            {/* <Button variant="ghost" className={cn("h-8 w-8 px-0")}>
-              <FaLanguage className="h-6 w-6" />
-              <span className="sr-only">Languages Switch</span>
-            </Button> */}
+            <ThemeModeSwitch />
+            <LangSwitch />
           </nav>
         </div>
       </div>

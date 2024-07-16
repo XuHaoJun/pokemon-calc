@@ -7,9 +7,23 @@ export function getPreferLocale(): string | null {
       LinguiConfig.locales.find(
         (locale: string) =>
           lang.toLowerCase() === locale.toLowerCase() ||
-          lang.toLowerCase().startsWith(locale.toLowerCase())
+          lang.toLowerCase().startsWith(locale.toLowerCase()) ||
+          lang.toLowerCase() === upgrade(locale).toLowerCase()
       ) || null
     )
   }
   return null
+}
+
+function upgrade(l: string) {
+  const subsets = {
+    "zh-Hans": ["zh-CN", "zh-SG"],
+    "zh-Hant": ["zh-TW", "zh-HK"],
+  }
+  for (const [superLang, subset] of Object.entries(subsets)) {
+    if (subset.map((x) => x.toLowerCase()).includes(l.toLowerCase())) {
+      return superLang
+    }
+  }
+  return l
 }

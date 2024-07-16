@@ -1,5 +1,5 @@
-import type { Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+import type { Config } from "tailwindcss"
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 const config = {
   darkMode: ["class"],
@@ -53,6 +53,62 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        pkmtype: {
+          normal: {
+            1: "#a8a77a",
+          },
+          fire: {
+            1: "#ee8130",
+          },
+          water: {
+            1: "#6390f0",
+          },
+          electric: {
+            1: "#f7d02C",
+          },
+          grass: {
+            1: "#7ac74c",
+          },
+          ice: {
+            1: "#96d9d6",
+          },
+          fighting: {
+            1: "#c22e28",
+          },
+          poison: {
+            1: "#a33ea1",
+          },
+          ground: {
+            1: "#e2bf65",
+          },
+          flying: {
+            1: "#a98ff3",
+          },
+          psychic: {
+            1: "#f95587",
+          },
+          bug: {
+            1: "#a6b91a",
+          },
+          rock: {
+            1: "#b6a136",
+          },
+          ghost: {
+            1: "#b6a136",
+          },
+          dragon: {
+            1: "#6f35fc",
+          },
+          dark: {
+            1: "#705746",
+          },
+          steel: {
+            1: "#b7b7ce",
+          },
+          fairy: {
+            1: "#d685ad",
+          },
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -79,6 +135,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+} satisfies Config
 
-export default config;
+export default config
