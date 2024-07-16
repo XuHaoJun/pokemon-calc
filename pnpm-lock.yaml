@@ -47,6 +47,9 @@ importers:
       lucide-react:
         specifier: ^0.408.0
         version: 0.408.0(react@18.3.1)
+      mutative:
+        specifier: ^1.0.6
+        version: 1.0.6
       negotiator:
         specifier: ^0.6.3
         version: 0.6.3
@@ -77,6 +80,9 @@ importers:
       url-join:
         specifier: ^5.0.0
         version: 5.0.0
+      use-mutative:
+        specifier: ^1.1.4
+        version: 1.1.4(mutative@1.0.6)
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.3.1
@@ -2470,6 +2476,10 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  mutative@1.0.6:
+    resolution: {integrity: sha512-6mcjGc09LGNQizP/in3NYbNFWwor2cMozm/W0fSXS+lhQXsrvRmZ2xG6MGW6aft6xBjrM8wT3pORO1eCZujMxw==}
+    engines: {node: '>=14.0'}
+
   mute-stream@0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
 
@@ -3247,6 +3257,11 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  use-mutative@1.1.4:
+    resolution: {integrity: sha512-1OA7TJltTywLtKdOU9Z5NhKAydp+HvIqlBymJon4EYGHS6kstwnoeWJ6VBTijuKhudtk5e0bePRbI69TSOIGhw==}
+    peerDependencies:
+      mutative: ^1.0.6
 
   use-sidecar@1.1.2:
     resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
@@ -5993,6 +6008,8 @@ snapshots:
 
   ms@2.1.3: {}
 
+  mutative@1.0.6: {}
+
   mute-stream@0.0.8: {}
 
   mz@2.7.0:
@@ -6815,6 +6832,10 @@ snapshots:
       tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.3
+
+  use-mutative@1.1.4(mutative@1.0.6):
+    dependencies:
+      mutative: 1.0.6
 
   use-sidecar@1.1.2(@types/react@18.3.3)(react@18.3.1):
     dependencies:

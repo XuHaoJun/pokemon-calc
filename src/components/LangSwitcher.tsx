@@ -54,7 +54,7 @@ export function LangSwitch() {
 
   return (
     <Select value={locale} onValueChange={handleChange}>
-      <SelectTrigger2 className={cn("h-8")}>
+      <SelectTrigger2 className={cn("h-8 w-8")}>
         <div
           className={cn(
             buttonVariants({

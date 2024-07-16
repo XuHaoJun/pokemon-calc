@@ -21,6 +21,7 @@ export interface Pokemon {
   pokemon_v2_pokemontypes: {
     slot: number
     id: number
+    type_id: number
   }[]
   pokemon_v2_pokemonabilities: {
     is_hidden: boolean

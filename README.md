@@ -34,6 +34,7 @@ Setup Next.js SSG work with Github page,actions by [gregrickaby/nextjs-github-pa
 pnpm install
 ## next.js dev
 npm run dev
+## open http://localhost:3000/pokemon-calc
 ```
 
 Update pokemon data:

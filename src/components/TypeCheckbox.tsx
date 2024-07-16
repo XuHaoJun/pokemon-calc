@@ -8,6 +8,8 @@ import { buttonVariants } from "./ui/button"
 
 export interface TypeCheckboxProps {
   type: string
+  checked?: boolean
+  onChange?: (nextChecked: boolean, type: string) => void
 }
 
 // TODO
@@ -57,13 +59,26 @@ const twCheckedBgColors: Record<string, string> = {
 }
 
 export function TypeCheckbox(props: TypeCheckboxProps) {
-  const [checked, setChecked] = React.useState<boolean>(false)
+  const { type, onChange, checked } = props
+  const [checkedState, setChecked] = React.useState<boolean>(
+    props.checked ?? false
+  )
+  React.useEffect(() => {
+    if (typeof checked === "boolean" && checkedState !== checked) {
+      setChecked(checked)
+    }
+  }, [checkedState, checked])
   const toggleChecked = React.useCallback(() => {
-    setChecked(!checked)
-  }, [checked])
+    const nextCheckedState = !checkedState
+    if (onChange) {
+      onChange(nextCheckedState, type)
+    } else {
+      setChecked(!checkedState)
+    }
+  }, [checkedState, type, onChange])
   const dataState = React.useMemo(
-    () => (checked ? "checked" : "unchecked"),
-    [checked]
+    () => (checkedState ? "checked" : "unchecked"),
+    [checkedState]
   )
   return (
     <div
@@ -77,7 +92,7 @@ export function TypeCheckbox(props: TypeCheckboxProps) {
       data-state={dataState}
       onClick={toggleChecked}
     >
-      <Checkbox checked={checked} className={cn(twBgColors[props.type])} />
+      <Checkbox checked={checkedState} className={cn(twBgColors[props.type])} />
       <label
         data-state={dataState}
         className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none data-[state=checked]:text-white"

@@ -2,8 +2,10 @@
 
 import * as React from "react"
 import * as Querys from "@/api/query"
-import { TYPE_COLORS } from "@/domain/constants"
+import { TYPE_ATTACK_RESITANCE, TYPE_COLORS } from "@/domain/constants"
+import type { PokemonType } from "@/domain/pokemon"
 import * as d3 from "d3"
+import { useMutative } from "use-mutative"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { TypeCheckbox } from "@/components/TypeCheckbox"
@@ -22,34 +24,109 @@ export default function TypePage() {
     [query.data]
   )
 
+  const [selectedTypes, setSelectedTypes] = useMutative(new Set<string>())
+  const pkmExistsTypes = React.useMemo(() => {
+    const xs = query.data?.data.pokemon_v2_pokemon || []
+    const founds: Set<string> = new Set([])
+    const sperator = ","
+    for (const x of xs) {
+      const typeIdsStr = x.pokemon_v2_pokemontypes
+        .map((t) => t.type_id)
+        .sort()
+        .join(sperator)
+      founds.add(typeIdsStr)
+    }
+    const result: PokemonType[][] = []
+    founds.forEach((typeIdsStr) => {
+      const typeIds = typeIdsStr.split(sperator)
+      result.push(
+        typeIds.map((id) => {
+          const foo = query.data?.data.pokemon_v2_type.find(
+            (t) => `${t.id}` === id
+          ) as PokemonType
+          return foo
+        })
+      )
+    })
+    return result
+  }, [query.data])
+
+  const typeResitanceMatrix = React.useMemo(() => {
+    const attackType = [...selectedTypes.values()][0]
+    if (!attackType) {
+      return []
+    }
+    return pkmExistsTypes.map((types) => {
+      let typeEffective = 1
+      if (types[0]?.name) {
+        typeEffective *= TYPE_ATTACK_RESITANCE[attackType][types[0].name]
+      }
+      if (types[1]?.name) {
+        typeEffective *= TYPE_ATTACK_RESITANCE[attackType][types[1].name]
+      }
+      return {
+        name: `${typeEffective}X`,
+        typeEffective,
+        size: typeEffective === 0 ? 0.125 : typeEffective,
+        color1: TYPE_COLORS[types[0].name],
+        color2: TYPE_COLORS[types[1]?.name] ?? TYPE_COLORS[types[0]?.name],
+        type1: types[0]?.name ?? "",
+        type2: types[1]?.name ?? "",
+      }
+    })
+  }, [pkmExistsTypes, selectedTypes])
+
+  React.useEffect(() => {
+    clean()
+    if (typeResitanceMatrix.length > 0) {
+      draw(typeResitanceMatrix)
+    }
+    return () => {
+      clean()
+    }
+  }, [typeResitanceMatrix, selectedTypes])
+
   return (
     <div className="flex flex-col gap-2">
       <div className="container flex gap-2 md:sticky md:top-[60px]">
         {query.data ? (
           <div className="flex gap-2 flex-wrap">
             {types.map((t) => (
-              <TypeCheckbox key={t.id} type={t.name} />
+              <TypeCheckbox
+                key={t.id}
+                type={t.name}
+                checked={selectedTypes.has(t.name)}
+                onChange={(nextChecked, typeName) => {
+                  setSelectedTypes((draft) => {
+                    if (nextChecked) {
+                      draft.add(typeName)
+                    } else {
+                      draft.delete(typeName)
+                    }
+                  })
+                }}
+              />
             ))}
           </div>
         ) : (
-          <TypeRadiosSkeleton />
+          <div className="flex gap-2 flex-wrap">
+            <TypeRadiosSkeletons />
+          </div>
         )}
       </div>
-      <div>{query.data ? <div id="treemap"></div> : <TreemapSkeleton />}</div>
+      {/* <div>{query.data ? <div id="treemap"></div> : <TreemapSkeleton />}</div> */}
+      <div id="treemap"></div>
       <div className="h-[500vh]"></div>
     </div>
   )
 }
 
-function TypeRadiosSkeleton() {
+function TypeRadiosSkeletons() {
   return (
     <>
-      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
-      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
-      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
-      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
-      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
-      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
+      {[...Array(18).keys()].map((i) => (
+        <Skeleton key={i} className="h-[40px] w-[140px] rounded-xl" />
+      ))}
     </>
   )
 }
@@ -58,7 +135,7 @@ function TreemapSkeleton() {
   return <Skeleton className="h-[250px] w-100% rounded-xl" />
 }
 
-function draw() {
+function draw(_data?: any) {
   function getRandomColor() {
     const colours = TYPE_COLORS
     const array = Object.values(colours)
@@ -85,7 +162,7 @@ function draw() {
   const chartDiv = document.getElementById("treemap")
 
   // Generate 30 directories with random sizes and colors
-  const data = generateRandomData(5)
+  const data = _data || generateRandomData(5)
 
   // Set dimensions
   const aspectRatio = 2 // 800 / 400
@@ -164,8 +241,35 @@ function draw() {
     .attr("dominant-baseline", "middle")
     .attr("fill", "#ffffff")
     .attr("font-weight", "bold")
-    .attr("font-size", `${chartDiv!.clientWidth * 0.007}em`)
+    .attr("font-size", 16)
     .text((d: any) => d.data.name)
+
+  // Append text
+  nodes
+    .append("text")
+    .attr("dx", function (d: any) {
+      return 10
+    })
+    .attr("dy", function (d: any) {
+      return 16
+    })
+    .attr("fill", "#ffffff")
+    .attr("font-weight", "bold")
+    .attr("font-size", 16)
+    .text((d: any) => d.data.type1)
+
+  nodes
+    .append("text")
+    .attr("dx", function (d: any) {
+      return 10
+    })
+    .attr("dy", function (d: any) {
+      return (d.y1 - d.y0) / 2 + 16
+    })
+    .attr("fill", "#ffffff")
+    .attr("font-weight", "bold")
+    .attr("font-size", "16px")
+    .text((d: any) => (d.data.type1 === d.data.type2 ? "" : d.data.type2))
 
   // handle click
   nodes.on("click", (...args) => {

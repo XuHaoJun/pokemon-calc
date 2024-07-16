@@ -25,8 +25,9 @@ query samplePokeAPIquery {
       }
     }
     pokemon_v2_pokemontypes {
-      slot
       id
+      slot
+      type_id
     }
     pokemon_v2_pokemonabilities {
       is_hidden
