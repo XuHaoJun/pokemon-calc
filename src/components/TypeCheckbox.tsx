@@ -1,0 +1,89 @@
+import * as React from "react"
+import { TYPE_COLORS } from "@/domain/constants"
+
+import { cn } from "@/lib/utils"
+import { Checkbox } from "@/components/ui/checkbox"
+
+import { buttonVariants } from "./ui/button"
+
+export interface TypeCheckboxProps {
+  type: string
+}
+
+// TODO
+// move to style?
+const twBgColors: Record<string, string> = {
+  normal: "bg-pkmtype-normal-1",
+  fire: "bg-pkmtype-fire-1",
+  water: "bg-pkmtype-water-1",
+  electric: "bg-pkmtype-electric-1",
+  grass: "bg-pkmtype-grass-1",
+  ice: "bg-pkmtype-ice-1",
+  fighting: "bg-pkmtype-fighting-1",
+  poison: "bg-pkmtype-poison-1",
+  ground: "bg-pkmtype-ground-1",
+  flying: "bg-pkmtype-flying-1",
+  psychic: "bg-pkmtype-psychic-1",
+  bug: "bg-pkmtype-bug-1",
+  rock: "bg-pkmtype-rock-1",
+  ghost: "bg-pkmtype-ghost-1",
+  dragon: "bg-pkmtype-dragon-1",
+  dark: "bg-pkmtype-dark-1",
+  steel: "bg-pkmtype-steel-1",
+  fairy: "bg-pkmtype-fairy-1",
+}
+
+// TODO
+// move to style?
+const twCheckedBgColors: Record<string, string> = {
+  normal: "data-[state=checked]:bg-pkmtype-normal-1",
+  fire: "data-[state=checked]:bg-pkmtype-fire-1",
+  water: "data-[state=checked]:bg-pkmtype-water-1",
+  electric: "data-[state=checked]:bg-pkmtype-electric-1",
+  grass: "data-[state=checked]:bg-pkmtype-grass-1",
+  ice: "data-[state=checked]:bg-pkmtype-ice-1",
+  fighting: "data-[state=checked]:bg-pkmtype-fighting-1",
+  poison: "data-[state=checked]:bg-pkmtype-poison-1",
+  ground: "data-[state=checked]:bg-pkmtype-ground-1",
+  flying: "data-[state=checked]:bg-pkmtype-flying-1",
+  psychic: "data-[state=checked]:bg-pkmtype-psychic-1",
+  bug: "data-[state=checked]:bg-pkmtype-bug-1",
+  rock: "data-[state=checked]:bg-pkmtype-rock-1",
+  ghost: "data-[state=checked]:bg-pkmtype-ghost-1",
+  dragon: "data-[state=checked]:bg-pkmtype-dragon-1",
+  dark: "data-[state=checked]:bg-pkmtype-dark-1",
+  steel: "data-[state=checked]:bg-pkmtype-steel-1",
+  fairy: "data-[state=checked]:bg-pkmtype-fairy-1",
+}
+
+export function TypeCheckbox(props: TypeCheckboxProps) {
+  const [checked, setChecked] = React.useState<boolean>(false)
+  const toggleChecked = React.useCallback(() => {
+    setChecked(!checked)
+  }, [checked])
+  const dataState = React.useMemo(
+    () => (checked ? "checked" : "unchecked"),
+    [checked]
+  )
+  return (
+    <div
+      className={cn(
+        buttonVariants({
+          variant: "outline",
+        }),
+        "w-[140px] flex justify-start items-center space-x-2",
+        twCheckedBgColors[props.type]
+      )}
+      data-state={dataState}
+      onClick={toggleChecked}
+    >
+      <Checkbox checked={checked} className={cn(twBgColors[props.type])} />
+      <label
+        data-state={dataState}
+        className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none data-[state=checked]:text-white"
+      >
+        {props.type}
+      </label>
+    </div>
+  )
+}

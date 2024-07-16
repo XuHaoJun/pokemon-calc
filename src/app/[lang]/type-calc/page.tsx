@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect } from "react"
+import * as React from "react"
 import * as Querys from "@/api/query"
 import { TYPE_COLORS } from "@/domain/constants"
 import * as d3 from "d3"
 
 import { Skeleton } from "@/components/ui/skeleton"
+import { TypeCheckbox } from "@/components/TypeCheckbox"
 
 export default function TypePage() {
   // useEffect(() => {
@@ -16,11 +17,23 @@ export default function TypePage() {
   // }, [])
 
   const query = Querys.useFetchPokemonData()
+  const types = React.useMemo(
+    () => query.data?.data.pokemon_v2_type || [],
+    [query.data]
+  )
 
   return (
     <div className="flex flex-col gap-2">
       <div className="container flex gap-2 md:sticky md:top-[60px]">
-        {query.data ? <div>test</div> : <TypeRadiosSkeleton />}
+        {query.data ? (
+          <div className="flex gap-2 flex-wrap">
+            {types.map((t) => (
+              <TypeCheckbox key={t.id} type={t.name} />
+            ))}
+          </div>
+        ) : (
+          <TypeRadiosSkeleton />
+        )}
       </div>
       <div>{query.data ? <div id="treemap"></div> : <TreemapSkeleton />}</div>
       <div className="h-[500vh]"></div>
