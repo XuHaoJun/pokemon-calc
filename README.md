@@ -36,6 +36,12 @@ pnpm install
 npm run dev
 ```
 
+Update pokemon data:
+
+```bash
+node download-pokemon-data.js
+```
+
 ## Contributing
 
 Contributions are welcome! To contribute:

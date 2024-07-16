@@ -71,5 +71,5 @@ query samplePokeAPIquery {
 }
 
 getPokemonData().then((x) =>
-  fs.writeFileSync("./src/data/pokemon-data.json", JSON.stringify(x, null, 2))
+  fs.writeFileSync("./public/data/pokemon-data.json", JSON.stringify(x, null, 2))
 )
