@@ -1,29 +1,47 @@
 "use client"
 
 import { useEffect } from "react"
+import * as Querys from "@/api/query"
 import * as d3 from "d3"
 
-export default function TypePage() {
-  useEffect(() => {
-    draw()
-    return () => {
-      clean()
-    }
-  }, [])
+import { Skeleton } from "@/components/ui/skeleton"
 
-  useEffect(() => {
-    async function fetchData() {
-      const foo = (await import("@/data/pokemon-data.json")).default
-      console.log("foo", foo)
-    }
-    fetchData()
-  }, [])
+export default function TypePage() {
+  // useEffect(() => {
+  //   draw()
+  //   return () => {
+  //     clean()
+  //   }
+  // }, [])
+
+  const query = Querys.useFetchPokemonData()
 
   return (
-    <div className="md:container">
-      <div id="treemap"></div>
+    <div className="flex flex-col gap-2">
+      <div className="container flex gap-2 md:sticky md:top-[60px]">
+        {query.data ? <div>test</div> : <TypeRadiosSkeleton />}
+      </div>
+      <div>{query.data ? <div id="treemap"></div> : <TreemapSkeleton />}</div>
+      <div className="h-[500vh]"></div>
     </div>
   )
+}
+
+function TypeRadiosSkeleton() {
+  return (
+    <>
+      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
+      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
+      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
+      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
+      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
+      <Skeleton className="h-[40px] w-[150px] rounded-xl" />
+    </>
+  )
+}
+
+function TreemapSkeleton() {
+  return <Skeleton className="h-[250px] w-100% rounded-xl" />
 }
 
 function draw() {

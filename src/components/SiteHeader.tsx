@@ -6,9 +6,10 @@ import { FaGithub } from "react-icons/fa6"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 
-import { LangSwitcher } from "./LangSwitcher"
+import { LangSwitch } from "./LangSwitcher"
 import { MainNav } from "./MainNav"
 import { MobileNav } from "./MobileNav"
+import { ThemeModeSwitch } from "./ThemeModeSwitch"
 import { buttonVariants } from "./ui/button"
 
 export function SiteHeader() {
@@ -37,7 +38,8 @@ export function SiteHeader() {
                 <span className="sr-only">GitHub</span>
               </div>
             </NextLink>
-            <LangSwitcher />
+            <ThemeModeSwitch />
+            <LangSwitch />
           </nav>
         </div>
       </div>

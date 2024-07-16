@@ -23,10 +23,10 @@ export function MainNav() {
       </Link>
       <nav className="flex items-center gap-4 text-sm lg:gap-6">
         <Link
-          href="/type"
+          href="/type-calc"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/type" ? "text-foreground" : "text-foreground/60"
+            pathname === "/type-calc" ? "text-foreground" : "text-foreground/60"
           )}
         >
           <Trans>Type Calculator</Trans>

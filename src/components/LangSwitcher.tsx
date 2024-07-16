@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select"
 
 import { buttonVariants } from "./ui/button"
+import { SelectTrigger2 } from "./ui/select2"
 
 type LOCALES = "en" | "sr" | "es" | "pseudo"
 
@@ -27,7 +28,7 @@ const languages = {
   "ko": msg`한국어`,
 } as const
 
-export function LangSwitcher() {
+export function LangSwitch() {
   const router = useRouter()
   const { i18n } = useLingui()
   const pathname = usePathname()
@@ -53,7 +54,7 @@ export function LangSwitcher() {
 
   return (
     <Select value={locale} onValueChange={handleChange}>
-      <SelectTrigger className={cn("h-8")}>
+      <SelectTrigger2 className={cn("h-8")}>
         <div
           className={cn(
             buttonVariants({
@@ -65,7 +66,7 @@ export function LangSwitcher() {
           <FaLanguage className="h-6 w-6" />
           <span className="sr-only">Languages Switch</span>
         </div>
-      </SelectTrigger>
+      </SelectTrigger2>
       <SelectContent>
         {Object.keys(languages).map((locale) => {
           return (

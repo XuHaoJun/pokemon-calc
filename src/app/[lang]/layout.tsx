@@ -1,9 +1,10 @@
-import type { Metadata } from "next"
 import { Inter as FontSans } from "next/font/google"
+import { t } from "@lingui/macro"
 
 import "../globals.css"
 
-import { t } from "@lingui/macro"
+import { QueryClientProvider } from "@/providers/QueryClientProvider"
+import { ThemeProvider } from "@/providers/ThemeProvider"
 
 import { cn } from "@/lib/utils"
 import { StandardSiteLayout } from "@/components/layouts/StandardSiteLayout"
@@ -40,19 +41,28 @@ export default withLinguiLayout(async function RootLayout({
 }>) {
   const allMessages = await getAllMessages()
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html lang={lang} dir="ltr" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
-        <LinguiClientProvider
-          initialLocale={lang}
-          initialMessages={allMessages[lang]!}
-        >
-          <StandardSiteLayout>{children}</StandardSiteLayout>
-        </LinguiClientProvider>
+        <QueryClientProvider>
+          <LinguiClientProvider
+            initialLocale={lang}
+            initialMessages={allMessages[lang]!}
+          >
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <StandardSiteLayout>{children}</StandardSiteLayout>
+            </ThemeProvider>
+          </LinguiClientProvider>
+        </QueryClientProvider>
       </body>
     </html>
   )
