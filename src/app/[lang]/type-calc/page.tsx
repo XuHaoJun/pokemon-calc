@@ -4,14 +4,19 @@ import * as React from "react"
 import * as Querys from "@/api/query"
 import { TYPE_ATTACK_RESITANCE, TYPE_COLORS } from "@/domain/constants"
 import type { Pokemon, PokemonType } from "@/domain/pokemon"
+import { useLingui } from "@lingui/react"
 import * as d3 from "d3"
 import * as R from "remeda"
 import { useMutative } from "use-mutative"
 
+import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Switch } from "@/components/ui/switch"
 import { TypeCheckbox } from "@/components/TypeCheckbox"
 
 export default function TypePage() {
+  const lingui = useLingui()
+
   const query = Querys.useFetchPokemonData()
   const types = React.useMemo(
     () =>
@@ -76,25 +81,62 @@ export default function TypePage() {
         color1: TYPE_COLORS[types[0].name],
         color2: TYPE_COLORS[types[1]?.name] ?? TYPE_COLORS[types[0]?.name],
         type1: types[0]?.name ?? "",
-        type2: types[1]?.name ?? "",
+        type2: types[1]?.name ?? types[0]?.name ?? "",
         pokemons: typesGroup.pokemons,
       }
     })
   }, [pkmExistsTypes, selectedTypes])
 
+  const [filter, setFilter] = useMutative({
+    hide42: false,
+    hide1: false,
+    hide05025: false,
+    hideTwoType: false,
+  })
+  const [controll, setControll] = useMutative({ reverseSize: false })
+
+  const finalTypeResitanceMatrix = React.useMemo(() => {
+    let result = typeResitanceMatrix
+    if (
+      filter.hide42 ||
+      filter.hide1 ||
+      filter.hide05025 ||
+      filter.hideTwoType
+    ) {
+      result = R.filter(
+        typeResitanceMatrix,
+        R.isNot(
+          (x) =>
+            (filter.hide42
+              ? x.typeEffective === 4 || x.typeEffective === 2
+              : false) ||
+            (filter.hide1 ? x.typeEffective === 1 : false) ||
+            (filter.hide05025
+              ? x.typeEffective === 0.5 || x.typeEffective === 0.25
+              : false) ||
+            (filter.hideTwoType ? x.type1 !== x.type2 : false)
+        )
+      )
+    }
+    if (controll.reverseSize) {
+      result = result.map((x) => ({ ...x, size: 1 / x.size }))
+    }
+    return result
+  }, [typeResitanceMatrix, filter, controll])
+
   React.useEffect(() => {
     clean()
-    if (typeResitanceMatrix.length > 0) {
-      draw(typeResitanceMatrix)
+    if (finalTypeResitanceMatrix.length > 0) {
+      draw(finalTypeResitanceMatrix)
     }
     return () => {
       clean()
     }
-  }, [typeResitanceMatrix, selectedTypes])
+  }, [finalTypeResitanceMatrix])
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="container flex gap-2 md:sticky md:top-[60px]">
+      <div className="container flex flex-col gap-2 md:sticky md:top-[60px]">
         {query.data ? (
           <div className="flex gap-2 flex-wrap">
             {types.map((t) => (
@@ -125,6 +167,63 @@ export default function TypePage() {
             <TypeRadiosSkeletons />
           </div>
         )}
+        <div className="flex gap-2 flex-wrap">
+          <div
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={() => {
+              setFilter((draft) => {
+                draft.hide42 = !draft.hide42
+              })
+            }}
+          >
+            <Switch checked={filter.hide42} />
+            <Label className="cursor-pointer">Hide 4x, 2x</Label>
+          </div>
+          <div
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={() => {
+              setFilter((draft) => {
+                draft.hide1 = !draft.hide1
+              })
+            }}
+          >
+            <Switch checked={filter.hide1} />
+            <Label className="cursor-pointer">Hide 1x</Label>
+          </div>
+          <div
+            className="flex items-center space-x-2 select-none cursor-pointer"
+            onClick={() => {
+              setFilter((draft) => {
+                draft.hide05025 = !draft.hide05025
+              })
+            }}
+          >
+            <Switch checked={filter.hide05025} />
+            <Label className="cursor-pointer">Hide 0.5x, 0.25x</Label>
+          </div>
+          <div
+            className="flex items-center space-x-2 select-none cursor-pointer"
+            onClick={() => {
+              setFilter((draft) => {
+                draft.hideTwoType = !draft.hideTwoType
+              })
+            }}
+          >
+            <Switch checked={filter.hideTwoType} />
+            <Label className="cursor-pointer">Hide Two Type</Label>
+          </div>
+          <div
+            className="flex items-center space-x-2 select-none cursor-pointer"
+            onClick={() => {
+              setControll((draft) => {
+                draft.reverseSize = !draft.reverseSize
+              })
+            }}
+          >
+            <Switch checked={controll.reverseSize} />
+            <Label className="cursor-pointer">Reverse Order</Label>
+          </div>
+        </div>
       </div>
       <div>{query.data ? null : <TreemapSkeleton />}</div>
       <div id="treemap"></div>

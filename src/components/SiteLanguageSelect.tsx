@@ -18,14 +18,14 @@ import {
 import { buttonVariants } from "./ui/button"
 import { SelectTrigger2 } from "./ui/select2"
 
-type LOCALES = "en" | "sr" | "es" | "pseudo"
+type LOCALES = "en" | "zh-Hant" | "zh-Hans" | "ja" | "ko" | "pseudo"
 
 const languages = {
   en: msg`English`,
   "zh-Hant": msg`繁體中文`,
   "zh-Hans": msg`简体中文`,
-  "ja": msg`日本語`,
-  "ko": msg`한국어`,
+  ja: msg`日本語`,
+  ko: msg`한국어`,
 } as const
 
 export function SiteLanguageSelect() {
