@@ -171,7 +171,7 @@ export default function TypeCalcPage() {
   }, [finalTypeResitanceMatrix])
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 py-6">
       <div className="container flex flex-col gap-2 md:sticky md:top-[60px]">
         {query.data ? (
           <div className="flex gap-2 flex-wrap">

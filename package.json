@@ -25,6 +25,7 @@
     "ahooks": "^3.8.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
     "d3": "^7.9.0",
     "lucide-react": "^0.408.0",
     "mutative": "^1.0.6",
