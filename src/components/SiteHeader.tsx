@@ -6,10 +6,10 @@ import { FaGithub } from "react-icons/fa6"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 
-import { LangSwitch } from "./LangSwitcher"
+import { SiteLanguageSelect } from "./SiteLanguageSelect"
 import { MainNav } from "./MainNav"
 import { MobileNav } from "./MobileNav"
-import { ThemeModeSwitch } from "./ThemeModeSwitch"
+import { SiteThemeModeSelect } from "./SiteThemeModeSelect"
 import { buttonVariants } from "./ui/button"
 
 export function SiteHeader() {
@@ -38,8 +38,8 @@ export function SiteHeader() {
                 <span className="sr-only">GitHub</span>
               </div>
             </NextLink>
-            <ThemeModeSwitch />
-            <LangSwitch />
+            <SiteThemeModeSelect />
+            <SiteLanguageSelect />
           </nav>
         </div>
       </div>

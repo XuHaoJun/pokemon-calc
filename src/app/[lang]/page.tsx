@@ -2,7 +2,6 @@ import { withLinguiPage } from "@/withLingui"
 import { t, Trans } from "@lingui/macro"
 
 import { Button } from "@/components/ui/button"
-import { LangSwitch } from "@/components/LangSwitcher"
 import { Link } from "@/components/Link"
 
 export default withLinguiPage(function Home() {

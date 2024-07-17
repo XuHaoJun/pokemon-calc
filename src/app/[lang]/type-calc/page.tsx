@@ -3,50 +3,54 @@
 import * as React from "react"
 import * as Querys from "@/api/query"
 import { TYPE_ATTACK_RESITANCE, TYPE_COLORS } from "@/domain/constants"
-import type { PokemonType } from "@/domain/pokemon"
+import type { Pokemon, PokemonType } from "@/domain/pokemon"
 import * as d3 from "d3"
+import * as R from "remeda"
 import { useMutative } from "use-mutative"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { TypeCheckbox } from "@/components/TypeCheckbox"
 
 export default function TypePage() {
-  // useEffect(() => {
-  //   draw()
-  //   return () => {
-  //     clean()
-  //   }
-  // }, [])
-
   const query = Querys.useFetchPokemonData()
   const types = React.useMemo(
-    () => query.data?.data.pokemon_v2_type || [],
-    [query.data]
+    () =>
+      R.filter(
+        query.data?.data.pokemon_v2_type || [],
+        R.isNot((t) => ["stellar", "unknown", "shadow"].includes(t.name))
+      ),
+    [query.data?.data.pokemon_v2_type]
   )
 
   const [selectedTypes, setSelectedTypes] = useMutative(new Set<string>())
   const pkmExistsTypes = React.useMemo(() => {
-    const xs = query.data?.data.pokemon_v2_pokemon || []
+    const pkms = query.data?.data.pokemon_v2_pokemon || []
     const founds: Set<string> = new Set([])
+    const pkmGroups: Record<string, Pokemon[]> = {}
     const sperator = ","
-    for (const x of xs) {
-      const typeIdsStr = x.pokemon_v2_pokemontypes
+    for (const pkm of pkms) {
+      const typeIdsStr = pkm.pokemon_v2_pokemontypes
         .map((t) => t.type_id)
         .sort()
         .join(sperator)
       founds.add(typeIdsStr)
+      if (!Array.isArray(pkmGroups[typeIdsStr])) {
+        pkmGroups[typeIdsStr] = []
+      }
+      pkmGroups[typeIdsStr].push(pkm)
     }
-    const result: PokemonType[][] = []
+    const result: { types: PokemonType[]; pokemons: Pokemon[] }[] = []
     founds.forEach((typeIdsStr) => {
       const typeIds = typeIdsStr.split(sperator)
-      result.push(
-        typeIds.map((id) => {
-          const foo = query.data?.data.pokemon_v2_type.find(
+      result.push({
+        types: typeIds.map((id) => {
+          const t = query.data?.data.pokemon_v2_type.find(
             (t) => `${t.id}` === id
           ) as PokemonType
-          return foo
-        })
-      )
+          return t
+        }),
+        pokemons: pkmGroups[typeIdsStr],
+      })
     })
     return result
   }, [query.data])
@@ -56,7 +60,8 @@ export default function TypePage() {
     if (!attackType) {
       return []
     }
-    return pkmExistsTypes.map((types) => {
+    return pkmExistsTypes.map((typesGroup) => {
+      const types = typesGroup.types
       let typeEffective = 1
       if (types[0]?.name) {
         typeEffective *= TYPE_ATTACK_RESITANCE[attackType][types[0].name]
@@ -72,6 +77,7 @@ export default function TypePage() {
         color2: TYPE_COLORS[types[1]?.name] ?? TYPE_COLORS[types[0]?.name],
         type1: types[0]?.name ?? "",
         type2: types[1]?.name ?? "",
+        pokemons: typesGroup.pokemons,
       }
     })
   }, [pkmExistsTypes, selectedTypes])
@@ -98,7 +104,13 @@ export default function TypePage() {
                 checked={selectedTypes.has(t.name)}
                 onChange={(nextChecked, typeName) => {
                   setSelectedTypes((draft) => {
+                    // if (nextChecked) {
+                    //   draft.add(typeName)
+                    // } else {
+                    //   draft.delete(typeName)
+                    // }
                     if (nextChecked) {
+                      draft.clear()
                       draft.add(typeName)
                     } else {
                       draft.delete(typeName)
@@ -114,9 +126,8 @@ export default function TypePage() {
           </div>
         )}
       </div>
-      {/* <div>{query.data ? <div id="treemap"></div> : <TreemapSkeleton />}</div> */}
+      <div>{query.data ? null : <TreemapSkeleton />}</div>
       <div id="treemap"></div>
-      <div className="h-[500vh]"></div>
     </div>
   )
 }
@@ -132,7 +143,7 @@ function TypeRadiosSkeletons() {
 }
 
 function TreemapSkeleton() {
-  return <Skeleton className="h-[250px] w-100% rounded-xl" />
+  return <Skeleton className="h-[50vh] w-100% rounded-xl" />
 }
 
 function draw(_data?: any) {
@@ -167,7 +178,7 @@ function draw(_data?: any) {
   // Set dimensions
   const aspectRatio = 2 // 800 / 400
   const width = document.body.clientWidth
-  const height = width / aspectRatio
+  const height = (width / aspectRatio) * 3
 
   // Create a root node
   const root = d3
@@ -271,10 +282,45 @@ function draw(_data?: any) {
     .attr("font-size", "16px")
     .text((d: any) => (d.data.type1 === d.data.type2 ? "" : d.data.type2))
 
+  nodes
+    .append("svg:image")
+    .attr("width", 64)
+    .attr("height", 64)
+    .attr("dx", function (d: any) {
+      return 0
+    })
+    .attr("dy", function (d: any) {
+      return 0
+    })
+    .attr("y", function (d: any) {
+      return 24
+    })
+    .attr("xlink:href", function (d: any) {
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${d.data.pokemons[0].id}.png`
+    })
+
+  // nodes
+  //   .append("svg:image")
+  //   .attr("width", 64)
+  //   .attr("height", 64)
+  //   .attr("x", 32)
+  //   .attr("dx", function (d: any) {
+  //     return 0
+  //   })
+  //   .attr("dy", function (d: any) {
+  //     return 0
+  //   })
+  //   .attr("xlink:href", function (d) {
+  //     console.log("d", d)
+  //     if (d.data.pokemons[1]?.id) {
+  //       return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${d.data.pokemons[1]?.id}.png`
+  //     } else {
+  //       return null
+  //     }
+  //   })
+
   // handle click
-  nodes.on("click", (...args) => {
-    console.log(args)
-  })
+  nodes.on("click", (event, node) => {})
 }
 
 function clean() {

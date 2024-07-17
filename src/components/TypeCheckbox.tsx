@@ -86,7 +86,7 @@ export function TypeCheckbox(props: TypeCheckboxProps) {
         buttonVariants({
           variant: "outline",
         }),
-        "w-[140px] flex justify-start items-center space-x-2",
+        "w-[140px] flex justify-start items-center space-x-2 cursor-pointer",
         twCheckedBgColors[props.type]
       )}
       data-state={dataState}
@@ -95,7 +95,7 @@ export function TypeCheckbox(props: TypeCheckboxProps) {
       <Checkbox checked={checkedState} className={cn(twBgColors[props.type])} />
       <label
         data-state={dataState}
-        className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none data-[state=checked]:text-white"
+        className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none data-[state=checked]:text-white data-[state=checked]:text-shadow"
       >
         {props.type}
       </label>

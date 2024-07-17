@@ -94,7 +94,7 @@ const config = {
             1: "#b6a136",
           },
           ghost: {
-            1: "#b6a136",
+            1: "#735797",
           },
           dragon: {
             1: "#6f35fc",
@@ -134,7 +134,10 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@designbycode/tailwindcss-text-shadow"),
+  ],
 } satisfies Config
 
 export default config

@@ -28,7 +28,7 @@ const languages = {
   "ko": msg`한국어`,
 } as const
 
-export function LangSwitch() {
+export function SiteLanguageSelect() {
   const router = useRouter()
   const { i18n } = useLingui()
   const pathname = usePathname()
