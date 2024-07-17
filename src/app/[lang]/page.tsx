@@ -1,16 +1,9 @@
+import { redirect, RedirectType } from "next/navigation"
 import { withLinguiPage } from "@/withLingui"
-import { t, Trans } from "@lingui/macro"
 
-import { Button } from "@/components/ui/button"
-import { Link } from "@/components/Link"
-
-export default withLinguiPage(function Home() {
-  return (
-    <div>
-      <Button>
-        <Trans>Click me</Trans>
-      </Button>
-      <Link href="/type">test</Link>
-    </div>
-  )
+export default withLinguiPage(function Home({ lang }: any) {
+  redirect(`/${lang}/type-calc`, RedirectType.replace)
+  // TODO
+  // add search history, news?
+  // or keep it simple show screenshots and basic description
 })

@@ -13,11 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/[lang]/page.tsx:12
-msgid "Click me"
-msgstr ""
-
-#: src/components/LangSwitcher.tsx:23
+#: src/components/SiteLanguageSelect.tsx:24
 msgid "English"
 msgstr "English"
 
@@ -25,7 +21,7 @@ msgstr "English"
 msgid "Pokédex"
 msgstr ""
 
-#: src/app/[lang]/layout.tsx:30
+#: src/app/[lang]/layout.tsx:31
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr ""
@@ -34,18 +30,18 @@ msgstr ""
 msgid "Type Calculator"
 msgstr ""
 
-#: src/components/LangSwitcher.tsx:27
+#: src/components/SiteLanguageSelect.tsx:28
 msgid "한국어"
 msgstr "한국어"
 
-#: src/components/LangSwitcher.tsx:26
+#: src/components/SiteLanguageSelect.tsx:27
 msgid "日本語"
 msgstr "日本語"
 
-#: src/components/LangSwitcher.tsx:25
+#: src/components/SiteLanguageSelect.tsx:26
 msgid "简体中文"
 msgstr "简体中文"
 
-#: src/components/LangSwitcher.tsx:24
+#: src/components/SiteLanguageSelect.tsx:25
 msgid "繁體中文"
 msgstr "繁體中文"

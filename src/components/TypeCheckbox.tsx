@@ -1,5 +1,9 @@
+"use client"
+
 import * as React from "react"
 import { TYPE_COLORS } from "@/domain/constants"
+import { Trans } from "@lingui/macro"
+import { useLingui } from "@lingui/react"
 
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -80,6 +84,7 @@ export function TypeCheckbox(props: TypeCheckboxProps) {
     () => (checkedState ? "checked" : "unchecked"),
     [checkedState]
   )
+  const lingui = useLingui()
   return (
     <div
       className={cn(
@@ -97,7 +102,7 @@ export function TypeCheckbox(props: TypeCheckboxProps) {
         data-state={dataState}
         className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none data-[state=checked]:text-white data-[state=checked]:text-shadow"
       >
-        {props.type}
+        {lingui._(`pkm.type.${type}`)}
       </label>
     </div>
   )
