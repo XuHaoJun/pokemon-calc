@@ -1,13 +1,20 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
 import { useFetchPokemonData } from "@/api/query"
+import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
+import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
+import { getRandomInt } from "@/utils/remebdaExt"
 import { msg, Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 import { DialogTitle } from "@radix-ui/react-dialog"
+import { useDebounce } from "ahooks"
+import type { Document } from "flexsearch"
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import * as R from "remeda"
 
 import { cn } from "@/lib/utils"
+import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Button } from "@/components/ui/button"
 import {
   CommandDialog,
@@ -16,12 +23,14 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "@/components/ui/command"
 
+import { Link } from "./Link"
+
 export function CommandMenu({ ...props }: any) {
-  const router = useRouter()
   const [open, setOpen] = React.useState(false)
+
+  useLoadPokemonLingui({ targets: ["name"], enabled: open })
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -44,16 +53,82 @@ export function CommandMenu({ ...props }: any) {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  const runCommand = React.useCallback((command: () => unknown) => {
-    setOpen(false)
-    command()
-  }, [])
-
-  const lingui = useLingui()
-
   const query = useFetchPokemonData()
 
   const [searchText, setSearchText] = React.useState<string>("")
+  const debouncedSearchText = useDebounce(searchText, {
+    wait: 400,
+    maxWait: 400 * 3,
+  })
+
+  const lingui = useLingui()
+  const flexsearchRef = React.useRef<{
+    index: Document<any> | null
+    loadedLocales: Set<string>
+  }>({
+    index: null,
+    loadedLocales: new Set(),
+  })
+  React.useEffect(() => {
+    async function doSearchIndex() {
+      const FlexSearch = (await import("flexsearch")).default
+      const index =
+        flexsearchRef.current.index ||
+        new FlexSearch.Document({
+          encode: false,
+          tokenize: "full",
+          document: {
+            id: "id",
+            field: [
+              "en_name",
+              "zh-Hant_name",
+              "zh-Hans_name",
+              "ja_name",
+              "ko_name",
+            ],
+          },
+        })
+      flexsearchRef.current.index = index
+
+      if (
+        query.data &&
+        !flexsearchRef.current.loadedLocales.has(lingui.i18n.locale)
+      ) {
+        for (const x of query.data.data.pokemon_v2_pokemon) {
+          const names: Record<string, string> = {}
+          for (const nameInfo of x.pokemon_v2_pokemonspecy
+            .pokemon_v2_pokemonspeciesnames) {
+            const locale = getLocaleByPokeApiLangId(nameInfo.language_id, null)
+            // load current locale and en
+            if ((locale && locale === lingui.i18n.locale) || locale === "en") {
+              flexsearchRef.current.loadedLocales.add(locale)
+              names[`${locale}_name`] = nameInfo.name
+            }
+          }
+          index.add({ id: x.id, ...names })
+        }
+      }
+    }
+    if (query.data) {
+      doSearchIndex()
+    }
+  }, [query.data, lingui.i18n.locale])
+
+  React.useEffect(() => {
+    const { index } = flexsearchRef.current
+    if (index && debouncedSearchText) {
+      console.log(index.search(debouncedSearchText))
+    }
+  }, [debouncedSearchText])
+
+  const [randomPokemonIds, setRandomPokemonIds] = React.useState(
+    getRandomPokemonIds()
+  )
+  React.useEffect(() => {
+    if (open) {
+      setRandomPokemonIds(getRandomPokemonIds())
+    }
+  }, [open])
 
   return (
     <>
@@ -84,43 +159,39 @@ export function CommandMenu({ ...props }: any) {
           onValueChange={setSearchText}
           placeholder={lingui._(msg`Type a search...`)}
         />
-
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-
-          <CommandGroup heading="Letters">
-            <CommandItem>a</CommandItem>
-            <CommandItem>b</CommandItem>
-            <CommandSeparator />
-            <CommandItem>c</CommandItem>
-          </CommandGroup>
-
-          <CommandItem>Apple</CommandItem>
-        </CommandList>
-        {/* <CommandList>
           <CommandEmpty>
             <Trans>No results found.</Trans>
           </CommandEmpty>
-          <CommandGroup heading="Pokemon">
-            <CommandItem key={554} value={`${554}`} onSelect={() => {}}>
-              <img
-                width={64}
-                height={64}
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/554.png"
-              />
-              皮卡丘
-            </CommandItem>
-            <CommandItem key={555} value={`${555}`} onSelect={() => {}}>
-              <img
-                width={64}
-                height={64}
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/555.png"
-              />
-              皮卡丘
-            </CommandItem>
-          </CommandGroup>
-        </CommandList> */}
+          {Boolean(searchText) === false && (
+            <CommandGroup heading="Random Pokemons">
+              {randomPokemonIds.map((id) => (
+                <Link key={id} href={`/pokedex/${id}`}>
+                  <CommandItem
+                    value={`${id}`}
+                    onSelect={() => {
+                      setOpen(false)
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <LazyLoadImage
+                      alt={"test"}
+                      width={64}
+                      height={64}
+                      src={getPokemonImageSrc(id)}
+                    />
+                    {lingui._(`pkm.name.${id}`)}
+                  </CommandItem>
+                </Link>
+              ))}
+            </CommandGroup>
+          )}
+        </CommandList>
       </CommandDialog>
     </>
   )
+}
+
+function getRandomPokemonIds() {
+  return [getRandomInt(1, 1025), getRandomInt(1, 1025), getRandomInt(1, 1025)]
 }

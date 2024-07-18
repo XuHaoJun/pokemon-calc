@@ -12,6 +12,7 @@ function getPokemonData() {
 query samplePokeAPIquery {
   pokemon_v2_pokemon {
     id
+    order
     name
     pokemon_v2_pokemonstats {
       base_stat

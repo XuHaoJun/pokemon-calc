@@ -4,9 +4,6 @@ import * as React from "react"
 import * as Querys from "@/api/query"
 import { TYPE_ATTACK_RESITANCE, TYPE_COLORS } from "@/domain/constants"
 import type { Pokemon, PokemonType } from "@/domain/pokemon"
-import { withLinguiPage } from "@/withLingui"
-import { useLingui } from "@lingui/react"
-import { useUpdate } from "ahooks"
 import * as d3 from "d3"
 import * as R from "remeda"
 import { useMutative } from "use-mutative"
@@ -17,39 +14,7 @@ import { Switch } from "@/components/ui/switch"
 import { TypeCheckbox } from "@/components/TypeCheckbox"
 
 export default function TypeCalcPage() {
-  const lingui = useLingui()
-
   const query = Querys.useFetchPokemonData()
-
-  const forceRender = useUpdate()
-  React.useEffect(() => {
-    if (
-      query.data &&
-      Boolean(lingui.i18n.messages["pkm.type.normal"]) === false
-    ) {
-      const pkmTypeI18nMessages: any = {}
-      for (const x of query.data.data.pokemon_v2_type) {
-        for (const xx of x.pokemon_v2_typenames) {
-          if (xx.language_id === 4 && lingui.i18n.locale === "zh-Hant") {
-            pkmTypeI18nMessages[`pkm.type.${x.name}`] = xx.name
-          } else if (
-            xx.language_id === 12 &&
-            lingui.i18n.locale === "zh-Hans"
-          ) {
-            pkmTypeI18nMessages[`pkm.type.${x.name}`] = xx.name
-          } else if (xx.language_id === 9 && lingui.i18n.locale === "en") {
-            pkmTypeI18nMessages[`pkm.type.${x.name}`] = xx.name
-          } else if (xx.language_id === 11 && lingui.i18n.locale === "ja") {
-            pkmTypeI18nMessages[`pkm.type.${x.name}`] = xx.name
-          } else if (xx.language_id === 3 && lingui.i18n.locale === "ko") {
-            pkmTypeI18nMessages[`pkm.type.${x.name}`] = xx.name
-          }
-        }
-      }
-      lingui.i18n.load(lingui.i18n.locale, pkmTypeI18nMessages)
-      forceRender()
-    }
-  }, [query.data, lingui.i18n, lingui.i18n.locale, forceRender])
 
   const types = React.useMemo(
     () =>
@@ -272,7 +237,6 @@ export default function TypeCalcPage() {
           </div>
         </div>
       </div>
-      <div>{query.data ? null : <TreemapSkeleton />}</div>
       <div id="treemap"></div>
     </div>
   )

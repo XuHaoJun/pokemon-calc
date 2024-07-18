@@ -8,5 +8,6 @@ export function useFetchPokemonData() {
     queryFn: Apis.fetchPokemonData,
     placeholderData: keepPreviousData,
     staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
   })
 }
