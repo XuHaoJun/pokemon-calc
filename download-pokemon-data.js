@@ -10,57 +10,57 @@ function getPokemonData() {
     body: JSON.stringify({
       query: `
 query samplePokeAPIquery {
-  pokemon_v2_pokemon {
+  pokemon_v2_pokemon(order_by: {id: asc}) {
     id
     order
     name
-    pokemon_v2_pokemonstats {
+    pokemon_v2_pokemonstats(order_by: {stat_id: asc}) {
       base_stat
       stat_id
     }
     pokemon_v2_pokemonspecy {
-      pokemon_v2_pokemonspeciesnames {
+      pokemon_v2_pokemonspeciesnames(order_by: {language_id: asc}) {
+        id
         language_id
         name
-        id
       }
     }
-    pokemon_v2_pokemontypes {
+    pokemon_v2_pokemontypes(order_by: {type_id: asc}) {
       id
       slot
       type_id
     }
-    pokemon_v2_pokemonabilities {
+    pokemon_v2_pokemonabilities(order_by: {ability_id: asc}) {
       is_hidden
       slot
       ability_id
     }
   }
-  pokemon_v2_stat {
+  pokemon_v2_stat(order_by: {id: asc}) {
     id
     name
-    pokemon_v2_statnames {
+    pokemon_v2_statnames(order_by: {language_id: asc}) {
+      id
       name
       language_id
-      id
     }
   }
-  pokemon_v2_language {
+  pokemon_v2_language(order_by: {id: asc}) {
     id
     name
   }
-  pokemon_v2_type {
+  pokemon_v2_type(order_by: {id: asc}) {
     id
     name
-    pokemon_v2_typenames {
+    pokemon_v2_typenames(order_by: {language_id: asc}) {
+      id
       name
       language_id
-      id
     }
   }
-  pokemon_v2_abilityflavortext {
+  pokemon_v2_abilityflavortext(order_by: {ability_id: asc, id: asc}) {
+    id
     flavor_text
-    id
     language_id
     ability_id
   }
@@ -73,5 +73,8 @@ query samplePokeAPIquery {
 }
 
 getPokemonData().then((x) =>
-  fs.writeFileSync("./public/data/pokemon-data.json", JSON.stringify(x, null, 2))
+  fs.writeFileSync(
+    "./public/data/pokemon-data.json",
+    JSON.stringify(x, null, 2)
+  )
 )

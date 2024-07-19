@@ -9,7 +9,7 @@ import { msg, Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 import { DialogTitle } from "@radix-ui/react-dialog"
 import { useDebounce } from "ahooks"
-import type { Document } from "flexsearch"
+import type { Document, SimpleDocumentSearchResultSetUnit } from "flexsearch"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import * as R from "remeda"
 
@@ -29,6 +29,7 @@ import { Link } from "./Link"
 
 export function CommandMenu({ ...props }: any) {
   const [open, setOpen] = React.useState(false)
+  const [openAndSearched, setOpenAndSearched] = React.useState(false)
 
   useLoadPokemonLingui({ targets: ["name"], enabled: open })
 
@@ -60,14 +61,21 @@ export function CommandMenu({ ...props }: any) {
     wait: 400,
     maxWait: 400 * 3,
   })
+  const [searchResult, setSearchResult] = React.useState<
+    SimpleDocumentSearchResultSetUnit[]
+  >([])
+
+  React.useEffect(() => {
+    if (searchText && openAndSearched === false) {
+      setOpenAndSearched(true)
+    }
+  }, [searchText])
 
   const lingui = useLingui()
   const flexsearchRef = React.useRef<{
     index: Document<any> | null
-    loadedLocales: Set<string>
   }>({
     index: null,
-    loadedLocales: new Set(),
   })
   React.useEffect(() => {
     async function doSearchIndex() {
@@ -79,33 +87,32 @@ export function CommandMenu({ ...props }: any) {
           tokenize: "full",
           document: {
             id: "id",
-            field: [
-              "en_name",
-              "zh-Hant_name",
-              "zh-Hans_name",
-              "ja_name",
-              "ko_name",
+            // why mutiple lanague?
+            // i want support current locale and en toghter
+            tag: "tag",
+            index: [
+              "names:en",
+              "names:zh-Hant",
+              "names:zh-Hans",
+              "names:ja",
+              "names:ko",
             ],
           },
         })
       flexsearchRef.current.index = index
 
-      if (
-        query.data &&
-        !flexsearchRef.current.loadedLocales.has(lingui.i18n.locale)
-      ) {
+      if (query.data) {
         for (const x of query.data.data.pokemon_v2_pokemon) {
           const names: Record<string, string> = {}
           for (const nameInfo of x.pokemon_v2_pokemonspecy
             .pokemon_v2_pokemonspeciesnames) {
             const locale = getLocaleByPokeApiLangId(nameInfo.language_id, null)
-            // load current locale and en
             if ((locale && locale === lingui.i18n.locale) || locale === "en") {
-              flexsearchRef.current.loadedLocales.add(locale)
-              names[`${locale}_name`] = nameInfo.name
+              names[locale] = nameInfo.name
             }
           }
-          index.add({ id: x.id, ...names })
+          const nextDoc = { id: x.id, tag: "pokemon", names }
+          index.addAsync(x.id, nextDoc)
         }
       }
     }
@@ -116,8 +123,9 @@ export function CommandMenu({ ...props }: any) {
 
   React.useEffect(() => {
     const { index } = flexsearchRef.current
-    if (index && debouncedSearchText) {
-      console.log(index.search(debouncedSearchText))
+    if (index) {
+      const nextSearchResult = index.search(debouncedSearchText)
+      setSearchResult(nextSearchResult)
     }
   }, [debouncedSearchText])
 
@@ -127,6 +135,19 @@ export function CommandMenu({ ...props }: any) {
   React.useEffect(() => {
     if (open) {
       setRandomPokemonIds(getRandomPokemonIds())
+    }
+  }, [open])
+
+  React.useEffect(() => {
+    if (open === false && openAndSearched) {
+      setOpenAndSearched(false)
+    }
+  }, [open])
+
+  React.useEffect(() => {
+    if (open === false && searchText) {
+      setSearchText("")
+      setSearchResult([])
     }
   }, [open])
 
@@ -150,7 +171,11 @@ export function CommandMenu({ ...props }: any) {
           <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        commandProps={{ shouldFilter: false }}
+      >
         <DialogTitle className="sr-only">
           <Trans>Search...</Trans>
         </DialogTitle>
@@ -161,31 +186,60 @@ export function CommandMenu({ ...props }: any) {
         />
         <CommandList>
           <CommandEmpty>
-            <Trans>No results found.</Trans>
+            <div className="min-h-[180px]">
+              <Trans>No results found.</Trans>
+            </div>
           </CommandEmpty>
-          {Boolean(searchText) === false && (
-            <CommandGroup heading="Random Pokemons">
-              {randomPokemonIds.map((id) => (
-                <Link key={id} href={`/pokedex/${id}`}>
-                  <CommandItem
-                    value={`${id}`}
-                    onSelect={() => {
-                      setOpen(false)
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <LazyLoadImage
-                      alt={"test"}
-                      width={64}
-                      height={64}
-                      src={getPokemonImageSrc(id)}
-                    />
-                    {lingui._(`pkm.name.${id}`)}
-                  </CommandItem>
-                </Link>
-              ))}
+          {Boolean(searchResult.length) && (
+            <CommandGroup heading="Pokemons">
+              {searchResult
+                .flatMap((x) => x.result)
+                .map((id) => (
+                  <Link key={id} href={`/pokedex/${id}`}>
+                    <CommandItem
+                      value={`${id}`}
+                      onSelect={() => {
+                        setOpen(false)
+                      }}
+                      className="cursor-pointer"
+                    >
+                      <LazyLoadImage
+                        alt={lingui._(`pkm.name.${id}`)}
+                        width={64}
+                        height={64}
+                        src={getPokemonImageSrc(id as number)}
+                      />
+                      {lingui._(`pkm.name.${id}`)}
+                    </CommandItem>
+                  </Link>
+                ))}
             </CommandGroup>
           )}
+          {Boolean(searchText) === false &&
+            openAndSearched === false &&
+            open && (
+              <CommandGroup heading="Random Pokemons">
+                {randomPokemonIds.map((id) => (
+                  <Link key={id} href={`/pokedex/${id}`}>
+                    <CommandItem
+                      value={`${id}`}
+                      onSelect={() => {
+                        setOpen(false)
+                      }}
+                      className="cursor-pointer"
+                    >
+                      <LazyLoadImage
+                        alt={lingui._(`pkm.name.${id}`)}
+                        width={64}
+                        height={64}
+                        src={getPokemonImageSrc(id)}
+                      />
+                      {lingui._(`pkm.name.${id}`)}
+                    </CommandItem>
+                  </Link>
+                ))}
+              </CommandGroup>
+            )}
         </CommandList>
       </CommandDialog>
     </>
