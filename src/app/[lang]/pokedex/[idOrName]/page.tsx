@@ -15,12 +15,7 @@ export async function generateStaticParams(props: {
   }))
 }
 
-export default async function PokemonDetailPageServer(props: {
-  pokemonData: any
-  params: {
-    idOrName: string
-  }
-}) {
+export default async function PokemonDetailPageServer(props: any) {
   const pokemonData = await fetchPokemonDataWithOptions({ ssg: true })
   return <PokemonDetailPage pokemonData={pokemonData} id={props.params.idOrName} />
 }
