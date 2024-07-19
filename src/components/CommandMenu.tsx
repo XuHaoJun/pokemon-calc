@@ -247,5 +247,9 @@ export function CommandMenu({ ...props }: any) {
 }
 
 function getRandomPokemonIds() {
-  return [getRandomInt(1, 1025), getRandomInt(1, 1025), getRandomInt(1, 1025)]
+  return R.unique([
+    getRandomInt(1, 1025),
+    getRandomInt(1, 1025),
+    getRandomInt(1, 1025),
+  ])
 }
