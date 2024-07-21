@@ -17,7 +17,7 @@ msgstr ""
 msgid "English"
 msgstr "English"
 
-#: src/components/CommandMenu.tsx:78
+#: src/components/CommandMenu.tsx:190
 msgid "No results found."
 msgstr "No results found."
 
@@ -30,15 +30,16 @@ msgstr "Pokédex"
 msgid "Pokemon Calc"
 msgstr "Pokemon Calc"
 
-#: src/components/CommandMenu.tsx:63
+#: src/components/CommandMenu.tsx:165
 msgid "Search Pokemon..."
 msgstr "Search Pokemon..."
 
-#: src/components/CommandMenu.tsx:66
+#: src/components/CommandMenu.tsx:168
+#: src/components/CommandMenu.tsx:180
 msgid "Search..."
 msgstr "Search..."
 
-#: src/components/CommandMenu.tsx:74
+#: src/components/CommandMenu.tsx:185
 msgid "Type a search..."
 msgstr "Type a search..."
 

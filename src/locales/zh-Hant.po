@@ -17,7 +17,7 @@ msgstr ""
 msgid "English"
 msgstr "English"
 
-#: src/components/CommandMenu.tsx:78
+#: src/components/CommandMenu.tsx:190
 msgid "No results found."
 msgstr "查無結果"
 
@@ -30,15 +30,16 @@ msgstr "寶可夢圖鑑"
 msgid "Pokemon Calc"
 msgstr "寶可夢計算機"
 
-#: src/components/CommandMenu.tsx:63
+#: src/components/CommandMenu.tsx:165
 msgid "Search Pokemon..."
 msgstr "搜尋寶可夢..."
 
-#: src/components/CommandMenu.tsx:66
+#: src/components/CommandMenu.tsx:168
+#: src/components/CommandMenu.tsx:180
 msgid "Search..."
 msgstr "搜尋..."
 
-#: src/components/CommandMenu.tsx:74
+#: src/components/CommandMenu.tsx:185
 msgid "Type a search..."
 msgstr "搜尋..."
 

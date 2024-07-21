@@ -32,7 +32,10 @@ export default async function PokemonDetailPageServer(props: any) {
     for (const xx of x.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames) {
       // TODO
       // add other languages?
-      if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
+      if (
+        getLocaleByPokeApiLangId(xx.language_id) === i18n.locale &&
+        x.id.toString() === props.params.idOrName
+      ) {
         nameI18nMessages[`pkm.name.${x.id}`] = xx.name
       }
     }

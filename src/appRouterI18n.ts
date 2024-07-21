@@ -50,20 +50,14 @@ type AllI18nInstances = { [K in SupportedLocales]: I18n }
 //   {}
 // );
 
-let allI18nInstances: AllI18nInstances
-
 export async function getAllI18nInstances(): Promise<AllI18nInstances> {
-  if (allI18nInstances) {
-    return allI18nInstances
-  }
   const allMessages = await getAllMessages()
-  allI18nInstances = locales.reduce((acc: any, locale: any) => {
+  return locales.reduce((acc: any, locale: any) => {
     const messages = allMessages[locale] ?? {}
     const i18n = setupI18n({
       locale,
-      messages: { [locale]: messages },
+      messages: { [locale]: { ...messages } },
     })
     return { ...acc, [locale]: i18n }
   }, {})
-  return allI18nInstances
 }
