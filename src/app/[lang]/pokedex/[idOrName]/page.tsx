@@ -1,5 +1,7 @@
 import { fetchPokemonDataWithOptions } from "@/api"
-import { useFetchPokemonData } from "@/api/query"
+import { getAllI18nInstances } from "@/appRouterI18n"
+import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
+import { setI18n } from "@lingui/react/server"
 
 import { PokemonDetailPage } from "./PokemonDetailPage"
 
@@ -17,5 +19,37 @@ export async function generateStaticParams(props: {
 
 export default async function PokemonDetailPageServer(props: any) {
   const pokemonData = await fetchPokemonDataWithOptions({ ssg: true })
-  return <PokemonDetailPage pokemonData={pokemonData} id={props.params.idOrName} />
+  const pokemon = pokemonData.data.pokemon_v2_pokemon.find(
+    (pkm) => pkm.id === props.params.idOrName
+  )
+
+  const lang = props.params.lang
+  const allI18nInstances = await getAllI18nInstances()
+  const i18n = allI18nInstances[lang]!
+
+  const nameI18nMessages: any = {}
+  for (const x of pokemonData.data.pokemon_v2_pokemon) {
+    for (const xx of x.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames) {
+      // TODO
+      // add other languages?
+      if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
+        nameI18nMessages[`pkm.name.${x.id}`] = xx.name
+      }
+    }
+  }
+  i18n.load(i18n.locale, nameI18nMessages)
+  const typeI18nMessages: any = {}
+  for (const x of pokemonData.data.pokemon_v2_type) {
+    for (const xx of x.pokemon_v2_typenames) {
+      // TODO
+      // add other languages?
+      if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
+        typeI18nMessages[`pkm.type.${x.name}`] = xx.name
+      }
+    }
+  }
+  i18n.load(i18n.locale, typeI18nMessages)
+  setI18n(i18n)
+
+  return <PokemonDetailPage pokemon={pokemon} id={props.params.idOrName} />
 }

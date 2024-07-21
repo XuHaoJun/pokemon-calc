@@ -13,7 +13,9 @@ export async function fetchPokemonDataWithOptions(
 ) {
   const { ssg = false } = options
   if (ssg) {
-    return (await import("../../public/data/pokemon-data.json")).default as PokemonData
+    const pokemonData = (await import("../../public/data/pokemon-data.json"))
+      .default
+    return pokemonData as PokemonData
   }
   return fetch(`${basePath}/data/pokemon-data.json`).then(
     (res) => res.json() as Promise<PokemonData>

@@ -28,18 +28,18 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
       query.data &&
       Boolean(lingui.i18n.messages["pkm.name.1"]) === false
     ) {
-      const pkmTypeI18nMessages: any = {}
+      const nameI18nMessages: any = {}
       for (const x of query.data.data.pokemon_v2_pokemon) {
         for (const xx of x.pokemon_v2_pokemonspecy
           .pokemon_v2_pokemonspeciesnames) {
           // TODO
           // add other languages?
           if (getLocaleByPokeApiLangId(xx.language_id) === lingui.i18n.locale) {
-            pkmTypeI18nMessages[`pkm.name.${x.id}`] = xx.name
+            nameI18nMessages[`pkm.name.${x.id}`] = xx.name
           }
         }
       }
-      lingui.i18n.load(lingui.i18n.locale, pkmTypeI18nMessages)
+      lingui.i18n.load(lingui.i18n.locale, nameI18nMessages)
       loaded = true
     }
     if (
@@ -47,17 +47,17 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
       query.data &&
       Boolean(lingui.i18n.messages["pkm.type.normal"]) === false
     ) {
-      const pkmTypeI18nMessages: any = {}
+      const typeI18nMessages: any = {}
       for (const x of query.data.data.pokemon_v2_type) {
         for (const xx of x.pokemon_v2_typenames) {
           // TODO
           // add other languages?
           if (getLocaleByPokeApiLangId(xx.language_id) === lingui.i18n.locale) {
-            pkmTypeI18nMessages[`pkm.type.${x.name}`] = xx.name
+            typeI18nMessages[`pkm.type.${x.name}`] = xx.name
           }
         }
       }
-      lingui.i18n.load(lingui.i18n.locale, pkmTypeI18nMessages)
+      lingui.i18n.load(lingui.i18n.locale, typeI18nMessages)
       loaded = true
     }
     if (loaded) {

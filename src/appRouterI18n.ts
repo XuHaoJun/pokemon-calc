@@ -23,11 +23,17 @@ async function loadCatalog(locale: SupportedLocales): Promise<{
 //   return { ...acc, ...oneCatalog };
 // }, {});
 
+let allMessages: any
+
 export async function getAllMessages() {
+  if (allMessages) {
+    return allMessages
+  }
   const catalogs = await Promise.all(locales.map(loadCatalog))
-  return catalogs.reduce((acc: any, oneCatalog: any) => {
+  allMessages = catalogs.reduce((acc: any, oneCatalog: any) => {
     return { ...acc, ...oneCatalog }
   }, {})
+  return allMessages
 }
 
 type AllI18nInstances = { [K in SupportedLocales]: I18n }
@@ -44,9 +50,14 @@ type AllI18nInstances = { [K in SupportedLocales]: I18n }
 //   {}
 // );
 
+let allI18nInstances: AllI18nInstances
+
 export async function getAllI18nInstances(): Promise<AllI18nInstances> {
+  if (allI18nInstances) {
+    return allI18nInstances
+  }
   const allMessages = await getAllMessages()
-  return locales.reduce((acc: any, locale: any) => {
+  allI18nInstances = locales.reduce((acc: any, locale: any) => {
     const messages = allMessages[locale] ?? {}
     const i18n = setupI18n({
       locale,
@@ -54,4 +65,5 @@ export async function getAllI18nInstances(): Promise<AllI18nInstances> {
     })
     return { ...acc, [locale]: i18n }
   }, {})
+  return allI18nInstances
 }
