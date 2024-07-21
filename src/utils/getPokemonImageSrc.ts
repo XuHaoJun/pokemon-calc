@@ -1,5 +1,5 @@
 export interface GetPokemonImageSrcOptions {
-  type: "frontDefault"
+  type: "frontDefault" | "frontShiny" | "backDefault" | "backShiny"
 }
 
 export function getPokemonImageSrc(
