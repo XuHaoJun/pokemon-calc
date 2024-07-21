@@ -201,9 +201,10 @@ export function CommandMenu({ ...props }: any) {
                       onSelect={() => {
                         setOpen(false)
                       }}
-                      className="cursor-pointer"
+                      className="cursor-pointer group"
                     >
                       <LazyLoadImage
+                        className="group-hover:animate-bounce"
                         alt={lingui._(`pkm.name.${id}`)}
                         width={64}
                         height={64}
@@ -226,9 +227,10 @@ export function CommandMenu({ ...props }: any) {
                       onSelect={() => {
                         setOpen(false)
                       }}
-                      className="cursor-pointer"
+                      className="cursor-pointer group"
                     >
                       <LazyLoadImage
+                        className="group-hover:animate-bounce"
                         alt={lingui._(`pkm.name.${id}`)}
                         width={64}
                         height={64}

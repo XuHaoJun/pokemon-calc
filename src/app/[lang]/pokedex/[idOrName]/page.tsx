@@ -20,7 +20,7 @@ export async function generateStaticParams(props: {
 export default async function PokemonDetailPageServer(props: any) {
   const pokemonData = await fetchPokemonDataWithOptions({ ssg: true })
   const pokemon = pokemonData.data.pokemon_v2_pokemon.find(
-    (pkm) => pkm.id === props.params.idOrName
+    (pkm) => pkm.id.toString() === props.params.idOrName
   )
 
   const lang = props.params.lang
@@ -53,6 +53,10 @@ export default async function PokemonDetailPageServer(props: any) {
   }
   i18n.load(i18n.locale, typeI18nMessages)
   setI18n(i18n)
+
+  if (!pokemon) {
+    return <div>not found pokemon</div>
+  }
 
   return <PokemonDetailPage pokemon={pokemon} id={props.params.idOrName} />
 }

@@ -32,13 +32,17 @@ export async function generateMetadata({ params }: PageLangParam) {
   }
 }
 
-export default withLinguiLayout(async function RootLayout({
-  children,
-  params: { lang },
-}: Readonly<{
-  children: React.ReactNode
-  params: any
-}>) {
+export default withLinguiLayout(async function RootLayout(
+  props: Readonly<{
+    children: React.ReactNode
+    params: any
+    Component: any
+  }>
+) {
+  const {
+    children,
+    params: { lang },
+  } = props
   const allMessages = await getAllMessages()
   return (
     <html lang={lang} dir="ltr" suppressHydrationWarning>
