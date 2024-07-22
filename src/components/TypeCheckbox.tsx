@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { TYPE_COLORS } from "@/domain/constants"
+import { getTypeBgColorClassName } from "@/utils/getTypeBgColorClassName"
 import { Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 
@@ -101,7 +102,10 @@ export function TypeCheckbox(props: TypeCheckboxProps) {
       data-state={dataState}
       onClick={toggleChecked}
     >
-      <Checkbox checked={checkedState} className={cn(twBgColors[props.type])} />
+      <Checkbox
+        checked={checkedState}
+        className={cn(getTypeBgColorClassName(props.type))}
+      />
       <label
         data-state={dataState}
         className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none data-[state=checked]:text-white data-[state=checked]:text-shadow"
