@@ -13,14 +13,14 @@ export async function generateStaticParams(props: {
   // find name from pkm.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames
   // by props.params.lang
   return pokemonData.data.pokemon_v2_pokemon.map((pkm) => ({
-    idOrName: `${pkm.id}`,
+    id: `${pkm.id}`,
   }))
 }
 
 export default async function PokemonDetailPageServer(props: any) {
   const pokemonData = await fetchPokemonDataWithOptions({ ssg: true })
   const pokemon = pokemonData.data.pokemon_v2_pokemon.find(
-    (pkm) => pkm.id.toString() === props.params.idOrName
+    (pkm) => pkm.id.toString() === props.params.id
   )
 
   const lang = props.params.lang
@@ -34,7 +34,7 @@ export default async function PokemonDetailPageServer(props: any) {
       // add other languages?
       if (
         getLocaleByPokeApiLangId(xx.language_id) === i18n.locale &&
-        x.id.toString() === props.params.idOrName
+        x.id.toString() === props.params.id
       ) {
         nameI18nMessages[`pkm.name.${x.id}`] = xx.name
       }
@@ -58,5 +58,5 @@ export default async function PokemonDetailPageServer(props: any) {
     return <div>not found pokemon</div>
   }
 
-  return <PokemonDetailPage pokemon={pokemon} id={props.params.idOrName} />
+  return <PokemonDetailPage pokemon={pokemon} id={props.params.id} />
 }

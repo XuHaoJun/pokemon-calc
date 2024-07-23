@@ -77,4 +77,7 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
     enableForceRender,
     updateOnce,
   ])
+  return {
+    updateOnce,
+  }
 }

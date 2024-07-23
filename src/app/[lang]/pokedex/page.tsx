@@ -1,3 +1,5 @@
-export default function PokemonsSearchPage() {
-  return <>Pokemons Search Page</>
+import { PokedexPage } from "./PokedexPage"
+
+export default function PokedexPageServer() {
+  return <PokedexPage />
 }

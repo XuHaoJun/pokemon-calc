@@ -22,15 +22,17 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
   const _52pokeHref = `https://wiki.52poke.com/wiki/${props.pokemon.name}`
   return (
     <div className="container flex flex-col gap-2 md:sticky md:top-[60px]">
+      <h1 className="scroll-m-20 text-3xl font-bold tracking-tight">
+        {lingui._(`pkm.name.${id}`)}
+      </h1>
       <Image
-        className="hover:animate-bounce"
+        className="border"
         alt={lingui._(`pkm.name.${id}`)}
-        width={64}
-        height={64}
+        width={200}
+        height={200}
         src={getPokemonImageSrc(id)}
         priority
       />
-      {lingui._(`pkm.name.${id}`)}
       <PokemonStatsChart pokemon={props.pokemon} />
       <div>
         <NextLink
