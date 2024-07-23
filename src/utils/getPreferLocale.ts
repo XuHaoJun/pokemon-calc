@@ -8,7 +8,7 @@ export function getPreferLocale(): string | null {
         (locale: string) =>
           lang.toLowerCase() === locale.toLowerCase() ||
           lang.toLowerCase().startsWith(locale.toLowerCase()) ||
-          lang.toLowerCase() === upgrade(locale).toLowerCase()
+          upgrade(lang).toLowerCase() === locale.toLowerCase()
       ) || null
     )
   }
