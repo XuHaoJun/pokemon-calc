@@ -14,6 +14,7 @@ import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
+import { DebouncedInput } from "@/components/DebouncedInput"
 import { Link } from "@/components/Link"
 
 import { PokemonDataTable } from "./PokemonDataTable"
@@ -145,7 +146,7 @@ function MyNameHeader({
   return (
     <div className="flex flex-col gap-1 pb-2">
       {children}
-      <Input className="h-7" />
+      <DebouncedInput className="h-7" />
     </div>
   )
 }
@@ -173,8 +174,8 @@ function MyHeader({
         {isSorted === "desc" && <ArrowDown className="ml-2 h-4 w-4" />}
         {isSorted === false && <div className="ml-2 h-4 w-4" />}
       </Button>
-      <Input type="number" className="h-7" value={1} />
-      <Input type="number" className="h-7" value={255} />
+      <DebouncedInput type="number" className="h-7" value={1} />
+      <DebouncedInput type="number" className="h-7" value={255} />
     </div>
   )
 }
