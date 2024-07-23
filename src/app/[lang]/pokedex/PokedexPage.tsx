@@ -174,8 +174,8 @@ function MyHeader({
         {isSorted === "desc" && <ArrowDown className="ml-2 h-4 w-4" />}
         {isSorted === false && <div className="ml-2 h-4 w-4" />}
       </Button>
-      <DebouncedInput type="number" className="h-7" value={1} />
-      <DebouncedInput type="number" className="h-7" value={255} />
+      <DebouncedInput type="number" className="h-7 w-[90px]" value={1} />
+      <DebouncedInput type="number" className="h-7 w-[90px]" value={255} />
     </div>
   )
 }
