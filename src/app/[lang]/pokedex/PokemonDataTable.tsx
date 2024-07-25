@@ -46,6 +46,7 @@ export function PokemonDataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
     autoResetPageIndex: true,
+    manualFiltering: true,
     state: {
       sorting,
       pagination,
