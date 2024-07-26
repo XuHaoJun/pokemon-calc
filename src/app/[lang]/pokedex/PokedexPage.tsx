@@ -3,7 +3,9 @@
 import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { useFetchPokemonData } from "@/api/query"
+import { flexsearchAtom, flexsearchIsIndexingAtom } from "@/atoms"
 import type { Pokemon } from "@/domain/pokemon"
+import { binaraySearch } from "@/utils/binarySearch"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import { useLingui } from "@lingui/react"
 import { ColumnDef, HeaderContext } from "@tanstack/react-table"
@@ -192,9 +194,36 @@ export function PokedexPageBase() {
   //   router.replace(`${pathname}?${finalQueryString}`)
   // }, [finalQueryString, pathname, router])
 
+  const [flexsearchQuery] = useAtom(flexsearchAtom)
+  const [flexsearchIsIndexing] = useAtom(flexsearchIsIndexingAtom)
+
+  const [flexsearchFilter] = useAtom(pokdexAtoms.flexsearchFilterAtom)
+
+  const [{ index: flexsearchIndex }] = useAtom(flexsearchAtom)
+
+  const dataFilterByFlexsearch = React.useMemo(() => {
+    if (
+      !flexsearchIndex ||
+      flexsearchFilter.name === "" ||
+      flexsearchIsIndexing
+    ) {
+      return data
+    }
+    const searchResult = flexsearchIndex.search(flexsearchFilter.name)
+    return searchResult
+      .flatMap((x) => x.result)
+      .map((_id) => {
+        const id = _id as number
+        return binaraySearch(data, id, (targetId, x) => targetId - x.id, {
+          firstMiddle: id - 1,
+        }) as Pokemon2
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, flexsearchFilter.name, flexsearchIndex, flexsearchIsIndexing])
+
   const finalData = React.useMemo(
-    () => data.filter(filterTester),
-    [data, filterTester]
+    () => dataFilterByFlexsearch.filter(filterTester),
+    [dataFilterByFlexsearch, filterTester]
   )
 
   if (query.isLoading) {
@@ -218,11 +247,21 @@ function MyNameHeader({
   headerContext,
   children,
 }: React.PropsWithChildren<MyNameHeaderProps>) {
-  const { column } = headerContext
+  const [filter, setFilter] = useAtom(pokdexAtoms.flexsearchFilterAtom)
   return (
     <div className="flex flex-col gap-1 pb-2">
       {children}
-      <DebouncedInput className="h-7" />
+      <DebouncedInput
+        className="h-7"
+        value={filter.name}
+        onChange={(v) =>
+          setFilter(
+            create(filter, (draft) => {
+              draft.name = `${v}`
+            })
+          )
+        }
+      />
     </div>
   )
 }

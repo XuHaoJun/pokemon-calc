@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { useFetchPokemonData } from "@/api/query"
+import { flexsearchAtom, flexsearchIsIndexingAtom } from "@/atoms"
 import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import { getRandomInt } from "@/utils/remebdaExt"
@@ -9,7 +10,9 @@ import { msg, Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 import { DialogTitle } from "@radix-ui/react-dialog"
 import { useDebounce } from "ahooks"
+import { CommandLoading } from "cmdk"
 import type { Document, SimpleDocumentSearchResultSetUnit } from "flexsearch"
+import { useAtom, useSetAtom } from "jotai"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import * as R from "remeda"
 
@@ -54,8 +57,6 @@ export function CommandMenu({ ...props }: any) {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  const query = useFetchPokemonData()
-
   const [searchText, setSearchText] = React.useState<string>("")
   const debouncedSearchText = useDebounce(searchText, {
     wait: 400,
@@ -72,62 +73,23 @@ export function CommandMenu({ ...props }: any) {
   }, [searchText])
 
   const lingui = useLingui()
-  const flexsearchRef = React.useRef<{
-    index: Document<any> | null
-  }>({
-    index: null,
-  })
-  React.useEffect(() => {
-    async function doSearchIndex() {
-      const FlexSearch = (await import("flexsearch")).default
-      const index =
-        flexsearchRef.current.index ||
-        new FlexSearch.Document({
-          encode: false,
-          tokenize: "full",
-          document: {
-            id: "id",
-            // why mutiple lanague?
-            // i want support current locale and en toghter
-            tag: "tag",
-            index: [
-              "names:en",
-              "names:zh-Hant",
-              "names:zh-Hans",
-              "names:ja",
-              "names:ko",
-            ],
-          },
-        })
-      flexsearchRef.current.index = index
 
-      if (query.data) {
-        for (const x of query.data.data.pokemon_v2_pokemon) {
-          const names: Record<string, string> = {}
-          for (const nameInfo of x.pokemon_v2_pokemonspecy
-            .pokemon_v2_pokemonspeciesnames) {
-            const locale = getLocaleByPokeApiLangId(nameInfo.language_id, null)
-            if ((locale && locale === lingui.i18n.locale) || locale === "en") {
-              names[locale] = nameInfo.name
-            }
-          }
-          const nextDoc = { id: x.id, tag: "pokemon", names }
-          index.addAsync(x.id, nextDoc)
-        }
+  const [{ index: flexsearchIndex }] = useAtom(flexsearchAtom)
+
+  const [isSearching, setIsSearching] = React.useState(false)
+  React.useEffect(() => {
+    async function run() {
+      if (flexsearchIndex) {
+        setIsSearching(true)
+        const nextSearchResult =
+          await flexsearchIndex.searchAsync(debouncedSearchText)
+        setSearchResult(nextSearchResult)
+        setIsSearching(false)
       }
     }
-    if (query.data) {
-      doSearchIndex()
-    }
-  }, [query.data, lingui.i18n.locale])
-
-  React.useEffect(() => {
-    const { index } = flexsearchRef.current
-    if (index) {
-      const nextSearchResult = index.search(debouncedSearchText)
-      setSearchResult(nextSearchResult)
-    }
-  }, [debouncedSearchText])
+    run()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchText, flexsearchIndex])
 
   const [randomPokemonIds, setRandomPokemonIds] = React.useState(
     getRandomPokemonIds()
@@ -190,6 +152,7 @@ export function CommandMenu({ ...props }: any) {
               <Trans>No results found.</Trans>
             </div>
           </CommandEmpty>
+          {isSearching && <CommandLoading>Searching…</CommandLoading>}
           {Boolean(searchResult.length) && (
             <CommandGroup heading="Pokemons">
               {searchResult
