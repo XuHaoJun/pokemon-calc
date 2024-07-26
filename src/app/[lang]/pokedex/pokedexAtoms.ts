@@ -19,7 +19,9 @@ export const defaultSiftFilter = {
   speed: { $gte: 1, $lte: 255 },
   total: { $gte: 1, $lte: 1125 },
 }
-
 export const siftFilterAtom = atom(clone(defaultSiftFilter))
 
-export const allAtoms = [siftFilterAtom]
+export const defaultFlexsearchFilter = { name: "" }
+export const flexsearchFilterAtom = atom(clone(defaultFlexsearchFilter))
+
+export const allAtoms = [siftFilterAtom, flexsearchFilterAtom]

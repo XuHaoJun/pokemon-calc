@@ -5,6 +5,7 @@ import "../globals.css"
 
 import { QueryClientProvider } from "@/providers/QueryClientProvider"
 import { ThemeProvider } from "@/providers/ThemeProvider"
+import { Provider as JotaiProvider } from "jotai"
 
 import { cn } from "@/lib/utils"
 import { StandardSiteLayout } from "@/components/layouts/StandardSiteLayout"
@@ -13,6 +14,7 @@ import { LinguiClientProvider } from "@/components/LinguiClientProvider"
 import linguiConfig from "../../../lingui.config"
 import { getAllI18nInstances, getAllMessages } from "../../appRouterI18n"
 import { PageLangParam, withLinguiLayout } from "../../withLingui"
+import { FlexsearchProvider } from "@/providers/FlexsearchProvider"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -63,7 +65,9 @@ export default withLinguiLayout(async function RootLayout(
               enableSystem
               disableTransitionOnChange
             >
-              <StandardSiteLayout>{children}</StandardSiteLayout>
+              <FlexsearchProvider>
+                <StandardSiteLayout>{children}</StandardSiteLayout>
+              </FlexsearchProvider>
             </ThemeProvider>
           </LinguiClientProvider>
         </QueryClientProvider>
