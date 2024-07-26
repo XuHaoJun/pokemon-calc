@@ -17,33 +17,35 @@ msgstr ""
 msgid "English"
 msgstr "English"
 
-#: src/components/CommandMenu.tsx:190
+#: src/components/CommandMenu.tsx:152
 msgid "No results found."
 msgstr "No results found."
 
 #: src/components/MainNav.tsx:43
+#: src/components/MobileNav.tsx:68
 msgid "Pokédex"
 msgstr "Pokédex"
 
-#: src/app/[lang]/layout.tsx:31
+#: src/app/[lang]/layout.tsx:33
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr "Pokemon Calc"
 
-#: src/components/CommandMenu.tsx:165
+#: src/components/CommandMenu.tsx:127
 msgid "Search Pokemon..."
 msgstr "Search Pokemon..."
 
-#: src/components/CommandMenu.tsx:168
-#: src/components/CommandMenu.tsx:180
+#: src/components/CommandMenu.tsx:130
+#: src/components/CommandMenu.tsx:142
 msgid "Search..."
 msgstr "Search..."
 
-#: src/components/CommandMenu.tsx:185
+#: src/components/CommandMenu.tsx:147
 msgid "Type a search..."
 msgstr "Type a search..."
 
 #: src/components/MainNav.tsx:32
+#: src/components/MobileNav.tsx:56
 msgid "Type Calculator"
 msgstr "Type Calculator"
 
