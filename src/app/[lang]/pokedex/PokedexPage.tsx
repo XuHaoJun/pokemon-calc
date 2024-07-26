@@ -22,10 +22,10 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DebouncedInput } from "@/components/DebouncedInput"
 import { Link } from "@/components/Link"
+import { TypeBadge } from "@/components/TypeBadge"
 
 import * as pokdexAtoms from "./pokedexAtoms"
 import { PokemonDataTable } from "./PokemonDataTable"
-import { TypeBadge } from "@/components/TypeBadge"
 
 interface Pokemon2 extends Pokemon {
   hp: number
@@ -193,14 +193,14 @@ export function PokedexPageBase() {
                 binaraySearch(
                   query.data?.data.pokemon_v2_type || [],
                   x.type_id,
-                  (typeId, x) => typeId - x.id
+                  (typeId, x) => typeId - x.id,
+                  { firstMiddle: x.type_id - 1 }
                 ) as PokemonType
             ),
           })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [query.data, lingui, updateOnce]
   )
-  console.log(data)
 
   const [filter] = useAtom(pokdexAtoms.siftFilterAtom)
   const filterTester = React.useMemo(() => sift(filter), [filter])
@@ -274,7 +274,7 @@ function MyNameHeader({
 }: React.PropsWithChildren<MyNameHeaderProps>) {
   const [filter, setFilter] = useAtom(pokdexAtoms.flexsearchFilterAtom)
   return (
-    <div className="flex flex-col gap-1 pb-2 w-[180px]">
+    <div className="flex flex-col gap-1 pb-2">
       {children}
       <DebouncedInput
         className="h-7"
