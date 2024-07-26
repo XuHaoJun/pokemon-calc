@@ -4,12 +4,12 @@ import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { useFetchPokemonData } from "@/api/query"
 import { flexsearchAtom, flexsearchIsIndexingAtom } from "@/atoms"
-import type { Pokemon, PokemonType } from "@/domain/pokemon"
+import type { Pokemon } from "@/domain/pokemon"
 import { binaraySearch } from "@/utils/binarySearch"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import { useLingui } from "@lingui/react"
 import { ColumnDef, HeaderContext } from "@tanstack/react-table"
-import { useAtom, useAtomValue } from "jotai"
+import { useAtom } from "jotai"
 import { ScopeProvider } from "jotai-scope"
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { create } from "mutative"
@@ -19,13 +19,13 @@ import sift from "sift"
 
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DebouncedInput } from "@/components/DebouncedInput"
 import { Link } from "@/components/Link"
 
 import * as pokdexAtoms from "./pokedexAtoms"
 import { PokemonDataTable } from "./PokemonDataTable"
-import { TypeBadge } from "@/components/TypeBadge"
 
 interface Pokemon2 extends Pokemon {
   hp: number
@@ -36,7 +36,6 @@ interface Pokemon2 extends Pokemon {
   speed: number
   total: number
   nameDisplay: string
-  types: PokemonType[]
 }
 
 export function PokedexPage() {
@@ -77,22 +76,6 @@ export function PokedexPageBase() {
               <Link href={href} className="text-blue-600 hover:text-blue-800">
                 {nameDisplay}
               </Link>
-            </div>
-          )
-        },
-      },
-      {
-        accessorKey: "types",
-        header: "Types",
-        enableSorting: false,
-        cell: (cellCtx) => {
-          const { row } = cellCtx
-          const types = row.getValue<PokemonType[]>("types")
-          return (
-            <div className="flex flex-col">
-              {types.map((x) => (
-                <TypeBadge key={x.id} type={x.name} />
-              ))}
             </div>
           )
         },
@@ -188,19 +171,10 @@ export function PokedexPageBase() {
             speed: pkm.pokemon_v2_pokemonstats[5].base_stat,
             total: R.sumBy(pkm.pokemon_v2_pokemonstats, (x) => x.base_stat),
             nameDisplay: lingui._(`pkm.name.${pkm.id}`),
-            types: pkm.pokemon_v2_pokemontypes.map(
-              (x) =>
-                binaraySearch(
-                  query.data?.data.pokemon_v2_type || [],
-                  x.type_id,
-                  (typeId, x) => typeId - x.id
-                ) as PokemonType
-            ),
           })),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [query.data, lingui, updateOnce]
   )
-  console.log(data)
 
   const [filter] = useAtom(pokdexAtoms.siftFilterAtom)
   const filterTester = React.useMemo(() => sift(filter), [filter])
@@ -220,11 +194,12 @@ export function PokedexPageBase() {
   //   router.replace(`${pathname}?${finalQueryString}`)
   // }, [finalQueryString, pathname, router])
 
-  const flexsearchIsIndexing = useAtomValue(flexsearchIsIndexingAtom)
+  const [flexsearchQuery] = useAtom(flexsearchAtom)
+  const [flexsearchIsIndexing] = useAtom(flexsearchIsIndexingAtom)
 
-  const flexsearchFilter = useAtomValue(pokdexAtoms.flexsearchFilterAtom)
+  const [flexsearchFilter] = useAtom(pokdexAtoms.flexsearchFilterAtom)
 
-  const { index: flexsearchIndex } = useAtomValue(flexsearchAtom)
+  const [{ index: flexsearchIndex }] = useAtom(flexsearchAtom)
 
   const dataFilterByFlexsearch = React.useMemo(() => {
     if (
@@ -274,7 +249,7 @@ function MyNameHeader({
 }: React.PropsWithChildren<MyNameHeaderProps>) {
   const [filter, setFilter] = useAtom(pokdexAtoms.flexsearchFilterAtom)
   return (
-    <div className="flex flex-col gap-1 pb-2 w-[180px]">
+    <div className="flex flex-col gap-1 pb-2">
       {children}
       <DebouncedInput
         className="h-7"
