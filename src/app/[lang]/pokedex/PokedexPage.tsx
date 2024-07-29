@@ -36,6 +36,7 @@ interface Pokemon2 extends Pokemon {
   speed: number
   total: number
   nameDisplay: string
+  defaultFormNameDisplay: string
   types: PokemonType[]
 }
 
@@ -61,8 +62,7 @@ export function PokedexPageBase() {
         enableSorting: false,
         cell: (cellCtx) => {
           const { row } = cellCtx
-          const { id } = row.original
-          const nameDisplay = row.getValue<string>("nameDisplay")
+          const { id, nameDisplay, defaultFormNameDisplay } = row.original
           const href = `/pokedex/${id}`
           return (
             <div className="flex items-center gap-2 min-w-[120px] min-h-[50px]">
@@ -75,7 +75,14 @@ export function PokedexPageBase() {
                 />
               </Link>
               <Link href={href} className="text-blue-600 hover:text-blue-800">
-                {nameDisplay}
+                <div className="flex items-center">
+                  <span>{nameDisplay}</span>
+                  <small className="pl-1 text-gray-500">
+                    {defaultFormNameDisplay !== ""
+                      ? defaultFormNameDisplay
+                      : ""}
+                  </small>
+                </div>
               </Link>
             </div>
           )
@@ -188,6 +195,11 @@ export function PokedexPageBase() {
             speed: pkm.pokemon_v2_pokemonstats[5].base_stat,
             total: R.sumBy(pkm.pokemon_v2_pokemonstats, (x) => x.base_stat),
             nameDisplay: lingui._(`pkm.name.${pkm.id}`),
+            defaultFormNameDisplay:
+              lingui._(`pkm.defaultFormName.${pkm.id}`) ===
+              `pkm.defaultFormName.${pkm.id}`
+                ? ""
+                : lingui._(`pkm.defaultFormName.${pkm.id}`),
             types: pkm.pokemon_v2_pokemontypes.map(
               (x) =>
                 binaraySearch(

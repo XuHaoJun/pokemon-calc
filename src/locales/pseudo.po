@@ -17,6 +17,26 @@ msgstr ""
 msgid "English"
 msgstr ""
 
+#: src/app/[lang]/pokedex/[id]/page.tsx:75
+#: src/hooks/useLoadPokemonLingui.ts:90
+msgid "gmax"
+msgstr ""
+
+#: src/app/[lang]/pokedex/[id]/page.tsx:73
+#: src/hooks/useLoadPokemonLingui.ts:88
+msgid "mega"
+msgstr ""
+
+#: src/app/[lang]/pokedex/[id]/page.tsx:70
+#: src/hooks/useLoadPokemonLingui.ts:85
+msgid "mega-x"
+msgstr ""
+
+#: src/app/[lang]/pokedex/[id]/page.tsx:72
+#: src/hooks/useLoadPokemonLingui.ts:87
+msgid "mega-y"
+msgstr ""
+
 #: src/components/CommandMenu.tsx:152
 msgid "No results found."
 msgstr ""
@@ -26,7 +46,7 @@ msgstr ""
 msgid "Pokédex"
 msgstr ""
 
-#: src/app/[lang]/layout.tsx:33
+#: src/app/[lang]/layout.tsx:32
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr ""

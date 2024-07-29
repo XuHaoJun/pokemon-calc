@@ -1,6 +1,7 @@
 import { fetchPokemonDataWithOptions } from "@/api"
 import { getAllI18nInstances } from "@/appRouterI18n"
 import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
+import { msg } from "@lingui/macro"
 import { setI18n } from "@lingui/react/server"
 
 import { PokemonDetailPage } from "./PokemonDetailPage"
@@ -52,6 +53,32 @@ export default async function PokemonDetailPageServer(props: any) {
     }
   }
   i18n.load(i18n.locale, typeI18nMessages)
+
+  const defaultFormNameI18nMessages: any = {}
+  for (const x of pokemonData.data.pokemon_v2_pokemon) {
+    const i18nId = `pkm.defaultFormName.${x.id}`
+    const defaultForm = (() => {
+      const foundDefault = x.pokemon_v2_pokemonforms.find((x) => x.is_default)
+      return foundDefault || x.pokemon_v2_pokemonforms[0]
+    })()
+    if (defaultForm.is_mega) {
+      defaultFormNameI18nMessages[i18nId] =
+        defaultForm.form_name === "mega-x"
+          ? i18n._(msg`mega-x`)
+          : defaultForm.form_name === "mega-y"
+            ? i18n._(msg`mega-y`)
+            : i18n._(msg`mega`)
+    } else if (defaultForm.form_name === "gmax") {
+      defaultFormNameI18nMessages[i18nId] = i18n._(msg`gmax`)
+    } else {
+      for (const xx of defaultForm.pokemon_v2_pokemonformnames) {
+        if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
+          defaultFormNameI18nMessages[i18nId] = xx.name
+        }
+      }
+    }
+  }
+  i18n.load(i18n.locale, defaultFormNameI18nMessages)
   setI18n(i18n)
 
   if (!pokemon) {

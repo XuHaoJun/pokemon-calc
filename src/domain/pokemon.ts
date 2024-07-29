@@ -28,6 +28,7 @@ export interface Pokemon {
     slot: number
     ability_id: number
   }[]
+  pokemon_v2_pokemonforms: PokemonForm[]
 }
 
 export interface PokemonStats {
@@ -55,4 +56,17 @@ export interface PokemonType {
 export interface PokemonLanguage {
   id: number
   name: string
+}
+
+export interface PokemonForm {
+  id: number
+  is_battle_only: boolean
+  is_default: boolean
+  is_mega: boolean
+  form_name: string
+  pokemon_v2_pokemonformnames: {
+    id: number
+    name: string
+    language_id: number
+  }[]
 }

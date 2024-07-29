@@ -5,7 +5,6 @@ import "../globals.css"
 
 import { QueryClientProvider } from "@/providers/QueryClientProvider"
 import { ThemeProvider } from "@/providers/ThemeProvider"
-import { Provider as JotaiProvider } from "jotai"
 
 import { cn } from "@/lib/utils"
 import { StandardSiteLayout } from "@/components/layouts/StandardSiteLayout"

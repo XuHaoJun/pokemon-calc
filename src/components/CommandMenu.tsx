@@ -158,24 +158,11 @@ export function CommandMenu({ ...props }: any) {
               {searchResult
                 .flatMap((x) => x.result)
                 .map((id) => (
-                  <Link key={id} href={`/pokedex/${id}`}>
-                    <CommandItem
-                      value={`${id}`}
-                      onSelect={() => {
-                        setOpen(false)
-                      }}
-                      className="cursor-pointer group"
-                    >
-                      <LazyLoadImage
-                        className="group-hover:animate-bounce"
-                        alt={lingui._(`pkm.name.${id}`)}
-                        width={64}
-                        height={64}
-                        src={getPokemonImageSrc(id as number)}
-                      />
-                      {lingui._(`pkm.name.${id}`)}
-                    </CommandItem>
-                  </Link>
+                  <PokemonCommandItem
+                    key={id}
+                    id={id as number}
+                    onSelect={() => setOpen(false)}
+                  />
                 ))}
             </CommandGroup>
           )}
@@ -184,24 +171,11 @@ export function CommandMenu({ ...props }: any) {
             open && (
               <CommandGroup heading="Random Pokemons">
                 {randomPokemonIds.map((id) => (
-                  <Link key={id} href={`/pokedex/${id}`}>
-                    <CommandItem
-                      value={`${id}`}
-                      onSelect={() => {
-                        setOpen(false)
-                      }}
-                      className="cursor-pointer group"
-                    >
-                      <LazyLoadImage
-                        className="group-hover:animate-bounce"
-                        alt={lingui._(`pkm.name.${id}`)}
-                        width={64}
-                        height={64}
-                        src={getPokemonImageSrc(id)}
-                      />
-                      {lingui._(`pkm.name.${id}`)}
-                    </CommandItem>
-                  </Link>
+                  <PokemonCommandItem
+                    key={id}
+                    id={id}
+                    onSelect={() => setOpen(false)}
+                  />
                 ))}
               </CommandGroup>
             )}
@@ -217,4 +191,40 @@ function getRandomPokemonIds() {
     getRandomInt(1, 1025),
     getRandomInt(1, 1025),
   ])
+}
+
+function PokemonCommandItem({
+  id,
+  onSelect,
+}: {
+  id: number
+  onSelect?: () => void
+}) {
+  const lingui = useLingui()
+  const defaultFormNameDisplay =
+    lingui._(`pkm.defaultFormName.${id}`) === `pkm.defaultFormName.${id}`
+      ? ""
+      : lingui._(`pkm.defaultFormName.${id}`)
+  return (
+    <Link key={id} href={`/pokedex/${id}`}>
+      <CommandItem
+        value={`${id}`}
+        onSelect={() => {
+          onSelect?.()
+          // setOpen(false)
+        }}
+        className="cursor-pointer group"
+      >
+        <LazyLoadImage
+          className="group-hover:animate-bounce"
+          alt={lingui._(`pkm.name.${id}`)}
+          width={64}
+          height={64}
+          src={getPokemonImageSrc(id)}
+        />
+        <span className="ml-2">{lingui._(`pkm.name.${id}`)}</span>
+        <small className="ml-1 text-gray-500">{defaultFormNameDisplay}</small>
+      </CommandItem>
+    </Link>
+  )
 }
