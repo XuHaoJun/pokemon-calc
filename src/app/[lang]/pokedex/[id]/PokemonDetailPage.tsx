@@ -18,8 +18,8 @@ export interface PokemonDetailPageProps {
 export function PokemonDetailPage(props: PokemonDetailPageProps) {
   const { id } = props
   const lingui = useLingui()
-  const bulbapediaHref = `https://bulbapedia.bulbagarden.net/wiki/${props.pokemon.name}_(Pokémon)`
-  const _52pokeHref = `https://wiki.52poke.com/wiki/${props.pokemon.name}`
+  const bulbapediaHref = `https://bulbapedia.bulbagarden.net/wiki/${props.pokemon.name.split("-")[0]}`
+  const _52pokeHref = `https://wiki.52poke.com/wiki/${props.pokemon.name.split("-")[0]}`
   return (
     <div className="container flex flex-col gap-2 md:sticky md:top-[60px]">
       <div className="flex items-center">
@@ -32,14 +32,20 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
             : lingui._(`pkm.defaultFormName.${id}`)}
         </span>
       </div>
-      <Image
-        className="border"
-        alt={lingui._(`pkm.name.${id}`)}
-        width={200}
-        height={200}
-        src={getPokemonImageSrc(id)}
-        priority
-      />
+
+      <div className="flex">
+        <Image
+          alt={lingui._(`pkm.name.${id}`)}
+          width={200}
+          height={200}
+          src={getPokemonImageSrc(id)}
+          priority
+        />
+        <div className="flex flex-col">
+          <div>Types:</div>
+        </div>
+      </div>
+
       <PokemonStatsChart pokemon={props.pokemon} />
       <div>
         <NextLink
