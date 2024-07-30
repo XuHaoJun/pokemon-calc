@@ -6,12 +6,15 @@ import { useLingui } from "@lingui/react"
 
 import { cn } from "@/lib/utils"
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
+import { MstSvIcon } from "./MstSvIcon"
 
 export interface TypeBadgeProps {
   type: string
+  className?: string
+  showIcon?: boolean
 }
 
-export function TypeBadge({ type }: TypeBadgeProps) {
+export function TypeBadge({ className, type }: TypeBadgeProps) {
   useLoadPokemonLingui({ targets: ["type"] })
   const lingui = useLingui()
 
@@ -19,10 +22,12 @@ export function TypeBadge({ type }: TypeBadgeProps) {
     <div
       className={`${cn(
         "p-1 text-sm font-bold text-white",
-        getTypeBgColorClassName(type)
+        getTypeBgColorClassName(type),
+        className
       )} text-shadow`}
     >
-      {lingui._(`pkm.type.${type}`)}
+      <MstSvIcon />
+      <span>{lingui._(`pkm.type.${type}`)}</span>
     </div>
   )
 }

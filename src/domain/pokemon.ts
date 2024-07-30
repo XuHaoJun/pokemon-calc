@@ -1,4 +1,4 @@
-export interface PokemonData {
+export interface PokemonAllData {
   data: {
     pokemon_v2_pokemon: Pokemon[]
     pokemon_v2_language: PokemonLanguage[]
@@ -10,6 +10,7 @@ export interface PokemonData {
 export interface Pokemon {
   id: number
   name: string
+  height: number
   pokemon_v2_pokemonstats: PokemonStats[]
   pokemon_v2_pokemonspecy: {
     pokemon_v2_pokemonspeciesnames: {
@@ -29,6 +30,19 @@ export interface Pokemon {
     ability_id: number
   }[]
   pokemon_v2_pokemonforms: PokemonForm[]
+}
+
+export interface Pokemon2 extends Pokemon {
+  hp: number
+  attack: number
+  defense: number
+  spAtk: number
+  spDef: number
+  speed: number
+  total: number
+  nameDisplay: string
+  defaultFormNameDisplay: string
+  types: PokemonType[]
 }
 
 export interface PokemonStats {

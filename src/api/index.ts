@@ -1,4 +1,4 @@
-import { PokemonData } from "@/domain/pokemon"
+import { PokemonAllData } from "@/domain/pokemon"
 
 // TODO
 // import from nextjs config?
@@ -15,9 +15,9 @@ export async function fetchPokemonDataWithOptions(
   if (ssg) {
     const pokemonData = (await import("../../public/data/pokemon-data.json"))
       .default
-    return pokemonData as PokemonData
+    return pokemonData as PokemonAllData
   }
   return fetch(`${basePath}/data/pokemon-data.json`).then(
-    (res) => res.json() as Promise<PokemonData>
+    (res) => res.json() as Promise<PokemonAllData>
   )
 }

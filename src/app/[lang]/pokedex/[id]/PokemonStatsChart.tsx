@@ -61,10 +61,9 @@ export function PokemonStatsChart(props: PokemonStatsChartProps) {
     [pokemon]
   )
   return (
-    <Card>
-      <CardHeader className="items-center pb-4">
+    <Card className="min-w-[320px]">
+      <CardHeader className="pb-4">
         <CardTitle>Base Stats</CardTitle>
-        <CardDescription>Total: {total}</CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
         <ChartContainer
@@ -127,7 +126,11 @@ export function PokemonStatsChart(props: PokemonStatsChartProps) {
           </RadarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm"></CardFooter>
+      <CardFooter className="flex-col gap-2 pt-4">
+        <div>
+          Total:<span className="font-bold ml-1 text-xl">{total}</span>
+        </div>
+      </CardFooter>
     </Card>
   )
 }

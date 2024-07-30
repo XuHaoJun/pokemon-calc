@@ -1,6 +1,7 @@
 import { fetchPokemonDataWithOptions } from "@/api"
 import { getAllI18nInstances } from "@/appRouterI18n"
 import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
+import { toPokemon2 } from "@/utils/toPokemon2"
 import { msg } from "@lingui/macro"
 import { setI18n } from "@lingui/react/server"
 
@@ -42,6 +43,7 @@ export default async function PokemonDetailPageServer(props: any) {
     }
   }
   i18n.load(i18n.locale, nameI18nMessages)
+
   const typeI18nMessages: any = {}
   for (const x of pokemonData.data.pokemon_v2_type) {
     for (const xx of x.pokemon_v2_typenames) {
@@ -52,6 +54,7 @@ export default async function PokemonDetailPageServer(props: any) {
       }
     }
   }
+  console.log(typeI18nMessages)
   i18n.load(i18n.locale, typeI18nMessages)
 
   const defaultFormNameI18nMessages: any = {}
@@ -85,5 +88,11 @@ export default async function PokemonDetailPageServer(props: any) {
     return <div>not found pokemon</div>
   }
 
-  return <PokemonDetailPage pokemon={pokemon} id={props.params.id} />
+  const pokemon2 = toPokemon2({
+    pokemon,
+    pokemon_v2_type: pokemonData.data.pokemon_v2_type,
+    t: i18n.t,
+  })
+
+  return <PokemonDetailPage pokemon={pokemon2} id={props.params.id} />
 }

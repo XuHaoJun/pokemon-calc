@@ -4,9 +4,10 @@ import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { useFetchPokemonData } from "@/api/query"
 import { flexsearchAtom, flexsearchIsIndexingAtom } from "@/atoms"
-import type { Pokemon, PokemonType } from "@/domain/pokemon"
+import type { Pokemon2, PokemonType } from "@/domain/pokemon"
 import { binaraySearch } from "@/utils/binarySearch"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
+import { toPokemon2 } from "@/utils/toPokemon2"
 import { useLingui } from "@lingui/react"
 import { ColumnDef, HeaderContext } from "@tanstack/react-table"
 import { useAtom, useAtomValue } from "jotai"
@@ -26,19 +27,6 @@ import { TypeBadge } from "@/components/TypeBadge"
 
 import * as pokdexAtoms from "./pokedexAtoms"
 import { PokemonDataTable } from "./PokemonDataTable"
-
-interface Pokemon2 extends Pokemon {
-  hp: number
-  attack: number
-  defense: number
-  spAtk: number
-  spDef: number
-  speed: number
-  total: number
-  nameDisplay: string
-  defaultFormNameDisplay: string
-  types: PokemonType[]
-}
 
 export function PokedexPage() {
   return (
@@ -185,31 +173,13 @@ export function PokedexPageBase() {
     () =>
       lingui._("pkm.name.1") === "pkm.name.1"
         ? []
-        : (query.data?.data.pokemon_v2_pokemon || []).map((pkm) => ({
-            ...pkm,
-            hp: pkm.pokemon_v2_pokemonstats[0].base_stat,
-            attack: pkm.pokemon_v2_pokemonstats[1].base_stat,
-            defense: pkm.pokemon_v2_pokemonstats[2].base_stat,
-            spAtk: pkm.pokemon_v2_pokemonstats[3].base_stat,
-            spDef: pkm.pokemon_v2_pokemonstats[4].base_stat,
-            speed: pkm.pokemon_v2_pokemonstats[5].base_stat,
-            total: R.sumBy(pkm.pokemon_v2_pokemonstats, (x) => x.base_stat),
-            nameDisplay: lingui._(`pkm.name.${pkm.id}`),
-            defaultFormNameDisplay:
-              lingui._(`pkm.defaultFormName.${pkm.id}`) ===
-              `pkm.defaultFormName.${pkm.id}`
-                ? ""
-                : lingui._(`pkm.defaultFormName.${pkm.id}`),
-            types: pkm.pokemon_v2_pokemontypes.map(
-              (x) =>
-                binaraySearch(
-                  query.data?.data.pokemon_v2_type || [],
-                  x.type_id,
-                  (typeId, x) => typeId - x.id,
-                  { firstMiddle: x.type_id - 1 }
-                ) as PokemonType
-            ),
-          })),
+        : (query.data?.data.pokemon_v2_pokemon || []).map((pkm) =>
+            toPokemon2({
+              pokemon: pkm,
+              t: lingui._,
+              pokemon_v2_type: query.data?.data.pokemon_v2_type || [],
+            })
+          ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [query.data, lingui, updateOnce]
   )
