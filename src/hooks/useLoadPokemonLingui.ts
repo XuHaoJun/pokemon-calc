@@ -4,7 +4,7 @@ import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
 import { msg } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 
-export type PokemonLinguiType = "name" | "type"
+export type PokemonLinguiType = "name"
 
 export interface UsePokemonLinguiParams {
   targets: PokemonLinguiType[]
@@ -41,25 +41,6 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
         }
       }
       lingui.i18n.load(lingui.i18n.locale, nameI18nMessages)
-      loaded = true
-    }
-
-    if (
-      targets.includes("type") &&
-      query.data &&
-      Boolean(lingui.i18n.messages["pkm.type.normal"]) === false
-    ) {
-      const typeI18nMessages: any = {}
-      for (const x of query.data.data.pokemon_v2_type) {
-        for (const xx of x.pokemon_v2_typenames) {
-          // TODO
-          // add other languages?
-          if (getLocaleByPokeApiLangId(xx.language_id) === lingui.i18n.locale) {
-            typeI18nMessages[`pkm.type.${x.name}`] = xx.name
-          }
-        }
-      }
-      lingui.i18n.load(lingui.i18n.locale, typeI18nMessages)
       loaded = true
     }
 
@@ -107,15 +88,7 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
     if (updateOnce === false) {
       setUpdateOnce(true)
     }
-  }, [
-    query.data,
-    lingui.i18n,
-    lingui.i18n.locale,
-    targets,
-    enabled,
-    enableForceRender,
-    updateOnce,
-  ])
+  }, [query.data, lingui.i18n, lingui.i18n.locale, targets, enabled, enableForceRender, updateOnce, lingui])
   return {
     updateOnce,
   }

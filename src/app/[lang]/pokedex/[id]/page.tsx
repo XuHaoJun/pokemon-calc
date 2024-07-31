@@ -2,7 +2,7 @@ import { fetchPokemonDataWithOptions } from "@/api"
 import { getAllI18nInstances } from "@/appRouterI18n"
 import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
 import { toPokemon2 } from "@/utils/toPokemon2"
-import { msg } from "@lingui/macro"
+import { msg, t } from "@lingui/macro"
 import { setI18n } from "@lingui/react/server"
 
 import { PokemonDetailPage } from "./PokemonDetailPage"
@@ -17,6 +17,26 @@ export async function generateStaticParams(props: {
   return pokemonData.data.pokemon_v2_pokemon.map((pkm) => ({
     id: `${pkm.id}`,
   }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string; id: string }
+}) {
+  const allI18nInstances = await getAllI18nInstances()
+  const i18n = allI18nInstances[params.lang]!
+  const pokemonData = await fetchPokemonDataWithOptions({ ssg: true })
+  const pkm = pokemonData.data.pokemon_v2_pokemon.find(
+    (x) => x.id === Number(params.id)
+  )
+  const pkmName =
+    pkm?.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames.find(
+      (x) => getLocaleByPokeApiLangId(x.language_id) === params.lang
+    )?.name || ""
+  return {
+    title: `${t(i18n)`${pkmName}`} | ${t(i18n)`Pokemon Calc`}`,
+  }
 }
 
 export default async function PokemonDetailPageServer(props: any) {
@@ -44,19 +64,6 @@ export default async function PokemonDetailPageServer(props: any) {
   }
   i18n.load(i18n.locale, nameI18nMessages)
 
-  const typeI18nMessages: any = {}
-  for (const x of pokemonData.data.pokemon_v2_type) {
-    for (const xx of x.pokemon_v2_typenames) {
-      // TODO
-      // add other languages?
-      if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
-        typeI18nMessages[`pkm.type.${x.name}`] = xx.name
-      }
-    }
-  }
-  console.log(typeI18nMessages)
-  i18n.load(i18n.locale, typeI18nMessages)
-
   const defaultFormNameI18nMessages: any = {}
   for (const x of pokemonData.data.pokemon_v2_pokemon) {
     const i18nId = `pkm.defaultFormName.${x.id}`
@@ -82,6 +89,24 @@ export default async function PokemonDetailPageServer(props: any) {
     }
   }
   i18n.load(i18n.locale, defaultFormNameI18nMessages)
+
+  const ablitiesI18nMessages: any = {}
+  for (const x of pokemonData.data.pokemon_v2_ability) {
+    const i18nId = `pkm.ability.${x.id}`
+    for (const xx of x.pokemon_v2_abilitynames) {
+      if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
+        ablitiesI18nMessages[i18nId] = xx.name
+      }
+    }
+    const i18nId2 = `pkm.abilityFlavorText.${x.id}`
+    for (const xx of x.pokemon_v2_abilityflavortexts) {
+      if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
+        ablitiesI18nMessages[i18nId2] = xx.flavor_text
+      }
+    }
+  }
+  i18n.load(i18n.locale, ablitiesI18nMessages)
+
   setI18n(i18n)
 
   if (!pokemon) {
@@ -91,6 +116,7 @@ export default async function PokemonDetailPageServer(props: any) {
   const pokemon2 = toPokemon2({
     pokemon,
     pokemon_v2_type: pokemonData.data.pokemon_v2_type,
+    pokemon_v2_ability: pokemonData.data.pokemon_v2_ability,
     t: i18n.t,
   })
 

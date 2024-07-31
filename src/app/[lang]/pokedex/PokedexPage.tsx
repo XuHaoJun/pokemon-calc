@@ -39,7 +39,7 @@ export function PokedexPage() {
 export function PokedexPageBase() {
   const query = useFetchPokemonData()
   const lingui = useLingui()
-  const { updateOnce } = useLoadPokemonLingui({ targets: ["name", "type"] })
+  const { updateOnce } = useLoadPokemonLingui({ targets: ["name"] })
   const columns: ColumnDef<Pokemon2>[] = React.useMemo(
     () => [
       {
@@ -63,12 +63,10 @@ export function PokedexPageBase() {
                 />
               </Link>
               <Link href={href} className="text-blue-600 hover:text-blue-800">
-                <div className="flex items-center">
+                <div className="flex flex-col">
                   <span>{nameDisplay}</span>
-                  <small className="pl-1 text-gray-500">
-                    {defaultFormNameDisplay !== ""
-                      ? defaultFormNameDisplay
-                      : ""}
+                  <small className="text-muted-foreground">
+                    {defaultFormNameDisplay}
                   </small>
                 </div>
               </Link>
@@ -84,7 +82,7 @@ export function PokedexPageBase() {
           const { row } = cellCtx
           const types = row.getValue<PokemonType[]>("types")
           return (
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-1">
               {types.map((x) => (
                 <TypeBadge key={x.id} type={x.name} />
               ))}
@@ -178,6 +176,7 @@ export function PokedexPageBase() {
               pokemon: pkm,
               t: lingui._,
               pokemon_v2_type: query.data?.data.pokemon_v2_type || [],
+              pokemon_v2_ability: query.data?.data.pokemon_v2_ability || [],
             })
           ),
     // eslint-disable-next-line react-hooks/exhaustive-deps

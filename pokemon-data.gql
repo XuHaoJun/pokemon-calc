@@ -20,7 +20,7 @@ query samplePokeAPIquery {
       slot
       type_id
     }
-    pokemon_v2_pokemonabilities(order_by: { ability_id: asc }) {
+    pokemon_v2_pokemonabilities(order_by: { slot: asc }) {
       is_hidden
       slot
       ability_id
@@ -60,10 +60,18 @@ query samplePokeAPIquery {
       language_id
     }
   }
-  pokemon_v2_abilityflavortext(order_by: { ability_id: asc, id: asc }) {
+  pokemon_v2_ability(order_by: { id: asc }) {
     id
-    flavor_text
-    language_id
-    ability_id
+    generation_id
+    is_main_series
+    name
+    pokemon_v2_abilityflavortexts {
+      flavor_text
+      language_id
+    }
+    pokemon_v2_abilitynames {
+      language_id
+      name
+    }
   }
 }

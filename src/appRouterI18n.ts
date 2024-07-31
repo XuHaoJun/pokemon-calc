@@ -1,8 +1,10 @@
-// import 'server-only'
+import "server-only"
 
 import { I18n, Messages, setupI18n } from "@lingui/core"
 
 import linguiConfig from "../lingui.config"
+import { fetchPokemonDataWithOptions } from "./api"
+import { getLocaleByPokeApiLangId } from "./utils/getLocaleByPokeApiLangId"
 
 const { locales } = linguiConfig
 // optionally use a stricter union type
@@ -12,8 +14,23 @@ async function loadCatalog(locale: SupportedLocales): Promise<{
   [k: string]: Messages
 }> {
   const { messages } = await import(`./locales/${locale}.po`)
+  const pokemonData = await fetchPokemonDataWithOptions({ ssg: true })
+  const pkmMessages: Record<string, string> = {}
+  for (const x of pokemonData.data.pokemon_v2_type) {
+    const typeName = x.pokemon_v2_typenames.find(
+      (t) => getLocaleByPokeApiLangId(t.language_id, null) === locale
+    )
+    if (typeName) {
+      pkmMessages[`pkm.type.${x.name}`] = typeName.name
+    }
+  }
+
+  const finalMessages = {
+    ...messages,
+    ...pkmMessages,
+  }
   return {
-    [locale]: messages,
+    [locale]: finalMessages,
   }
 }
 // const catalogs = await Promise.all(locales.map(loadCatalog));

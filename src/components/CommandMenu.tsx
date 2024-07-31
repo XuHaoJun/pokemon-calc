@@ -223,7 +223,7 @@ function PokemonCommandItem({
           src={getPokemonImageSrc(id)}
         />
         <span className="ml-2">{lingui._(`pkm.name.${id}`)}</span>
-        <small className="ml-1 text-gray-500">{defaultFormNameDisplay}</small>
+        <small className="ml-1 text-muted-foreground">{defaultFormNameDisplay}</small>
       </CommandItem>
     </Link>
   )
