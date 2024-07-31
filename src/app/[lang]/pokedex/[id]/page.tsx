@@ -32,7 +32,7 @@ export async function generateMetadata({
   )
   const pkmName =
     pkm?.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesnames.find(
-      (x) => getLocaleByPokeApiLangId(x.language_id) === params.lang
+      (x) => getLocaleByPokeApiLangId(x.language_id, null) === params.lang
     )?.name || ""
   return {
     title: `${pkmName} | ${t(i18n)`Pokemon Calc`}`,
