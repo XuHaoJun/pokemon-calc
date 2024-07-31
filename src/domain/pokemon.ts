@@ -1,15 +1,17 @@
-export interface PokemonData {
+export interface PokemonAllData {
   data: {
     pokemon_v2_pokemon: Pokemon[]
     pokemon_v2_language: PokemonLanguage[]
     pokemon_v2_type: PokemonType[]
     pokemon_v2_abilityflavortext: Abilityflavortext[]
+    pokemon_v2_ability: PokemonAbility[]
   }
 }
 
 export interface Pokemon {
   id: number
   name: string
+  height: number
   pokemon_v2_pokemonstats: PokemonStats[]
   pokemon_v2_pokemonspecy: {
     pokemon_v2_pokemonspeciesnames: {
@@ -23,12 +25,33 @@ export interface Pokemon {
     id: number
     type_id: number
   }[]
-  pokemon_v2_pokemonabilities: {
-    is_hidden: boolean
-    slot: number
-    ability_id: number
-  }[]
+  pokemon_v2_pokemonabilities: PokemonAbilityFk[]
   pokemon_v2_pokemonforms: PokemonForm[]
+}
+
+export interface Pokemon2 extends Pokemon {
+  hp: number
+  attack: number
+  defense: number
+  spAtk: number
+  spDef: number
+  speed: number
+  total: number
+  nameDisplay: string
+  defaultFormNameDisplay: string
+  types: PokemonType[]
+  abilities: PokemonAbility2[]
+}
+
+export interface PokemonAbility2 extends PokemonAbilityFk {
+  abilityFlavorTextDisplay: string
+  nameDisplay: string
+}
+
+export interface PokemonAbilityFk {
+  is_hidden: boolean
+  slot: number
+  ability_id: number
 }
 
 export interface PokemonStats {
@@ -68,5 +91,20 @@ export interface PokemonForm {
     id: number
     name: string
     language_id: number
+  }[]
+}
+
+export interface PokemonAbility {
+  id: number
+  generation_id: number
+  is_main_series: boolean
+  name: string
+  pokemon_v2_abilityflavortexts: {
+    flavor_text: string
+    language_id: number
+  }[]
+  pokemon_v2_abilitynames: {
+    language_id: number
+    name: number
   }[]
 }

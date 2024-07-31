@@ -17,23 +17,27 @@ msgstr ""
 msgid "English"
 msgstr "English"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:75
-#: src/hooks/useLoadPokemonLingui.ts:90
+#: src/app/[lang]/pokedex/[id]/page.tsx:62
+#: src/hooks/useLoadPokemonLingui.ts:70
 msgid "gmax"
 msgstr "極巨化"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:73
-#: src/hooks/useLoadPokemonLingui.ts:88
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:94
+msgid "Hidden Ability"
+msgstr "隱藏特性"
+
+#: src/app/[lang]/pokedex/[id]/page.tsx:60
+#: src/hooks/useLoadPokemonLingui.ts:68
 msgid "mega"
 msgstr "Mega"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:70
-#: src/hooks/useLoadPokemonLingui.ts:85
+#: src/app/[lang]/pokedex/[id]/page.tsx:57
+#: src/hooks/useLoadPokemonLingui.ts:65
 msgid "mega-x"
 msgstr "Mega-X"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:72
-#: src/hooks/useLoadPokemonLingui.ts:87
+#: src/app/[lang]/pokedex/[id]/page.tsx:59
+#: src/hooks/useLoadPokemonLingui.ts:67
 msgid "mega-y"
 msgstr "Mega-Y"
 

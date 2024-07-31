@@ -1,13 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { TYPE_COLORS } from "@/domain/constants"
 import { getTypeBgColorClassName } from "@/utils/getTypeBgColorClassName"
-import { Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 
 import { cn } from "@/lib/utils"
-import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Checkbox } from "@/components/ui/checkbox"
 
 import { buttonVariants } from "./ui/button"
@@ -87,8 +84,6 @@ export function TypeCheckbox(props: TypeCheckboxProps) {
     [checkedState]
   )
   const lingui = useLingui()
-
-  useLoadPokemonLingui({ targets: ["type"] })
 
   return (
     <div

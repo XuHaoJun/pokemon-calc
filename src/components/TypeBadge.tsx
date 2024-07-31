@@ -1,28 +1,36 @@
-"use client"
-
 import * as React from "react"
+import { TYPE_COLORS } from "@/domain/constants"
 import { getTypeBgColorClassName } from "@/utils/getTypeBgColorClassName"
 import { useLingui } from "@lingui/react"
+import { darken } from "color2k"
 
 import { cn } from "@/lib/utils"
-import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
+
+import { MstSvIcon } from "./MstSvIcon"
 
 export interface TypeBadgeProps {
   type: string
+  className?: string
+  showIcon?: boolean
 }
 
-export function TypeBadge({ type }: TypeBadgeProps) {
-  useLoadPokemonLingui({ targets: ["type"] })
+export function TypeBadge({ className, type }: TypeBadgeProps) {
   const lingui = useLingui()
-
   return (
     <div
       className={`${cn(
-        "p-1 text-sm font-bold text-white",
-        getTypeBgColorClassName(type)
+        "px-1 py-1 text-sm font-bold text-white rounded",
+        getTypeBgColorClassName(type),
+        className
       )} text-shadow`}
     >
-      {lingui._(`pkm.type.${type}`)}
+      <div
+        className="p-[2px] rounded"
+        style={{ background: darken(TYPE_COLORS[type], 0.1) }}
+      >
+        <MstSvIcon type={type} className="mr-1" />
+        <span>{lingui._(`pkm.type.${type}`)}</span>
+      </div>
     </div>
   )
 }
