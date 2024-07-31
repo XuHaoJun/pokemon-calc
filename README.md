@@ -6,7 +6,7 @@ Welcome to Pokemon Calc! This project is an open-source web application that pro
 
 Pokédex data is from [PokéAPI](https://pokeapi.co/).
 
-Inspired by [Pokemon Types with Heat Map](https://plotapi.com/docs/pokemon-types-with-heatmap/), [Pokémon Type Calculator](https://www.pkmn.help/more/), [TradingView Stock Heatmap](https://www.tradingview.com/heatmap/stock/).
+Inspired by [Pokemon Types with Heat Map](https://plotapi.com/docs/pokemon-types-with-heatmap/), [Pokémon Type Calculator](https://www.pkmn.help/more/), [TradingView Stock Heatmap](https://www.tradingview.com/heatmap/stock/), [poe.ninja](https://poe.ninja).
 
 ## Features
 
