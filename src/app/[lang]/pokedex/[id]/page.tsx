@@ -55,8 +55,8 @@ export default async function PokemonDetailPageServer(props: any) {
       // TODO
       // add other languages?
       if (
-        getLocaleByPokeApiLangId(xx.language_id) === i18n.locale &&
-        x.id.toString() === props.params.id
+        getLocaleByPokeApiLangId(xx.language_id) === i18n.locale
+        // && x.id.toString() === props.params.id
       ) {
         nameI18nMessages[`pkm.name.${x.id}`] = xx.name
       }
@@ -117,6 +117,7 @@ export default async function PokemonDetailPageServer(props: any) {
     pokemon,
     pokemon_v2_type: pokemonData.data.pokemon_v2_type,
     pokemon_v2_ability: pokemonData.data.pokemon_v2_ability,
+    pokemon_v2_evolutionchain: pokemonData.data.pokemon_v2_evolutionchain,
     t: i18n.t,
   })
 

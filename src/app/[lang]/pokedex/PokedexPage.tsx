@@ -177,6 +177,7 @@ export function PokedexPageBase() {
               t: lingui._,
               pokemon_v2_type: query.data?.data.pokemon_v2_type || [],
               pokemon_v2_ability: query.data?.data.pokemon_v2_ability || [],
+              pokemon_v2_evolutionchain: query.data?.data.pokemon_v2_evolutionchain || [],
             })
           ),
     // eslint-disable-next-line react-hooks/exhaustive-deps

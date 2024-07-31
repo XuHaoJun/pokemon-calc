@@ -14,17 +14,41 @@ export interface ToPokemon2Params {
   pokemon: Pokemon
   pokemon_v2_type: PokemonAllData["data"]["pokemon_v2_type"]
   pokemon_v2_ability: PokemonAllData["data"]["pokemon_v2_ability"]
-  // pokemon_v2_abilityflavortext: PokemonAllData["data"]["pokemon_v2_abilityflavortext"]
+  pokemon_v2_evolutionchain: PokemonAllData["data"]["pokemon_v2_evolutionchain"]
   t: I18n["t"]
 }
 
 export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
-  const {
-    pokemon: pkm,
-    pokemon_v2_type,
-    // pokemon_v2_abilityflavortext,
-    t,
-  } = params
+  const { pokemon: pkm, pokemon_v2_type, pokemon_v2_evolutionchain, t } = params
+  const evolutionchain = pokemon_v2_evolutionchain.find((x) =>
+    binaraySearch(
+      x.pokemon_v2_pokemonspecies,
+      pkm.pokemon_v2_pokemonspecy.id,
+      (id, el) => id - el.id
+    )
+  )
+  const evolutionchain2 = (() => {
+    if (evolutionchain) {
+      let depthCursor = 0
+      return {
+        ...evolutionchain,
+        pokemon_v2_pokemonspecies: evolutionchain.pokemon_v2_pokemonspecies.map(
+          (x, i) => {
+            const isSameDepth =
+              (evolutionchain.pokemon_v2_pokemonspecies[i - 1]
+                ?.evolves_from_species_id ?? null) === x.evolves_from_species_id
+            const depth = isSameDepth ? depthCursor : ++depthCursor
+            return {
+              ...x,
+              depth,
+            }
+          }
+        ),
+      }
+    } else {
+      return evolutionchain
+    }
+  })()
   return {
     ...pkm,
     hp: pkm.pokemon_v2_pokemonstats[0].base_stat,
@@ -55,5 +79,6 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
         abilityFlavorTextDisplay: t(`pkm.abilityFlavorText.${x.ability_id}`),
       }
     }),
+    evolutionchain: evolutionchain2,
   }
 }

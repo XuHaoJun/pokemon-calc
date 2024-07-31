@@ -4,6 +4,7 @@ export interface PokemonAllData {
     pokemon_v2_language: PokemonLanguage[]
     pokemon_v2_type: PokemonType[]
     pokemon_v2_ability: PokemonAbility[]
+    pokemon_v2_evolutionchain: PokemonEvolutionchain[]
   }
 }
 
@@ -11,8 +12,10 @@ export interface Pokemon {
   id: number
   name: string
   height: number
+  weight: number
   pokemon_v2_pokemonstats: PokemonStats[]
   pokemon_v2_pokemonspecy: {
+    id: number
     pokemon_v2_pokemonspeciesnames: {
       language_id: number
       name: string
@@ -40,6 +43,7 @@ export interface Pokemon2 extends Pokemon {
   defaultFormNameDisplay: string
   types: PokemonType[]
   abilities: PokemonAbilityFk2[]
+  evolutionchain?: PokemonEvolutionchain2
 }
 
 export interface PokemonAbilityFk2 extends PokemonAbilityFk {
@@ -105,5 +109,22 @@ export interface PokemonAbility {
   pokemon_v2_abilitynames: {
     language_id: number
     name: string
+  }[]
+}
+
+export interface PokemonEvolutionchain {
+  id: number
+  pokemon_v2_pokemonspecies: {
+    id: number
+    evolves_from_species_id: number
+  }[]
+}
+
+export interface PokemonEvolutionchain2 {
+  id: number
+  pokemon_v2_pokemonspecies: {
+    id: number
+    evolves_from_species_id: number
+    depth: number
   }[]
 }

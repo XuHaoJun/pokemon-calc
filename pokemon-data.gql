@@ -4,11 +4,13 @@ query samplePokeAPIquery {
     order
     name
     height
+    weight
     pokemon_v2_pokemonstats(order_by: { stat_id: asc }) {
       base_stat
       stat_id
     }
     pokemon_v2_pokemonspecy {
+      id
       pokemon_v2_pokemonspeciesnames(order_by: { language_id: asc }) {
         id
         language_id
@@ -72,6 +74,22 @@ query samplePokeAPIquery {
     pokemon_v2_abilitynames {
       language_id
       name
+    }
+  }
+  pokemon_v2_evolutionchain(
+    order_by: { id: asc }
+    where: {
+      _and: {
+        pokemon_v2_pokemonspecies: {
+          evolves_from_species_id: { _is_null: false }
+        }
+      }
+    }
+  ) {
+    id
+    pokemon_v2_pokemonspecies(order_by: { id: asc }) {
+      id
+      evolves_from_species_id
     }
   }
 }

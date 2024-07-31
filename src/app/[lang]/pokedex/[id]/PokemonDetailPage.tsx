@@ -12,6 +12,7 @@ import * as R from "remeda"
 import { cn } from "@/lib/utils"
 import { badgeVariants } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Link } from "@/components/Link"
 import { TypeBadge } from "@/components/TypeBadge"
 
 import { PokemonStatsChart } from "./PokemonStatsChart"
@@ -48,7 +49,7 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
     >
       <div className="container flex flex-col items-center gap-2 relative">
         <Image
-          className="absolute"
+          className="absolute hover:animate-zoom-in-out"
           style={{}}
           alt={lingui._(`pkm.name.${id}`)}
           width={200}
@@ -82,30 +83,53 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
                       />
                     ))}
                   </div>
-                  <div className="flex gap-8 mt-10 flex-wrap md:justify-center items-baseline">
-                    {pokemon.abilities.map((x) => (
-                      <div key={x.ability_id} className="flex flex-col gap-1">
-                        <p>
-                          {x.nameDisplay}
-                          {x.is_hidden && (
-                            <small className="text-muted-foreground text-sm ml-1">
-                              <Trans>Hidden Ability</Trans>
-                            </small>
-                          )}
-                        </p>
-                        <small className="text-muted-foreground text-sm md:max-w-[200px] whitespace-pre-line">
-                          {x.abilityFlavorTextDisplay}
-                        </small>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
             </CardTitle>
           </CardHeader>
 
           <CardContent className="flex flex-col gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Abilities</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex gap-8 flex-wrap md:justify-center items-baseline">
+                  {pokemon.abilities.map((x) => (
+                    <div key={x.ability_id} className="flex flex-col gap-1">
+                      <h3 className="text-xl font-bold">
+                        {x.nameDisplay}
+                        {x.is_hidden && (
+                          <small className="text-muted-foreground text-sm ml-1">
+                            <Trans>Hidden Ability</Trans>
+                          </small>
+                        )}
+                      </h3>
+                      <small className="text-muted-foreground text-sm md:max-w-[200px] whitespace-pre-line">
+                        {x.abilityFlavorTextDisplay}
+                      </small>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
             <PokemonStatsChart pokemon={props.pokemon} />
+
+            {pokemon.evolutionchain && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    <Trans>Envolution</Trans>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex gap-2 flex-wrap">
+                  <div className="flex md:justify-center">
+                    <PokemonEvolutionChain pokemon={pokemon} />
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             <Card>
               <CardHeader>
@@ -145,6 +169,49 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
           </CardContent>
         </Card>
       </div>
+    </div>
+  )
+}
+
+function PokemonEvolutionChain({ pokemon }: { pokemon: Pokemon2 }) {
+  const lingui = useLingui()
+  if (!pokemon.evolutionchain) {
+    return null
+  }
+  const grouped = R.groupBy(
+    pokemon.evolutionchain.pokemon_v2_pokemonspecies,
+    (x) => x.depth
+  )
+  const maxDepth =
+    pokemon.evolutionchain.pokemon_v2_pokemonspecies[
+      pokemon.evolutionchain.pokemon_v2_pokemonspecies.length - 1
+    ].depth
+  return (
+    <div className="flex items-center">
+      {R.range(0, maxDepth + 1).map((depth) => {
+        return (
+          <React.Fragment key={depth}>
+            <div className="flex flex-col">
+              {grouped[depth].map((x) => {
+                return (
+                  <Link href={`/pokedex/${x.id}`} key={x.id}>
+                    <div className="hover:animate-zoom-in-out">
+                      <Image
+                        alt={lingui._(`pkm.name.${x.id}`)}
+                        width={80}
+                        height={80}
+                        src={getPokemonImageSrc(x.id)}
+                        priority
+                      />
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+            {depth < maxDepth && <big>→</big>}
+          </React.Fragment>
+        )
+      })}
     </div>
   )
 }
