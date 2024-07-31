@@ -35,7 +35,7 @@ export async function generateMetadata({
       (x) => getLocaleByPokeApiLangId(x.language_id) === params.lang
     )?.name || ""
   return {
-    title: `${t(i18n)`${pkmName}`} | ${t(i18n)`Pokemon Calc`}`,
+    title: `${pkmName} | ${t(i18n)`Pokemon Calc`}`,
   }
 }
 
