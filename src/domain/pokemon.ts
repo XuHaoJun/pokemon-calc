@@ -39,10 +39,10 @@ export interface Pokemon2 extends Pokemon {
   nameDisplay: string
   defaultFormNameDisplay: string
   types: PokemonType[]
-  abilities: PokemonAbility2[]
+  abilities: PokemonAbilityFk2[]
 }
 
-export interface PokemonAbility2 extends PokemonAbilityFk {
+export interface PokemonAbilityFk2 extends PokemonAbilityFk {
   abilityFlavorTextDisplay: string
   nameDisplay: string
 }
@@ -104,6 +104,6 @@ export interface PokemonAbility {
   }[]
   pokemon_v2_abilitynames: {
     language_id: number
-    name: number
+    name: string
   }[]
 }

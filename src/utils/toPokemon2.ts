@@ -1,7 +1,7 @@
 import type {
   Pokemon,
   Pokemon2,
-  PokemonAbility2,
+  PokemonAbilityFk2,
   PokemonAllData,
   PokemonType,
 } from "@/domain/pokemon"
