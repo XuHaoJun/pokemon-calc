@@ -10,9 +10,9 @@ function getPokemonData() {
 
   // you can self-host pokeapi graphql endpoint
   // https://github.com/PokeAPI/pokeapi?tab=readme-ov-file#graphql--
-  const apiEndpoint = "http://localhost:8080/v1/graphql"
+  // const apiEndpoint = "http://localhost:8080/v1/graphql"
 
-  // const apiEndpoint = "https://beta.pokeapi.co/graphql/v1beta"
+  const apiEndpoint = "https://beta.pokeapi.co/graphql/v1beta"
 
   return fetch(apiEndpoint, {
     method: "POST",
