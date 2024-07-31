@@ -3,7 +3,6 @@ export interface PokemonAllData {
     pokemon_v2_pokemon: Pokemon[]
     pokemon_v2_language: PokemonLanguage[]
     pokemon_v2_type: PokemonType[]
-    pokemon_v2_abilityflavortext: Abilityflavortext[]
     pokemon_v2_ability: PokemonAbility[]
   }
 }
