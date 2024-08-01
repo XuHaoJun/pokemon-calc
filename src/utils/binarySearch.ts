@@ -1,6 +1,5 @@
 export interface BinaraySearchOptions<NF> {
   firstMiddle?: number
-  notFoundValue?: NF
 }
 
 export function binaraySearch<T, TTarget, NF>(
@@ -8,8 +7,8 @@ export function binaraySearch<T, TTarget, NF>(
   target: TTarget,
   compareFn: (target: TTarget, el: T) => number,
   options?: BinaraySearchOptions<NF>
-) {
-  const { firstMiddle, notFoundValue = undefined } = options ?? {}
+): T | undefined {
+  const { firstMiddle } = options ?? {}
   let m = 0
   let n = xs.length - 1
   while (m <= n) {
@@ -36,5 +35,5 @@ export function binaraySearch<T, TTarget, NF>(
       return current
     }
   }
-  return notFoundValue
+  return undefined
 }

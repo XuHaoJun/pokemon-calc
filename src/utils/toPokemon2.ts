@@ -6,6 +6,7 @@ import type {
   PokemonType,
 } from "@/domain/pokemon"
 import type { I18n } from "@lingui/core"
+import buildTree from "fast-tree-builder"
 import * as R from "remeda"
 
 import { binaraySearch } from "./binarySearch"
@@ -20,35 +21,20 @@ export interface ToPokemon2Params {
 
 export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
   const { pokemon: pkm, pokemon_v2_type, pokemon_v2_evolutionchain, t } = params
-  const evolutionchain = pokemon_v2_evolutionchain.find((x) =>
-    binaraySearch(
-      x.pokemon_v2_pokemonspecies,
-      pkm.pokemon_v2_pokemonspecy.id,
-      (id, el) => id - el.id
-    )
-  )
-  const evolutionchain2 = (() => {
-    if (evolutionchain) {
-      let depthCursor = 0
-      return {
-        ...evolutionchain,
-        pokemon_v2_pokemonspecies: evolutionchain.pokemon_v2_pokemonspecies.map(
-          (x, i) => {
-            const isSameDepth =
-              (evolutionchain.pokemon_v2_pokemonspecies[i - 1]
-                ?.evolves_from_species_id ?? null) === x.evolves_from_species_id
-            const depth = isSameDepth ? depthCursor : ++depthCursor
-            return {
-              ...x,
-              depth,
-            }
-          }
-        ),
-      }
-    } else {
-      return evolutionchain
+  const evolutionchain = binaraySearch(
+    pokemon_v2_evolutionchain,
+    pkm.pokemon_v2_pokemonspecy.evolution_chain_id,
+    (id, el) => id - el.id,
+    {
+      firstMiddle: pkm.pokemon_v2_pokemonspecy.evolution_chain_id - 1,
     }
-  })()
+  )
+  const evolutionTrees = evolutionchain
+    ? buildTree(evolutionchain.pokemon_v2_pokemonspecies, {
+        parentKey: "evolves_from_species_id",
+      })
+    : undefined
+  const evolutionTree = evolutionTrees?.roots?.[0]
   return {
     ...pkm,
     hp: pkm.pokemon_v2_pokemonstats[0].base_stat,
@@ -79,6 +65,7 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
         abilityFlavorTextDisplay: t(`pkm.abilityFlavorText.${x.ability_id}`),
       }
     }),
-    evolutionchain: evolutionchain2,
+    evolutionchain,
+    evolutionTree,
   }
 }
