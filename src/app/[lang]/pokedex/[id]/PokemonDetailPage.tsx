@@ -2,10 +2,12 @@ import * as React from "react"
 import Image from "next/image"
 import NextLink from "next/link"
 import { TYPE_COLORS } from "@/domain/constants"
-import { Pokemon2 } from "@/domain/pokemon"
+import { Pokemon2, PokemonEvolutionTreeNode } from "@/domain/pokemon"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
+import { treeToArrayByDepth } from "@/utils/treeToArrayByDepth"
 import { Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
+import { lighten } from "color2k"
 import { ExternalLinkIcon } from "lucide-react"
 import * as R from "remeda"
 
@@ -38,19 +40,20 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
     const color1 = TYPE_COLORS[pokemon.types[0].name]
     const color2 = TYPE_COLORS[pokemon.types[1]?.name] || color1
     if (color1 === color2) {
-      return color1
+      // TODO
+      // light use lighten, dark use darken
+      return lighten(color1, 0.2)
     }
     return `linear-gradient(to right, ${color1}, ${color2})`
   }, [pokemon.types])
   return (
-    <div
-      className="mx-auto w-full min-h-[calc(100vh-60px)]"
-      style={{ background: backgroundCss }}
-    >
-      <div className="container flex flex-col items-center gap-2 relative">
+    <div className="mx-auto w-full min-h-[calc(100vh-60px)]">
+      <div
+        className="container flex flex-col items-center gap-2 relative"
+        style={{ background: backgroundCss }}
+      >
         <Image
           className="absolute hover:animate-zoom-in-out"
-          style={{}}
           alt={lingui._(`pkm.name.${id}`)}
           width={200}
           height={200}
@@ -123,10 +126,8 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
                     <Trans>Envolution</Trans>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="flex gap-2 flex-wrap">
-                  <div className="flex md:justify-center">
-                    <PokemonEvolutionChain pokemon={pokemon} />
-                  </div>
+                <CardContent className="flex md:justify-center">
+                  <PokemonEvolutionChainTree pokemon={pokemon} />
                 </CardContent>
               </Card>
             )}
@@ -173,45 +174,46 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
   )
 }
 
-function PokemonEvolutionChain({ pokemon }: { pokemon: Pokemon2 }) {
-  const lingui = useLingui()
-  if (!pokemon.evolutionchain) {
+function PokemonEvolutionChainTree({ pokemon }: { pokemon: Pokemon2 }) {
+  const { evolutionTree } = pokemon
+  if (!evolutionTree) {
     return null
   }
-  const grouped = R.groupBy(
-    pokemon.evolutionchain.pokemon_v2_pokemonspecies,
-    (x) => x.depth
-  )
-  const maxDepth =
-    pokemon.evolutionchain.pokemon_v2_pokemonspecies[
-      pokemon.evolutionchain.pokemon_v2_pokemonspecies.length - 1
-    ].depth
   return (
     <div className="flex items-center">
-      {R.range(0, maxDepth + 1).map((depth) => {
+      {treeToArrayByDepth(evolutionTree).map((nodes, i) => {
         return (
-          <React.Fragment key={depth}>
+          <React.Fragment key={i}>
             <div className="flex flex-col">
-              {grouped[depth].map((x) => {
-                return (
-                  <Link href={`/pokedex/${x.id}`} key={x.id}>
-                    <div className="hover:animate-zoom-in-out">
-                      <Image
-                        alt={lingui._(`pkm.name.${x.id}`)}
-                        width={80}
-                        height={80}
-                        src={getPokemonImageSrc(x.id)}
-                        priority
-                      />
-                    </div>
-                  </Link>
-                )
+              {nodes.map((x) => {
+                return <PokemonEvolutionNode key={x.data.id} node={x} />
               })}
             </div>
-            {depth < maxDepth && <big>→</big>}
           </React.Fragment>
         )
       })}
+    </div>
+  )
+}
+
+function PokemonEvolutionNode({ node }: { node: PokemonEvolutionTreeNode }) {
+  const lingui = useLingui()
+  return (
+    <div className="flex items-center">
+      {node.parent && <big>→</big>}
+      <Link href={`/pokedex/${node.data.id}`} key={node.data.id}>
+        <div className="flex flex-col items-center">
+          <Image
+            className="hover:animate-zoom-in-out"
+            alt={lingui._(`pkm.name.${node.data.id}`)}
+            width={80}
+            height={80}
+            src={getPokemonImageSrc(node.data.id)}
+            priority
+          />
+          <p>{lingui._(`pkm.name.${node.data.id}`)}</p>
+        </div>
+      </Link>
     </div>
   )
 }

@@ -16,6 +16,7 @@ export interface Pokemon {
   pokemon_v2_pokemonstats: PokemonStats[]
   pokemon_v2_pokemonspecy: {
     id: number
+    evolution_chain_id: number
     pokemon_v2_pokemonspeciesnames: {
       language_id: number
       name: string
@@ -43,7 +44,8 @@ export interface Pokemon2 extends Pokemon {
   defaultFormNameDisplay: string
   types: PokemonType[]
   abilities: PokemonAbilityFk2[]
-  evolutionchain?: PokemonEvolutionchain2
+  evolutionchain?: PokemonEvolutionchain
+  evolutionTree?: PokemonEvolutionTreeNode
 }
 
 export interface PokemonAbilityFk2 extends PokemonAbilityFk {
@@ -114,17 +116,16 @@ export interface PokemonAbility {
 
 export interface PokemonEvolutionchain {
   id: number
-  pokemon_v2_pokemonspecies: {
-    id: number
-    evolves_from_species_id: number
-  }[]
+  pokemon_v2_pokemonspecies: PokemonSpency[]
 }
 
-export interface PokemonEvolutionchain2 {
+export interface PokemonSpency {
   id: number
-  pokemon_v2_pokemonspecies: {
-    id: number
-    evolves_from_species_id: number
-    depth: number
-  }[]
+  evolves_from_species_id: number
+}
+
+export interface PokemonEvolutionTreeNode {
+  data: PokemonSpency
+  parent?: PokemonEvolutionTreeNode
+  children?: PokemonEvolutionTreeNode[]
 }
