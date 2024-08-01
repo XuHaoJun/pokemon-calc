@@ -17,26 +17,30 @@ msgstr ""
 msgid "English"
 msgstr "English"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:62
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:126
+msgid "Envolution"
+msgstr ""
+
+#: src/app/[lang]/pokedex/[id]/page.tsx:82
 #: src/hooks/useLoadPokemonLingui.ts:70
 msgid "gmax"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:94
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:107
 msgid "Hidden Ability"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:60
+#: src/app/[lang]/pokedex/[id]/page.tsx:80
 #: src/hooks/useLoadPokemonLingui.ts:68
 msgid "mega"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:57
+#: src/app/[lang]/pokedex/[id]/page.tsx:77
 #: src/hooks/useLoadPokemonLingui.ts:65
 msgid "mega-x"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:59
+#: src/app/[lang]/pokedex/[id]/page.tsx:79
 #: src/hooks/useLoadPokemonLingui.ts:67
 msgid "mega-y"
 msgstr ""
@@ -51,6 +55,7 @@ msgid "Pokédex"
 msgstr ""
 
 #: src/app/[lang]/layout.tsx:32
+#: src/app/[lang]/pokedex/[id]/page.tsx:38
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr ""
