@@ -2,7 +2,11 @@ import * as React from "react"
 import Image from "next/image"
 import NextLink from "next/link"
 import { TYPE_COLORS } from "@/domain/constants"
-import { Pokemon2, PokemonEvolutionTreeNode } from "@/domain/pokemon"
+import {
+  Pokemon2,
+  PokemonEvolutionTreeNode,
+  PokemonType,
+} from "@/domain/pokemon"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import { treeToArrayByDepth } from "@/utils/treeToArrayByDepth"
 import { Trans } from "@lingui/macro"
@@ -18,23 +22,27 @@ import { Link } from "@/components/Link"
 import { TypeBadge } from "@/components/TypeBadge"
 
 import { PokemonStatsChart } from "./PokemonStatsChart"
+import { TypeDefensiveResistance } from "./TypeResistance"
+
+export type TypeNoI18n = Pick<PokemonType, "id" | "name">
 
 export interface PokemonDetailPageProps {
   id: number
   pokemon: Pokemon2
+  types: TypeNoI18n[]
 }
 
 export function PokemonDetailPage(props: PokemonDetailPageProps) {
   const { id, pokemon } = props
   const lingui = useLingui()
   const bulbapediaHref = React.useMemo(
-    () =>
-      `https://bulbapedia.bulbagarden.net/wiki/${pokemon.name.split("-")[0]}`,
-    [pokemon.name]
+    () => getBulbapediaHref(pokemon),
+    [pokemon]
   )
-  const _52pokeHref = React.useMemo(
-    () => `https://wiki.52poke.com/wiki/${pokemon.name.split("-")[0]}`,
-    [pokemon.name]
+  const _52pokeHref = React.useMemo(() => get52pokeHref(pokemon), [pokemon])
+  const _pokeRogueDexHref = React.useMemo(
+    () => getPokeRogueDexHref(pokemon),
+    [pokemon]
   )
   const backgroundCss = React.useMemo(() => {
     const color1 = TYPE_COLORS[pokemon.types[0].name]
@@ -134,6 +142,23 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
 
             <Card>
               <CardHeader>
+                <CardTitle>
+                  <Trans>Type Defensive</Trans>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex gap-1 flex-wrap md:justify-center">
+                {props.types.map((x) => (
+                  <TypeDefensiveResistance
+                    key={x.id}
+                    offensiveType={x.name}
+                    defensiveTypes={pokemon.types}
+                  />
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
                 <CardTitle>References</CardTitle>
               </CardHeader>
               <CardContent className="flex gap-2">
@@ -165,6 +190,20 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
                     <ExternalLinkIcon className="h-3 w-3" />
                   </NextLink>
                 </div>
+                <div>
+                  <NextLink
+                    href={_pokeRogueDexHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cn(
+                      badgeVariants({ variant: "secondary" }),
+                      "gap-1"
+                    )}
+                  >
+                    PokeRogue Dex
+                    <ExternalLinkIcon className="h-3 w-3" />
+                  </NextLink>
+                </div>
               </CardContent>
             </Card>
           </CardContent>
@@ -172,6 +211,30 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
       </div>
     </div>
   )
+}
+
+function getBulbapediaHref(pkm: Pokemon2): string {
+  const name = pkm.pokemon_v2_pokemonspecy.name
+    .split("-")
+    .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+    .join("_")
+  return `https://bulbapedia.bulbagarden.net/wiki/${name}_(Pokémon)`
+}
+
+function get52pokeHref(pkm: Pokemon2): string {
+  const name = pkm.pokemon_v2_pokemonspecy.name
+    .split("-")
+    .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+    .join(" ")
+  return `https://wiki.52poke.com/wiki/${name}`
+}
+
+function getPokeRogueDexHref(pkm: Pokemon2): string {
+  const name = pkm.pokemon_v2_pokemonspecy.name
+    .toUpperCase()
+    .split("-")
+    .join("_")
+  return `https://ydarissep.github.io/PokeRogue-Pokedex/?species=SPECIES_${name}&table=speciesTable&`
 }
 
 function PokemonEvolutionChainTree({ pokemon }: { pokemon: Pokemon2 }) {

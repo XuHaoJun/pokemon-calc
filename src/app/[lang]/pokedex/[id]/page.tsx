@@ -4,6 +4,7 @@ import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
 import { toPokemon2 } from "@/utils/toPokemon2"
 import { msg, t } from "@lingui/macro"
 import { setI18n } from "@lingui/react/server"
+import * as R from "remeda"
 
 import { PokemonDetailPage } from "./PokemonDetailPage"
 
@@ -121,5 +122,20 @@ export default async function PokemonDetailPageServer(props: any) {
     t: i18n.t,
   })
 
-  return <PokemonDetailPage pokemon={pokemon2} id={props.params.id} />
+  const noI18nTypes = R.pipe(
+    pokemonData.data.pokemon_v2_type,
+    R.map((x) => ({
+      id: x.id,
+      name: x.name,
+    })),
+    R.filter(R.isNot((t) => ["stellar", "unknown", "shadow"].includes(t.name)))
+  )
+
+  return (
+    <PokemonDetailPage
+      id={props.params.id}
+      pokemon={pokemon2}
+      types={noI18nTypes}
+    />
+  )
 }

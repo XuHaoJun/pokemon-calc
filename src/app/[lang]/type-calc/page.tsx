@@ -2,8 +2,9 @@
 
 import * as React from "react"
 import * as Querys from "@/api/query"
-import { TYPE_ATTACK_RESITANCE, TYPE_COLORS } from "@/domain/constants"
+import { TYPE_COLORS } from "@/domain/constants"
 import type { Pokemon, PokemonType } from "@/domain/pokemon"
+import { getTypeEffectiveMemo } from "@/utils/getTypeEffective"
 import * as d3 from "d3"
 import * as R from "remeda"
 import { useMutative } from "use-mutative"
@@ -59,19 +60,16 @@ export default function TypeCalcPage() {
   }, [query.data])
 
   const typeResitanceMatrix = React.useMemo(() => {
-    const attackType = [...selectedTypes.values()][0]
-    if (!attackType) {
+    const offensiveType = [...selectedTypes.values()][0]
+    if (!offensiveType) {
       return []
     }
     return pkmExistsTypes.map((typesGroup) => {
       const types = typesGroup.types
-      let typeEffective = 1
-      if (types[0]?.name) {
-        typeEffective *= TYPE_ATTACK_RESITANCE[attackType][types[0].name]
-      }
-      if (types[1]?.name) {
-        typeEffective *= TYPE_ATTACK_RESITANCE[attackType][types[1].name]
-      }
+      const typeEffective = getTypeEffectiveMemo({
+        offensiveType,
+        defensiveTypes: types,
+      })
       return {
         name: `${typeEffective}X`,
         typeEffective,

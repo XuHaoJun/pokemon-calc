@@ -16,6 +16,7 @@ export interface Pokemon {
   pokemon_v2_pokemonstats: PokemonStats[]
   pokemon_v2_pokemonspecy: {
     id: number
+    name: string
     evolution_chain_id: number
     pokemon_v2_pokemonspeciesnames: {
       language_id: number

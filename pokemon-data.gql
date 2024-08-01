@@ -11,6 +11,7 @@ query samplePokeAPIquery {
     }
     pokemon_v2_pokemonspecy {
       id
+      name
       evolution_chain_id
       pokemon_v2_pokemonspeciesnames(order_by: { language_id: asc }) {
         id
