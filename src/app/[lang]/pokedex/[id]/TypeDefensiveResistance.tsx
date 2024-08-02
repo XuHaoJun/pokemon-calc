@@ -9,12 +9,12 @@ export interface TypeDefensiveResistance {
 }
 
 const effectiveBgColors: Record<number, string> = {
-  4: "bg-red-400",
-  2: "bg-red-800",
+  4: "bg-red-800",
+  2: "bg-red-400",
   1: "bg-gray-400 dark:bg-background",
   0: "bg-black dark:bg-gray-400",
-  0.5: "bg-green-400",
-  0.25: "bg-green-800",
+  0.5: "bg-green-800",
+  0.25: "bg-green-400",
 }
 
 export function TypeDefensiveResistance({
