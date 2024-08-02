@@ -1,6 +1,5 @@
 import * as React from "react"
 import Image from "next/image"
-import NextLink from "next/link"
 import { TYPE_COLORS } from "@/domain/constants"
 import {
   Pokemon2,
@@ -8,21 +7,24 @@ import {
   PokemonType,
 } from "@/domain/pokemon"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
+import {
+  get52pokeHref,
+  getBulbapediaHref,
+  getPokeRogueDexHref,
+} from "@/utils/getPokemonReferenceUrl"
 import { treeToArrayByDepth } from "@/utils/treeToArrayByDepth"
 import { Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 import { lighten } from "color2k"
-import { ExternalLinkIcon } from "lucide-react"
 import * as R from "remeda"
 
-import { cn } from "@/lib/utils"
-import { badgeVariants } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ExternalLink } from "@/components/ExternalLink"
 import { Link } from "@/components/Link"
 import { TypeBadge } from "@/components/TypeBadge"
 
 import { PokemonStatsChart } from "./PokemonStatsChart"
-import { TypeDefensiveResistance } from "./TypeResistance"
+import { TypeDefensiveResistance } from "./TypeDefensiveResistance"
 
 export type TypeNoI18n = Pick<PokemonType, "id" | "name">
 
@@ -57,7 +59,7 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
   return (
     <div className="mx-auto w-full min-h-[calc(100vh-60px)]">
       <div
-        className="container flex flex-col items-center gap-2 relative"
+        className="container flex flex-col items-center gap-2 rounded relative"
         style={{ background: backgroundCss }}
       >
         <Image
@@ -162,48 +164,11 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
                 <CardTitle>References</CardTitle>
               </CardHeader>
               <CardContent className="flex gap-2">
-                <div>
-                  <NextLink
-                    href={bulbapediaHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      badgeVariants({ variant: "secondary" }),
-                      "gap-1"
-                    )}
-                  >
-                    Bulbapedia
-                    <ExternalLinkIcon className="h-3 w-3" />
-                  </NextLink>
-                </div>
-                <div>
-                  <NextLink
-                    href={_52pokeHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      badgeVariants({ variant: "secondary" }),
-                      "gap-1"
-                    )}
-                  >
-                    52poke
-                    <ExternalLinkIcon className="h-3 w-3" />
-                  </NextLink>
-                </div>
-                <div>
-                  <NextLink
-                    href={_pokeRogueDexHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      badgeVariants({ variant: "secondary" }),
-                      "gap-1"
-                    )}
-                  >
-                    PokeRogue Dex
-                    <ExternalLinkIcon className="h-3 w-3" />
-                  </NextLink>
-                </div>
+                <ExternalLink href={bulbapediaHref}>bulbapedia</ExternalLink>
+                <ExternalLink href={_52pokeHref}>52poke</ExternalLink>
+                <ExternalLink href={_pokeRogueDexHref}>
+                  PokeRogue Dex
+                </ExternalLink>
               </CardContent>
             </Card>
           </CardContent>
@@ -211,30 +176,6 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
       </div>
     </div>
   )
-}
-
-function getBulbapediaHref(pkm: Pokemon2): string {
-  const name = pkm.pokemon_v2_pokemonspecy.name
-    .split("-")
-    .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
-    .join("_")
-  return `https://bulbapedia.bulbagarden.net/wiki/${name}_(Pokémon)`
-}
-
-function get52pokeHref(pkm: Pokemon2): string {
-  const name = pkm.pokemon_v2_pokemonspecy.name
-    .split("-")
-    .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
-    .join(" ")
-  return `https://wiki.52poke.com/wiki/${name}`
-}
-
-function getPokeRogueDexHref(pkm: Pokemon2): string {
-  const name = pkm.pokemon_v2_pokemonspecy.name
-    .toUpperCase()
-    .split("-")
-    .join("_")
-  return `https://ydarissep.github.io/PokeRogue-Pokedex/?species=SPECIES_${name}&table=speciesTable&`
 }
 
 function PokemonEvolutionChainTree({ pokemon }: { pokemon: Pokemon2 }) {
