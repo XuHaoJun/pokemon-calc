@@ -1,40 +1,50 @@
 import * as React from "react"
 import Image from "next/image"
-import NextLink from "next/link"
 import { TYPE_COLORS } from "@/domain/constants"
-import { Pokemon2, PokemonEvolutionTreeNode } from "@/domain/pokemon"
+import {
+  Pokemon2,
+  PokemonEvolutionTreeNode,
+  PokemonType,
+} from "@/domain/pokemon"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
+import {
+  get52pokeHref,
+  getBulbapediaHref,
+  getPokeRogueDexHref,
+} from "@/utils/getPokemonReferenceUrl"
 import { treeToArrayByDepth } from "@/utils/treeToArrayByDepth"
 import { Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 import { lighten } from "color2k"
-import { ExternalLinkIcon } from "lucide-react"
 import * as R from "remeda"
 
-import { cn } from "@/lib/utils"
-import { badgeVariants } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ExternalLink } from "@/components/ExternalLink"
 import { Link } from "@/components/Link"
 import { TypeBadge } from "@/components/TypeBadge"
 
 import { PokemonStatsChart } from "./PokemonStatsChart"
+import { TypeDefensiveResistance } from "./TypeDefensiveResistance"
+
+export type TypeNoI18n = Pick<PokemonType, "id" | "name">
 
 export interface PokemonDetailPageProps {
   id: number
   pokemon: Pokemon2
+  types: TypeNoI18n[]
 }
 
 export function PokemonDetailPage(props: PokemonDetailPageProps) {
   const { id, pokemon } = props
   const lingui = useLingui()
   const bulbapediaHref = React.useMemo(
-    () =>
-      `https://bulbapedia.bulbagarden.net/wiki/${pokemon.name.split("-")[0]}`,
-    [pokemon.name]
+    () => getBulbapediaHref(pokemon),
+    [pokemon]
   )
-  const _52pokeHref = React.useMemo(
-    () => `https://wiki.52poke.com/wiki/${pokemon.name.split("-")[0]}`,
-    [pokemon.name]
+  const _52pokeHref = React.useMemo(() => get52pokeHref(pokemon), [pokemon])
+  const _pokeRogueDexHref = React.useMemo(
+    () => getPokeRogueDexHref(pokemon),
+    [pokemon]
   )
   const backgroundCss = React.useMemo(() => {
     const color1 = TYPE_COLORS[pokemon.types[0].name]
@@ -49,7 +59,7 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
   return (
     <div className="mx-auto w-full min-h-[calc(100vh-60px)]">
       <div
-        className="container flex flex-col items-center gap-2 relative"
+        className="container flex flex-col items-center gap-2 rounded relative"
         style={{ background: backgroundCss }}
       >
         <Image
@@ -134,37 +144,31 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
 
             <Card>
               <CardHeader>
+                <CardTitle>
+                  <Trans>Type Defensive</Trans>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex gap-1 flex-wrap md:justify-center">
+                {props.types.map((x) => (
+                  <TypeDefensiveResistance
+                    key={x.id}
+                    offensiveType={x.name}
+                    defensiveTypes={pokemon.types}
+                  />
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
                 <CardTitle>References</CardTitle>
               </CardHeader>
               <CardContent className="flex gap-2">
-                <div>
-                  <NextLink
-                    href={bulbapediaHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      badgeVariants({ variant: "secondary" }),
-                      "gap-1"
-                    )}
-                  >
-                    Bulbapedia
-                    <ExternalLinkIcon className="h-3 w-3" />
-                  </NextLink>
-                </div>
-                <div>
-                  <NextLink
-                    href={_52pokeHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={cn(
-                      badgeVariants({ variant: "secondary" }),
-                      "gap-1"
-                    )}
-                  >
-                    52poke
-                    <ExternalLinkIcon className="h-3 w-3" />
-                  </NextLink>
-                </div>
+                <ExternalLink href={bulbapediaHref}>bulbapedia</ExternalLink>
+                <ExternalLink href={_52pokeHref}>52poke</ExternalLink>
+                <ExternalLink href={_pokeRogueDexHref}>
+                  PokeRogue Dex
+                </ExternalLink>
               </CardContent>
             </Card>
           </CardContent>

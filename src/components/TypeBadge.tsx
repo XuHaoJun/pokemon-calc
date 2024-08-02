@@ -14,7 +14,11 @@ export interface TypeBadgeProps {
   showIcon?: boolean
 }
 
-export function TypeBadge({ className, type }: TypeBadgeProps) {
+export function TypeBadge({
+  className,
+  type,
+  showIcon = true,
+}: TypeBadgeProps) {
   const lingui = useLingui()
   return (
     <div
@@ -28,7 +32,7 @@ export function TypeBadge({ className, type }: TypeBadgeProps) {
         className="p-[2px] rounded"
         style={{ background: darken(TYPE_COLORS[type], 0.1) }}
       >
-        <MstSvIcon type={type} className="mr-1" />
+        {showIcon && <MstSvIcon type={type} className="mr-1" />}
         <span>{lingui._(`pkm.type.${type}`)}</span>
       </div>
     </div>
