@@ -17,30 +17,30 @@ msgstr ""
 msgid "English"
 msgstr "English"
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:126
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:136
 msgid "Envolution"
 msgstr "進化"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:82
+#: src/app/[lang]/pokedex/[id]/page.tsx:83
 #: src/hooks/useLoadPokemonLingui.ts:70
 msgid "gmax"
 msgstr "極巨化"
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:107
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:117
 msgid "Hidden Ability"
 msgstr "隱藏特性"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:80
+#: src/app/[lang]/pokedex/[id]/page.tsx:81
 #: src/hooks/useLoadPokemonLingui.ts:68
 msgid "mega"
 msgstr "Mega"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:77
+#: src/app/[lang]/pokedex/[id]/page.tsx:78
 #: src/hooks/useLoadPokemonLingui.ts:65
 msgid "mega-x"
 msgstr "Mega-X"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:79
+#: src/app/[lang]/pokedex/[id]/page.tsx:80
 #: src/hooks/useLoadPokemonLingui.ts:67
 msgid "mega-y"
 msgstr "Mega-Y"
@@ -55,7 +55,7 @@ msgid "Pokédex"
 msgstr "寶可夢圖鑑"
 
 #: src/app/[lang]/layout.tsx:32
-#: src/app/[lang]/pokedex/[id]/page.tsx:38
+#: src/app/[lang]/pokedex/[id]/page.tsx:39
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr "寶可夢計算機"
@@ -77,6 +77,10 @@ msgstr "搜尋..."
 #: src/components/MobileNav.tsx:56
 msgid "Type Calculator"
 msgstr "屬性計算機"
+
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:148
+msgid "Type Defensive"
+msgstr ""
 
 #: src/components/SiteLanguageSelect.tsx:28
 msgid "한국어"

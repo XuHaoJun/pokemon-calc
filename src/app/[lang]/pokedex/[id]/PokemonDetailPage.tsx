@@ -161,6 +161,21 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
 
             <Card>
               <CardHeader>
+                <CardTitle>
+                  <Trans>Moves</Trans>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex gap-1 flex-col md:justify-center">
+                {
+                  props.pokemon.pokemon_v2_pokemonmoves.map((x) => {
+                    return <div key={x.move_id}>{x.move_id}&nbsp;{x.pokemon_v2_movelearnmethod.name}</div>
+                  })
+                }
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
                 <CardTitle>References</CardTitle>
               </CardHeader>
               <CardContent className="flex gap-2">

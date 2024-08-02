@@ -41,6 +41,20 @@ query samplePokeAPIquery {
         language_id
       }
     }
+    pokemon_v2_pokemonmoves(
+      order_by: { move_id: asc }
+      where: { pokemon_v2_versiongroup: { generation_id: { _eq: 9 } } }
+    ) {
+      id
+      move_id
+      version_group_id
+      level
+      order
+      pokemon_v2_movelearnmethod {
+        id
+        name
+      }
+    }
   }
   pokemon_v2_stat(order_by: { id: asc }) {
     id
@@ -92,6 +106,43 @@ query samplePokeAPIquery {
     pokemon_v2_pokemonspecies(order_by: { id: asc }) {
       id
       evolves_from_species_id
+    }
+  }
+  pokemon_v2_move(order_by: { id: asc }) {
+    id
+    name
+    accuracy
+    power
+    pp
+    move_effect_chance
+    pokemon_v2_type {
+      id
+      name
+    }
+    pokemon_v2_moveeffect {
+      id
+      pokemon_v2_moveeffecteffecttexts {
+        language_id
+        effect
+        short_effect
+      }
+    }
+    pokemon_v2_movenames {
+      name
+      language_id
+    }
+    pokemon_v2_moveflavortexts(
+      order_by: { version_group_id: desc, language_id: asc }
+      distinct_on: language_id
+    ) {
+      language_id
+      flavor_text
+      id
+      version_group_id
+    }
+    pokemon_v2_movedamageclass {
+      name
+      id
     }
   }
 }

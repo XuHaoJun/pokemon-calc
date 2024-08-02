@@ -31,6 +31,19 @@ export interface Pokemon {
   }[]
   pokemon_v2_pokemonabilities: PokemonAbilityFk[]
   pokemon_v2_pokemonforms: PokemonForm[]
+  pokemon_v2_pokemonmoves: PokemonMoveFk[]
+}
+
+export interface PokemonMoveFk {
+  id: number
+  move_id: number
+  version_group_id: number
+  level: number
+  order: number
+  pokemon_v2_movelearnmethod: {
+    id: number
+    name: string
+  }
 }
 
 export interface Pokemon2 extends Pokemon {
