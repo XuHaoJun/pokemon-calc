@@ -108,24 +108,22 @@ export default async function PokemonDetailPageServer(props: any) {
   }
   i18n.load(i18n.locale, ablitiesI18nMessages)
 
-
-  // TODO
-  // const moveI18nMessages: any = {}
-  // for (const x of pokemonData.data.pokemon_v2_ability) {
-  //   const i18nId = `pkm.move.${x.id}`
-  //   for (const xx of x.pokemon_v2_abilitynames) {
-  //     if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
-  //       moveI18nMessages[i18nId] = xx.name
-  //     }
-  //   }
-  //   const i18nId2 = `pkm.move.${x.id}`
-  //   for (const xx of x.pokemon_v2_abilityflavortexts) {
-  //     if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
-  //       moveI18nMessages[i18nId2] = xx.flavor_text
-  //     }
-  //   }
-  // }
-  // i18n.load(i18n.locale, moveI18nMessages)
+  const moveI18nMessages: any = {}
+  for (const x of pokemonData.data.pokemon_v2_move) {
+    const i18nId = `pkm.move.${x.id}`
+    for (const xx of x.pokemon_v2_movenames) {
+      if (getLocaleByPokeApiLangId(xx.language_id as number) === i18n.locale) {
+        moveI18nMessages[i18nId] = xx.name
+      }
+    }
+    const i18nId2 = `pkm.moveFlavorTexts.${x.id}`
+    for (const xx of x.pokemon_v2_moveflavortexts) {
+      if (getLocaleByPokeApiLangId(xx.language_id as number) === i18n.locale) {
+        moveI18nMessages[i18nId2] = xx.flavor_text
+      }
+    }
+  }
+  i18n.load(i18n.locale, moveI18nMessages)
 
   setI18n(i18n)
 

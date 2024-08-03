@@ -1,3 +1,5 @@
+import type { SamplePokeApIqueryQuery } from "./generated/pokeapi-schema"
+
 export interface PokemonAllData {
   data: {
     pokemon_v2_pokemon: Pokemon[]
@@ -5,6 +7,7 @@ export interface PokemonAllData {
     pokemon_v2_type: PokemonType[]
     pokemon_v2_ability: PokemonAbility[]
     pokemon_v2_evolutionchain: PokemonEvolutionchain[]
+    pokemon_v2_move: SamplePokeApIqueryQuery["pokemon_v2_move"]
   }
 }
 
@@ -60,6 +63,11 @@ export interface Pokemon2 extends Pokemon {
   abilities: PokemonAbilityFk2[]
   evolutionchain?: PokemonEvolutionchain
   evolutionTree?: PokemonEvolutionTreeNode
+  moves: Array<
+    PokemonMoveFk & {
+      move: Unarray<SamplePokeApIqueryQuery["pokemon_v2_move"]>
+    }
+  >
 }
 
 export interface PokemonAbilityFk2 extends PokemonAbilityFk {
@@ -143,3 +151,6 @@ export interface PokemonEvolutionTreeNode {
   parent?: PokemonEvolutionTreeNode
   children?: PokemonEvolutionTreeNode[]
 }
+
+// unwrap up to one level
+type Unarray<T> = T extends Array<infer U> ? U : T
