@@ -23,6 +23,7 @@ import { ExternalLink } from "@/components/ExternalLink"
 import { Link } from "@/components/Link"
 import { TypeBadge } from "@/components/TypeBadge"
 
+import { MoveTable } from "./MoveTable"
 import { PokemonStatsChart } from "./PokemonStatsChart"
 import { TypeDefensiveResistance } from "./TypeDefensiveResistance"
 
@@ -56,6 +57,15 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
     }
     return `linear-gradient(to right, ${color1}, ${color2})`
   }, [pokemon.types])
+
+  const levelUpMoves = React.useMemo(() => {
+    return R.pipe(
+      pokemon.moves,
+      R.filter((x) => x.pokemon_v2_movelearnmethod.name === "level-up"),
+      R.sortBy((x) => x.level)
+    )
+  }, [pokemon.moves])
+
   return (
     <div className="mx-auto w-full min-h-[calc(100vh-60px)]">
       <div
@@ -162,15 +172,11 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
             <Card>
               <CardHeader>
                 <CardTitle>
-                  <Trans>Moves</Trans>
+                  <Trans>Level up Moves</Trans>
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex gap-1 flex-col md:justify-center">
-                {
-                  props.pokemon.pokemon_v2_pokemonmoves.map((x) => {
-                    return <div key={x.move_id}>{x.move_id}&nbsp;{x.pokemon_v2_movelearnmethod.name}</div>
-                  })
-                }
+                <MoveTable moves={levelUpMoves} />
               </CardContent>
             </Card>
 

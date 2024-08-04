@@ -136,6 +136,7 @@ export default async function PokemonDetailPageServer(props: any) {
     pokemon_v2_type: pokemonData.data.pokemon_v2_type,
     pokemon_v2_ability: pokemonData.data.pokemon_v2_ability,
     pokemon_v2_evolutionchain: pokemonData.data.pokemon_v2_evolutionchain,
+    pokemon_v2_move: pokemonData.data.pokemon_v2_move,
     t: i18n.t,
   })
 

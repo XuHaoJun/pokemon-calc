@@ -65,6 +65,9 @@ export interface Pokemon2 extends Pokemon {
   evolutionTree?: PokemonEvolutionTreeNode
   moves: Array<
     PokemonMoveFk & {
+      nameDisplay: string
+      typeName: string
+    } & {
       move: Unarray<SamplePokeApIqueryQuery["pokemon_v2_move"]>
     }
   >
@@ -153,4 +156,4 @@ export interface PokemonEvolutionTreeNode {
 }
 
 // unwrap up to one level
-type Unarray<T> = T extends Array<infer U> ? U : T
+export type Unarray<T> = T extends Array<infer U> ? U : T

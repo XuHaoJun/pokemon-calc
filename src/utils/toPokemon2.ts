@@ -1,9 +1,11 @@
+import { SamplePokeApIqueryQuery } from "@/domain/generated/pokeapi-schema"
 import type {
   Pokemon,
   Pokemon2,
   PokemonAbilityFk2,
   PokemonAllData,
   PokemonType,
+  Unarray,
 } from "@/domain/pokemon"
 import type { I18n } from "@lingui/core"
 import buildTree from "fast-tree-builder"
@@ -16,11 +18,18 @@ export interface ToPokemon2Params {
   pokemon_v2_type: PokemonAllData["data"]["pokemon_v2_type"]
   pokemon_v2_ability: PokemonAllData["data"]["pokemon_v2_ability"]
   pokemon_v2_evolutionchain: PokemonAllData["data"]["pokemon_v2_evolutionchain"]
+  pokemon_v2_move: PokemonAllData["data"]["pokemon_v2_move"]
   t: I18n["t"]
 }
 
 export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
-  const { pokemon: pkm, pokemon_v2_type, pokemon_v2_evolutionchain, t } = params
+  const {
+    pokemon: pkm,
+    pokemon_v2_type,
+    pokemon_v2_evolutionchain,
+    pokemon_v2_move,
+    t,
+  } = params
   const evolutionchain = binaraySearch(
     pokemon_v2_evolutionchain,
     pkm.pokemon_v2_pokemonspecy.evolution_chain_id,
@@ -35,6 +44,23 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
       })
     : undefined
   const evolutionTree = evolutionTrees?.roots?.[0]
+  const moves = pkm.pokemon_v2_pokemonmoves.map((x) => {
+    const move = binaraySearch(
+      pokemon_v2_move,
+      x.move_id,
+      (id, el) => id - el.id,
+      {
+        firstMiddle: x.move_id - 1,
+      }
+    ) as Unarray<SamplePokeApIqueryQuery["pokemon_v2_move"]>
+    return {
+      ...x,
+      nameDisplay: t(`pkm.move.${x.move_id}`),
+      typeName: move.pokemon_v2_type?.name as string,
+      damageClassDisplay: move.pokemon_v2_movedamageclass?.name as string,
+      move,
+    }
+  })
   return {
     ...pkm,
     hp: pkm.pokemon_v2_pokemonstats[0].base_stat,
@@ -67,5 +93,6 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
     }),
     evolutionchain,
     evolutionTree,
+    moves,
   }
 }
