@@ -12,6 +12,7 @@ import buildTree from "fast-tree-builder"
 import * as R from "remeda"
 
 import { binaraySearch } from "./binarySearch"
+import { getI18nIds } from "./getI18nIds"
 
 export interface ToPokemon2Params {
   pokemon: Pokemon
@@ -55,7 +56,7 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
     ) as Unarray<SamplePokeApIqueryQuery["pokemon_v2_move"]>
     return {
       ...x,
-      nameDisplay: t(`pkm.move.${x.move_id}`),
+      nameDisplay: t(getI18nIds.pokemon.move(x.move_id)),
       typeName: move.pokemon_v2_type?.name as string,
       damageClassDisplay: move.pokemon_v2_movedamageclass?.name as string,
       move,
@@ -70,11 +71,12 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
     spDef: pkm.pokemon_v2_pokemonstats[4].base_stat,
     speed: pkm.pokemon_v2_pokemonstats[5].base_stat,
     total: R.sumBy(pkm.pokemon_v2_pokemonstats, (x) => x.base_stat),
-    nameDisplay: t(`pkm.name.${pkm.id}`),
+    nameDisplay: t(getI18nIds.pokemon.name(pkm.id)),
     defaultFormNameDisplay:
-      t(`pkm.defaultFormName.${pkm.id}`) === `pkm.defaultFormName.${pkm.id}`
+      t(getI18nIds.pokemon.defaultFormName(pkm.id)) ===
+      getI18nIds.pokemon.defaultFormName(pkm.id)
         ? ""
-        : t(`pkm.defaultFormName.${pkm.id}`),
+        : t(getI18nIds.pokemon.defaultFormName(pkm.id)),
     types: pkm.pokemon_v2_pokemontypes.map(
       (x) =>
         binaraySearch(
@@ -87,8 +89,10 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
     abilities: pkm.pokemon_v2_pokemonabilities.map((x) => {
       return {
         ...x,
-        nameDisplay: t(`pkm.ability.${x.ability_id}`),
-        abilityFlavorTextDisplay: t(`pkm.abilityFlavorText.${x.ability_id}`),
+        nameDisplay: t(getI18nIds.pokemon.ability(x.ability_id)),
+        abilityFlavorTextDisplay: t(
+          getI18nIds.pokemon.abilityFlavorText(x.ability_id)
+        ),
       }
     }),
     evolutionchain,
