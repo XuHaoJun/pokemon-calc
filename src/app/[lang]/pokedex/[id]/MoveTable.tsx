@@ -5,6 +5,7 @@ import { Pokemon2, Unarray } from "@/domain/pokemon"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { SimpleHeader } from "@/components/data-table/SimpleHeader"
+import { MstSvIcon } from "@/components/MstSvIcon"
 import { TypeBadge } from "@/components/TypeBadge"
 
 import { MoveDataTable } from "./MoveDataTable"
@@ -31,7 +32,7 @@ export function MoveTable({ moves }: MoveTableProps) {
         },
       },
       {
-        accessorKey: "typeName",
+        accessorKey: "move.pokemon_v2_type.name",
         header: (headerContext) => {
           return <SimpleHeader headerContext={headerContext}>Type</SimpleHeader>
         },
@@ -39,15 +40,29 @@ export function MoveTable({ moves }: MoveTableProps) {
           const { row } = cellCtx
           return (
             <div className="flex flex-col gap-1">
-              <TypeBadge type={row.getValue("typeName")} />
+              {row.original.move.pokemon_v2_type?.name && (
+                <TypeBadge type={row.original.move.pokemon_v2_type.name} />
+              )}
             </div>
           )
         },
       },
       {
-        accessorKey: "damageClassDisplay",
+        accessorKey: "move.pokemon_v2_movedamageclass.name",
         header: (headerContext) => {
           return <SimpleHeader headerContext={headerContext}>Cat.</SimpleHeader>
+        },
+        cell: (cellCtx) => {
+          const { row } = cellCtx
+          return (
+            <div className="flex flex-col gap-1">
+              {row.original.move.pokemon_v2_movedamageclass?.name && (
+                <MstSvIcon
+                  type={row.original.move.pokemon_v2_movedamageclass.name}
+                />
+              )}
+            </div>
+          )
         },
       },
       {

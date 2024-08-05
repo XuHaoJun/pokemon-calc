@@ -57,8 +57,6 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
     return {
       ...x,
       nameDisplay: t(getI18nIds.pokemon.move(x.move_id)),
-      typeName: move.pokemon_v2_type?.name as string,
-      damageClassDisplay: move.pokemon_v2_movedamageclass?.name as string,
       move,
     }
   })

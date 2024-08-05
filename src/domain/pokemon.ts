@@ -66,7 +66,6 @@ export interface Pokemon2 extends Pokemon {
   moves: Array<
     PokemonMoveFk & {
       nameDisplay: string
-      typeName: string
     } & {
       move: Unarray<SamplePokeApIqueryQuery["pokemon_v2_move"]>
     }

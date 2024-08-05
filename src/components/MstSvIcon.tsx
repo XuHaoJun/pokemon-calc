@@ -28,9 +28,9 @@ const backgroundPositionMap: Record<string, string> = {
   steel: "0 -160px",
   fairy: "0 -340px",
   // moves
-  atkMove: "0 -360px",
-  spAtkMove: "0 -380px",
-  statusMove: "0 -400px",
+  physical: "0 -360px",
+  special: "0 -380px",
+  status: "0 -400px",
 }
 
 export function MstSvIcon(props: MstSvIconProps) {
