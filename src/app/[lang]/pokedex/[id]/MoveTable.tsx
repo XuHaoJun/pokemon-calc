@@ -1,11 +1,11 @@
 "use client"
 
-import React from "react"
+import * as React from "react"
+import NextImage from "next/image"
 import { Pokemon2, Unarray } from "@/domain/pokemon"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { SimpleHeader } from "@/components/data-table/SimpleHeader"
-import { MstSvIcon } from "@/components/MstSvIcon"
 import { TypeBadge } from "@/components/TypeBadge"
 
 import { MoveDataTable } from "./MoveDataTable"
@@ -57,8 +57,11 @@ export function MoveTable({ moves }: MoveTableProps) {
           return (
             <div className="flex flex-col gap-1">
               {row.original.move.pokemon_v2_movedamageclass?.name && (
-                <MstSvIcon
-                  type={row.original.move.pokemon_v2_movedamageclass.name}
+                <NextImage
+                  alt={row.original.move.pokemon_v2_movedamageclass?.name}
+                  src={`/pokemon-calc/images/SPLIT_${row.original.move.pokemon_v2_movedamageclass.name.toUpperCase()}.png`}
+                  width={40}
+                  height={40}
                 />
               )}
             </div>
