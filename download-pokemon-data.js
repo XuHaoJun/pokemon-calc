@@ -1,5 +1,6 @@
 const fs = require("fs")
 const { exec } = require("child_process")
+const R = require("remeda")
 
 async function main() {
   // you can self-host pokeapi graphql endpoint
@@ -9,6 +10,20 @@ async function main() {
   const apiEndpoint = "https://beta.pokeapi.co/graphql/v1beta"
 
   const pokemonData = await getPokemonData(apiEndpoint)
+  const { data } = pokemonData
+  data.pokemon_v2_pokemon = data.pokemon_v2_pokemon.map((pkm) => {
+    const latestGenerationId = R.firstBy(pkm.pokemon_v2_pokemonmoves, [
+      (m) => m.pokemon_v2_versiongroup.generation_id,
+      "desc",
+    ])?.pokemon_v2_versiongroup?.generation_id
+    const onlyLatestGenMoves = pkm.pokemon_v2_pokemonmoves.filter(
+      (m) => m.pokemon_v2_versiongroup.generation_id === latestGenerationId
+    )
+    return {
+      ...pkm,
+      pokemon_v2_pokemonmoves: onlyLatestGenMoves,
+    }
+  })
   fs.writeFileSync(
     "./public/data/pokemon-data.json",
     JSON.stringify(pokemonData, null, 2)

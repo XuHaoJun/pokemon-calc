@@ -41,10 +41,7 @@ query samplePokeAPIquery {
         language_id
       }
     }
-    pokemon_v2_pokemonmoves(
-      order_by: { move_id: asc }
-      where: { pokemon_v2_versiongroup: { generation_id: { _eq: 9 } } }
-    ) {
+    pokemon_v2_pokemonmoves(order_by: { move_id: asc }) {
       id
       move_id
       version_group_id
@@ -53,6 +50,10 @@ query samplePokeAPIquery {
       pokemon_v2_movelearnmethod {
         id
         name
+      }
+      pokemon_v2_versiongroup {
+        id
+        generation_id
       }
     }
   }

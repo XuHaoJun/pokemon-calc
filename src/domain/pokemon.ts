@@ -47,6 +47,10 @@ export interface PokemonMoveFk {
     id: number
     name: string
   }
+  pokemon_v2_versiongroup: {
+    id: number
+    generation_id: string
+  }
 }
 
 export interface Pokemon2 extends Pokemon {

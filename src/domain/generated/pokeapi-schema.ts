@@ -58601,6 +58601,12 @@ export type SamplePokeApIqueryQuery = { __typename?: "query_root" } & {
                   "id" | "name"
                 >
               >
+              pokemon_v2_versiongroup?: Maybe<
+                { __typename?: "pokemon_v2_versiongroup" } & Pick<
+                  Pokemon_V2_Versiongroup,
+                  "id" | "generation_id"
+                >
+              >
             }
         >
       }
