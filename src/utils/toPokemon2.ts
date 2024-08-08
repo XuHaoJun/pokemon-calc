@@ -54,11 +54,16 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
         firstMiddle: x.move_id - 1,
       }
     ) as Unarray<SamplePokeApIqueryQuery["pokemon_v2_move"]>
+    const moveNoI18n = R.omit(move, [
+      "pokemon_v2_moveeffect",
+      "pokemon_v2_moveflavortexts",
+      "pokemon_v2_movenames",
+    ])
     return {
       ...x,
       nameDisplay: t(getI18nIds.pokemon.move(x.move_id)),
       flavorTextDisplay: t(getI18nIds.pokemon.moveFlavorText(x.move_id)),
-      move,
+      move: moveNoI18n,
     }
   })
   return {

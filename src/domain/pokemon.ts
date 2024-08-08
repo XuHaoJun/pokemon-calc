@@ -68,7 +68,12 @@ export interface Pokemon2 extends Pokemon {
       nameDisplay: string
       flavorTextDisplay: string
     } & {
-      move: Unarray<SamplePokeApIqueryQuery["pokemon_v2_move"]>
+      move: Omit<
+        Unarray<SamplePokeApIqueryQuery["pokemon_v2_move"]>,
+        | "pokemon_v2_moveeffect"
+        | "pokemon_v2_movenames"
+        | "pokemon_v2_moveflavortexts"
+      >
     }
   >
 }
