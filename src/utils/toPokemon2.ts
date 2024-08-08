@@ -57,6 +57,7 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
     return {
       ...x,
       nameDisplay: t(getI18nIds.pokemon.move(x.move_id)),
+      flavorTextDisplay: t(getI18nIds.pokemon.moveFlavorText(x.move_id)),
       move,
     }
   })

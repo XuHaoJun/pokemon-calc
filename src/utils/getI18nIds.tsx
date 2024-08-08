@@ -18,5 +18,8 @@ export const getI18nIds = {
     move: (moveId: number) => {
       return `pkm.move.${moveId}`
     },
+    moveFlavorText: (moveId: number) => {
+      return `pkm.moveFlavorTexts.${moveId}`
+    },
   },
 }

@@ -10,6 +10,7 @@ import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import {
   get52pokeHref,
   getBulbapediaHref,
+  getPokemonDatabaseHref,
   getPokeRogueDexHref,
 } from "@/utils/getPokemonReferenceUrl"
 import { treeToArrayByDepth } from "@/utils/treeToArrayByDepth"
@@ -43,6 +44,10 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
     [pokemon]
   )
   const _52pokeHref = React.useMemo(() => get52pokeHref(pokemon), [pokemon])
+  const _pokemonDatabaseHref = React.useMemo(
+    () => getPokemonDatabaseHref(pokemon),
+    [pokemon]
+  )
   const _pokeRogueDexHref = React.useMemo(
     () => getPokeRogueDexHref(pokemon),
     [pokemon]
@@ -58,13 +63,32 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
     return `linear-gradient(to right, ${color1}, ${color2})`
   }, [pokemon.types])
 
+  const moveGroups = React.useMemo(
+    () => R.groupBy(pokemon.moves, (x) => x.pokemon_v2_movelearnmethod.name),
+    [pokemon.moves]
+  )
+
+  const eggMoves = React.useMemo(() => {
+    return R.pipe(
+      moveGroups["egg"] || [],
+      R.sortBy((x) => x.order)
+    )
+  }, [moveGroups])
+
   const levelUpMoves = React.useMemo(() => {
     return R.pipe(
-      pokemon.moves,
+      moveGroups["level-up"] || [],
       R.filter((x) => x.pokemon_v2_movelearnmethod.name === "level-up"),
       R.sortBy((x) => x.level)
     )
-  }, [pokemon.moves])
+  }, [moveGroups])
+
+  const machineMoves = React.useMemo(() => {
+    return R.pipe(
+      moveGroups["machine"] || [],
+      R.sortBy((x) => x.order)
+    )
+  }, [moveGroups])
 
   return (
     <div className="mx-auto w-full min-h-[calc(100vh-60px)]">
@@ -169,24 +193,55 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>
-                  <Trans>Level up Moves</Trans>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex gap-1 flex-col md:justify-center">
-                <MoveTable moves={levelUpMoves} />
-              </CardContent>
-            </Card>
+            {levelUpMoves.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    <Trans>Level Up Moves</Trans>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex gap-1 flex-col md:justify-center">
+                  <MoveTable moves={levelUpMoves} />
+                </CardContent>
+              </Card>
+            )}
+
+            {eggMoves.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    <Trans>Egg Moves</Trans>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex gap-1 flex-col md:justify-center">
+                  <MoveTable hideColumns={["level"]} moves={eggMoves} />
+                </CardContent>
+              </Card>
+            )}
+
+            {machineMoves.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    <Trans>TM/HM Moves</Trans>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex gap-1 flex-col md:justify-center">
+                  <MoveTable hideColumns={["level"]} moves={machineMoves} />
+                </CardContent>
+              </Card>
+            )}
 
             <Card>
               <CardHeader>
                 <CardTitle>References</CardTitle>
               </CardHeader>
-              <CardContent className="flex gap-2">
+              <CardContent className="flex gap-2 flex-wrap">
                 <ExternalLink href={bulbapediaHref}>bulbapedia</ExternalLink>
                 <ExternalLink href={_52pokeHref}>52poke</ExternalLink>
+                <ExternalLink href={_pokemonDatabaseHref}>
+                  Pokemon Database
+                </ExternalLink>
                 <ExternalLink href={_pokeRogueDexHref}>
                   PokeRogue Dex
                 </ExternalLink>
