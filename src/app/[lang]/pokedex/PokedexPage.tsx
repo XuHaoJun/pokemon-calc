@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { usePathname, useRouter } from "next/navigation"
 import { useFetchPokemonData } from "@/api/query"
 import { flexsearchAtom, flexsearchIsIndexingAtom } from "@/atoms"
 import type { Pokemon2, PokemonType } from "@/domain/pokemon"
@@ -15,7 +14,6 @@ import { ScopeProvider } from "jotai-scope"
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { create } from "mutative"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import * as R from "remeda"
 import sift from "sift"
 
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
@@ -177,7 +175,9 @@ export function PokedexPageBase() {
               t: lingui._,
               pokemon_v2_type: query.data?.data.pokemon_v2_type || [],
               pokemon_v2_ability: query.data?.data.pokemon_v2_ability || [],
-              pokemon_v2_evolutionchain: query.data?.data.pokemon_v2_evolutionchain || [],
+              pokemon_v2_evolutionchain:
+                query.data?.data.pokemon_v2_evolutionchain || [],
+              pokemon_v2_move: query.data?.data.pokemon_v2_move || [],
             })
           ),
     // eslint-disable-next-line react-hooks/exhaustive-deps

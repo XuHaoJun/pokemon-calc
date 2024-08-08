@@ -23,3 +23,8 @@ export function getPokeRogueDexHref(pkm: Pokemon2): string {
     .join("_")
   return `https://ydarissep.github.io/PokeRogue-Pokedex/?species=SPECIES_${name}&table=speciesTable&`
 }
+
+export function getPokemonDatabaseHref(pkm: Pokemon2): string {
+  const name = pkm.pokemon_v2_pokemonspecy.name
+  return `https://pokemondb.net/pokedex/${name}`
+}

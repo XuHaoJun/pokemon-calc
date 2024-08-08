@@ -17,30 +17,30 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:126
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:136
 msgid "Envolution"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:82
+#: src/app/[lang]/pokedex/[id]/page.tsx:83
 #: src/hooks/useLoadPokemonLingui.ts:70
 msgid "gmax"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:107
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:117
 msgid "Hidden Ability"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:80
+#: src/app/[lang]/pokedex/[id]/page.tsx:81
 #: src/hooks/useLoadPokemonLingui.ts:68
 msgid "mega"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:77
+#: src/app/[lang]/pokedex/[id]/page.tsx:78
 #: src/hooks/useLoadPokemonLingui.ts:65
 msgid "mega-x"
 msgstr ""
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:79
+#: src/app/[lang]/pokedex/[id]/page.tsx:80
 #: src/hooks/useLoadPokemonLingui.ts:67
 msgid "mega-y"
 msgstr ""
@@ -55,7 +55,7 @@ msgid "Pokédex"
 msgstr ""
 
 #: src/app/[lang]/layout.tsx:32
-#: src/app/[lang]/pokedex/[id]/page.tsx:38
+#: src/app/[lang]/pokedex/[id]/page.tsx:39
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr ""
@@ -76,6 +76,10 @@ msgstr ""
 #: src/components/MainNav.tsx:32
 #: src/components/MobileNav.tsx:56
 msgid "Type Calculator"
+msgstr ""
+
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:148
+msgid "Type Defensive"
 msgstr ""
 
 #: src/components/SiteLanguageSelect.tsx:28
