@@ -13,11 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:213
+msgid "Egg Moves"
+msgstr "蛋招式"
+
 #: src/components/SiteLanguageSelect.tsx:24
 msgid "English"
 msgstr "English"
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:136
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:170
 msgid "Envolution"
 msgstr "進化"
 
@@ -26,9 +30,13 @@ msgstr "進化"
 msgid "gmax"
 msgstr "極巨化"
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:117
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:151
 msgid "Hidden Ability"
 msgstr "隱藏特性"
+
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:200
+msgid "Level Up Moves"
+msgstr "從升級學會的招式"
 
 #: src/app/[lang]/pokedex/[id]/page.tsx:81
 #: src/hooks/useLoadPokemonLingui.ts:68
@@ -69,6 +77,10 @@ msgstr "搜尋寶可夢..."
 msgid "Search..."
 msgstr "搜尋..."
 
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:226
+msgid "TM/HM Moves"
+msgstr "從招式機學會的招式"
+
 #: src/components/CommandMenu.tsx:147
 msgid "Type a search..."
 msgstr "搜尋..."
@@ -78,7 +90,7 @@ msgstr "搜尋..."
 msgid "Type Calculator"
 msgstr "屬性計算機"
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:148
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:182
 msgid "Type Defensive"
 msgstr ""
 

@@ -13,11 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:213
+msgid "Egg Moves"
+msgstr "Egg Moves"
+
 #: src/components/SiteLanguageSelect.tsx:24
 msgid "English"
 msgstr "English"
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:136
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:170
 msgid "Envolution"
 msgstr "Envolution"
 
@@ -26,9 +30,13 @@ msgstr "Envolution"
 msgid "gmax"
 msgstr "Gmax"
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:117
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:151
 msgid "Hidden Ability"
 msgstr "Hidden Ability"
+
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:200
+msgid "Level Up Moves"
+msgstr "Level Up Moves"
 
 #: src/app/[lang]/pokedex/[id]/page.tsx:81
 #: src/hooks/useLoadPokemonLingui.ts:68
@@ -69,6 +77,10 @@ msgstr "Search Pokemon..."
 msgid "Search..."
 msgstr "Search..."
 
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:226
+msgid "TM/HM Moves"
+msgstr "TM/HM Moves"
+
 #: src/components/CommandMenu.tsx:147
 msgid "Type a search..."
 msgstr "Type a search..."
@@ -78,7 +90,7 @@ msgstr "Type a search..."
 msgid "Type Calculator"
 msgstr "Type Calculator"
 
-#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:148
+#: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:182
 msgid "Type Defensive"
 msgstr "Type Defensive"
 
