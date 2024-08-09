@@ -61,7 +61,7 @@ export function PokemonStatsChart(props: PokemonStatsChartProps) {
     [pokemon]
   )
   return (
-    <Card className="min-w-[320px]">
+    <Card className="md:min-w-[320px]">
       <CardHeader className="pb-4">
         <CardTitle>Base Stats</CardTitle>
       </CardHeader>
