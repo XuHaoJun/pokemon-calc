@@ -49,7 +49,7 @@ export interface PokemonMoveFk {
   }
   pokemon_v2_versiongroup: {
     id: number
-    generation_id: string
+    generation_id: number
   }
 }
 
