@@ -7,6 +7,7 @@ import type { Pokemon2, PokemonType } from "@/domain/pokemon"
 import { binaraySearch } from "@/utils/binarySearch"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import { toPokemon2 } from "@/utils/toPokemon2"
+import { Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 import { ColumnDef, HeaderContext } from "@tanstack/react-table"
 import { useAtom, useAtomValue } from "jotai"
@@ -93,8 +94,16 @@ export function PokedexPageBase() {
         header: (headerContext) => {
           return (
             <MyStatHeader fieldName="hp" headerContext={headerContext}>
-              Hp
+              <Trans>HP</Trans>
             </MyStatHeader>
+          )
+        },
+        cell: (cellCtx) => {
+          return (
+            <StatTabelCell
+              label={<Trans>HP</Trans>}
+              value={cellCtx.getValue() as string}
+            />
           )
         },
       },
@@ -103,8 +112,16 @@ export function PokedexPageBase() {
         header: (headerContext) => {
           return (
             <MyStatHeader fieldName="attack" headerContext={headerContext}>
-              Attack
+              <Trans>Atk</Trans>
             </MyStatHeader>
+          )
+        },
+        cell: (cellCtx) => {
+          return (
+            <StatTabelCell
+              label={<Trans>Atk</Trans>}
+              value={cellCtx.getValue() as string}
+            />
           )
         },
       },
@@ -113,8 +130,16 @@ export function PokedexPageBase() {
         header: (headerContext) => {
           return (
             <MyStatHeader fieldName="defense" headerContext={headerContext}>
-              Defense
+              <Trans>Def</Trans>
             </MyStatHeader>
+          )
+        },
+        cell: (cellCtx) => {
+          return (
+            <StatTabelCell
+              label={<Trans>Def</Trans>}
+              value={cellCtx.getValue() as string}
+            />
           )
         },
       },
@@ -123,8 +148,16 @@ export function PokedexPageBase() {
         header: (headerContext) => {
           return (
             <MyStatHeader fieldName="spAtk" headerContext={headerContext}>
-              Sp.Atk
+              <Trans>Sp.Atk</Trans>
             </MyStatHeader>
+          )
+        },
+        cell: (cellCtx) => {
+          return (
+            <StatTabelCell
+              label={<Trans>SpA</Trans>}
+              value={cellCtx.getValue() as string}
+            />
           )
         },
       },
@@ -133,8 +166,16 @@ export function PokedexPageBase() {
         header: (headerContext) => {
           return (
             <MyStatHeader fieldName="spDef" headerContext={headerContext}>
-              Sp.Def
+              <Trans>Sp.Def</Trans>
             </MyStatHeader>
+          )
+        },
+        cell: (cellCtx) => {
+          return (
+            <StatTabelCell
+              label={<Trans>SpD</Trans>}
+              value={cellCtx.getValue() as string}
+            />
           )
         },
       },
@@ -143,8 +184,16 @@ export function PokedexPageBase() {
         header: (headerContext) => {
           return (
             <MyStatHeader fieldName="speed" headerContext={headerContext}>
-              Speed
+              <Trans>Speed</Trans>
             </MyStatHeader>
+          )
+        },
+        cell: (cellCtx) => {
+          return (
+            <StatTabelCell
+              label={<Trans>Spe</Trans>}
+              value={cellCtx.getValue() as string}
+            />
           )
         },
       },
@@ -157,8 +206,20 @@ export function PokedexPageBase() {
               fieldName="total"
               headerContext={headerContext}
             >
-              Total
+              <Trans>Total</Trans>
             </MyStatHeader>
+          )
+        },
+        cell: (cellCtx) => {
+          return (
+            <StatTabelCell
+              label={<Trans>Tot</Trans>}
+              value={
+                <span className="text-muted-foreground">
+                  {cellCtx.getValue() as string}
+                </span>
+              }
+            />
           )
         },
       },
@@ -290,7 +351,7 @@ function MyStatHeader({
   const isSorted = column.getIsSorted()
   const [filter, setFilter] = useAtom(pokdexAtoms.siftFilterAtom)
   return (
-    <div className="flex flex-col gap-1 pb-2">
+    <div className="flex flex-col gap-1 pb-2 items-center justify-center">
       <Button
         variant="ghost"
         onClick={() =>
@@ -308,7 +369,7 @@ function MyStatHeader({
       </Button>
       <DebouncedInput
         type="number"
-        className="h-7 w-[90px]"
+        className="h-7 w-[60px] md:w-[90px]"
         min={min}
         max={max}
         value={filter[fieldName].$gte}
@@ -322,7 +383,7 @@ function MyStatHeader({
       />
       <DebouncedInput
         type="number"
-        className="h-7 w-[90px]"
+        className="h-7 w-[60px] md:w-[90px]"
         min={min}
         max={max}
         value={filter[fieldName].$lte}
@@ -334,6 +395,21 @@ function MyStatHeader({
           )
         }
       />
+    </div>
+  )
+}
+
+function StatTabelCell({
+  label,
+  value,
+}: {
+  label: React.ReactNode
+  value: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col gap-1 justify-center items-center">
+      <span className="text-muted-foreground text-xs">{label}</span>
+      <span className="text-base">{value}</span>
     </div>
   )
 }

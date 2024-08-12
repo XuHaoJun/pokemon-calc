@@ -13,6 +13,16 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/app/[lang]/pokedex/PokedexPage.tsx:115
+#: src/app/[lang]/pokedex/PokedexPage.tsx:122
+msgid "Atk"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:133
+#: src/app/[lang]/pokedex/PokedexPage.tsx:140
+msgid "Def"
+msgstr ""
+
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:213
 msgid "Egg Moves"
 msgstr ""
@@ -32,6 +42,11 @@ msgstr ""
 
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:151
 msgid "Hidden Ability"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:97
+#: src/app/[lang]/pokedex/PokedexPage.tsx:104
+msgid "HP"
 msgstr ""
 
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:200
@@ -77,8 +92,40 @@ msgstr ""
 msgid "Search..."
 msgstr ""
 
+#: src/app/[lang]/pokedex/PokedexPage.tsx:151
+msgid "Sp.Atk"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:169
+msgid "Sp.Def"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:158
+msgid "SpA"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:176
+msgid "SpD"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:194
+msgid "Spe"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:187
+msgid "Speed"
+msgstr ""
+
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:226
 msgid "TM/HM Moves"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:216
+msgid "Tot"
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:209
+msgid "Total"
 msgstr ""
 
 #: src/components/CommandMenu.tsx:147

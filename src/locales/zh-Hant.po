@@ -13,6 +13,16 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/app/[lang]/pokedex/PokedexPage.tsx:115
+#: src/app/[lang]/pokedex/PokedexPage.tsx:122
+msgid "Atk"
+msgstr "攻擊"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:133
+#: src/app/[lang]/pokedex/PokedexPage.tsx:140
+msgid "Def"
+msgstr "防禦"
+
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:213
 msgid "Egg Moves"
 msgstr "蛋招式"
@@ -33,6 +43,11 @@ msgstr "極巨化"
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:151
 msgid "Hidden Ability"
 msgstr "隱藏特性"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:97
+#: src/app/[lang]/pokedex/PokedexPage.tsx:104
+msgid "HP"
+msgstr "HP"
 
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:200
 msgid "Level Up Moves"
@@ -77,9 +92,41 @@ msgstr "搜尋寶可夢..."
 msgid "Search..."
 msgstr "搜尋..."
 
+#: src/app/[lang]/pokedex/PokedexPage.tsx:151
+msgid "Sp.Atk"
+msgstr "特攻"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:169
+msgid "Sp.Def"
+msgstr "特防"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:158
+msgid "SpA"
+msgstr "特攻"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:176
+msgid "SpD"
+msgstr "特防"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:194
+msgid "Spe"
+msgstr "速度"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:187
+msgid "Speed"
+msgstr "速度"
+
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:226
 msgid "TM/HM Moves"
 msgstr "從招式機學會的招式"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:216
+msgid "Tot"
+msgstr "總和"
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:209
+msgid "Total"
+msgstr "總和"
 
 #: src/components/CommandMenu.tsx:147
 msgid "Type a search..."

@@ -93,7 +93,7 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
   return (
     <div className="mx-auto w-full min-h-[calc(100vh-60px)]">
       <div
-        className="container flex flex-col items-center gap-2 rounded relative"
+        className="container px-2 md:px-6 flex flex-col items-center gap-2 rounded relative"
         style={{ background: backgroundCss }}
       >
         <Image

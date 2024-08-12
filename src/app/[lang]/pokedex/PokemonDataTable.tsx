@@ -12,6 +12,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 
+import { cn } from "@/lib/utils"
 import {
   Table,
   TableBody,
@@ -61,7 +62,7 @@ export function PokemonDataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="px-1 md:px-4">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -84,11 +85,12 @@ export function PokemonDataTable<TData, TValue>({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className={
+                    className={cn(
+                      "p-0 md:p-4",
                       cell.column.getIndex() === 0
-                        ? "sticky left-0 z-10 max-sm:bg-background"
+                        ? "sticky left-0 z-10 max-sm:bg-background p-1 md:p-4"
                         : ""
-                    }
+                    )}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
