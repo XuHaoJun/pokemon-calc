@@ -141,6 +141,10 @@ msgstr "Type Calculator"
 msgid "Type Defensive"
 msgstr "Type Defensive"
 
+#: src/components/MainNav.tsx:54
+msgid "Who's That Pokemon"
+msgstr "Who's That Pokemon"
+
 #: src/components/SiteLanguageSelect.tsx:28
 msgid "한국어"
 msgstr "한국어"

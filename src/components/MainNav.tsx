@@ -42,6 +42,17 @@ export function MainNav() {
         >
           <Trans>Pokédex</Trans>
         </Link>
+        <Link
+          href="/whos-that-pokemon"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname.startsWith("/whos-that-pokemon")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          <Trans>Who&apos;s That Pokemon</Trans>
+        </Link>
       </nav>
     </div>
   )

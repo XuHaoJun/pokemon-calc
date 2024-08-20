@@ -1,50 +1,106 @@
 "use client"
 
-import { resolve } from "path"
 import * as React from "react"
+import NextImage from "next/image"
 import { useFetchPokemonData } from "@/api/query"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
+import { Trans } from "@lingui/macro"
 import * as R from "remeda"
 
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
+import { Button } from "@/components/ui/button"
 
 export function WhosThatPokemonPage() {
+  useLoadPokemonLingui({ targets: ["name"] })
+
   const query = useFetchPokemonData()
+
+  const [randomSeed, setRandomSeed] = React.useState(new Date())
+
   const randomPokemon = React.useMemo(
     () =>
-      query.data ? R.sample(query.data?.data.pokemon_v2_pokemon, 1)[0] : null,
-    [query.data]
+      query.data && randomSeed
+        ? R.sample(query.data?.data.pokemon_v2_pokemon, 1)[0]
+        : null,
+    [query.data, randomSeed]
   )
 
-  const { updateOnce } = useLoadPokemonLingui({ targets: ["name"] })
+  const canvasResultRef = React.useRef<CanvasWithImageData | null>(null)
+
+  const updateCanvas = React.useCallback(async () => {
+    if (!randomPokemon) {
+      return
+    }
+    const result = await replaceNonTransparentPixelsWithBlack(
+      getPokemonImageSrc(randomPokemon.id)
+    )
+    canvasResultRef.current = result
+    result.canvas.id = "pokemon-image"
+    result.canvas.style = "width: 300px; height: 300px;"
+    const canvasContainer = document.querySelector("#canvas-container")
+    if (canvasContainer) {
+      canvasContainer.replaceChildren()
+      canvasContainer.appendChild(result.canvas)
+    }
+  }, [randomPokemon])
 
   React.useEffect(() => {
-    async function foo() {
-      const canvas = randomPokemon
-        ? await replaceNonTransparentPixelsWithBlack(
-            getPokemonImageSrc(randomPokemon.id)
-          )
-        : null
-      if (canvas) {
-        const canvasContainer = document.querySelector("#canvas-container")
-        if (canvasContainer) {
-          canvasContainer.appendChild(canvas)
-        }
-      }
+    updateCanvas()
+  }, [updateCanvas])
+
+  const [showAnswer, setShowAnswer] = React.useState(false)
+  React.useEffect(() => {
+    if (showAnswer && canvasResultRef.current) {
+      showAnswerFunc(
+        canvasResultRef.current.context,
+        canvasResultRef.current.originalImageData
+      )
+    } else {
+      updateCanvas()
     }
-    foo()
-  }, [randomPokemon])
+  }, [showAnswer, updateCanvas])
+
   return (
     <div className="md:container flex flex-col gap-2 py-6">
-      <div id="canvas-container"></div>
-      <div>answer: {randomPokemon?.name}</div>
+      <div className="flex flex-col justify-center items-center">
+        <div id="canvas-container"></div>
+        {showAnswer ? (
+          <div>
+            <Trans>answer</Trans>: {randomPokemon?.name}
+          </div>
+        ) : (
+          <div className="h-[24px]"></div>
+        )}
+      </div>
+      <div className="flex gap-2">
+        <Button
+          onClick={() => {
+            setRandomSeed(new Date())
+            if (showAnswer) {
+              setShowAnswer(false)
+            }
+          }}
+        >
+          Random
+        </Button>
+        <Button onClick={() => setShowAnswer(!showAnswer)}>
+          {showAnswer ? <Trans>Hide Answer</Trans> : <Trans>Show Answer</Trans>}
+        </Button>
+      </div>
     </div>
   )
 }
 
+interface CanvasWithImageData {
+  canvas: HTMLCanvasElement
+  image: HTMLImageElement
+  originalImageData: ImageData
+  context: CanvasRenderingContext2D
+}
+
 function replaceNonTransparentPixelsWithBlack(
   imageSrc: string
-): Promise<HTMLCanvasElement> {
+): Promise<CanvasWithImageData> {
   return new Promise((resolve, reject) => {
     const img = new Image()
     img.crossOrigin = "Anonymous"
@@ -64,7 +120,13 @@ function replaceNonTransparentPixelsWithBlack(
       ctx.drawImage(img, 0, 0)
 
       // Get the image data
-      console.log(ctx)
+      const originalImageData = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      )
+
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       const data = imageData.data
 
@@ -85,7 +147,30 @@ function replaceNonTransparentPixelsWithBlack(
 
       // Convert the canvas to an image (or use the canvas as needed)
       // const blackedImageSrc = canvas.toDataURL()
-      return resolve(canvas)
+      resolve({ canvas, image: img, originalImageData, context: ctx })
+      return
     }
   })
+}
+function showAnswerFunc(ctx: any, originalImageData: any) {
+  const data = originalImageData.data
+  const width = originalImageData.width
+  const height = originalImageData.height
+
+  let currentLine = 0
+  const totalLines = height
+
+  const interval = setInterval(() => {
+    if (currentLine < totalLines) {
+      for (let x = 0; x < width; x++) {
+        const index = (currentLine * width + x) * 4
+
+        // Restore original pixel color
+        ctx.putImageData(originalImageData, 0, 0, x, currentLine, 1, 1)
+      }
+      currentLine++
+    } else {
+      clearInterval(interval)
+    }
+  }, 1000 / height) // Duration divided by the number of lines
 }
