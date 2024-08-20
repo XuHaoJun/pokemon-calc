@@ -56,7 +56,6 @@ export function WhosThatPokemonPage() {
       getPokemonImageSrc(randomPokemon.id)
     )
     canvasResultRef.current = result
-    result.canvas.id = "pokemon-image"
     result.canvas.setAttribute("style", "width: 300px; height: 300px;")
     const canvasContainer = document.querySelector("#canvas-container")
     if (canvasContainer) {
@@ -72,7 +71,7 @@ export function WhosThatPokemonPage() {
   const [showAnswer, setShowAnswer] = React.useState(false)
   React.useEffect(() => {
     if (showAnswer && canvasResultRef.current) {
-      showAnswerFunc(
+      showAnswerImage(
         canvasResultRef.current.context,
         canvasResultRef.current.originalImageData
       )
@@ -86,7 +85,7 @@ export function WhosThatPokemonPage() {
       <div className="flex flex-col justify-center items-center">
         <div id="canvas-container"></div>
         {showAnswer && randomPokemon ? (
-          <div className="py-2">
+          <div className="py-2 flex justify-center items-center">
             <PkmTypeAnimation
               nameDisplay={randomPokemon.nameDisplay}
               defaultFormNameDisplay={randomPokemon.defaultFormNameDisplay}
@@ -97,7 +96,19 @@ export function WhosThatPokemonPage() {
         )}
       </div>
       <div className="flex gap-2">
-        <Button>Hint</Button>
+        <Button
+          onClick={() => {
+            if (canvasResultRef.current) {
+              showHintImage(
+                canvasResultRef.current.imageData,
+                canvasResultRef.current.context,
+                canvasResultRef.current.originalImageData
+              )
+            }
+          }}
+        >
+          Hint
+        </Button>
         <Button
           onClick={() => {
             setRandomSeed(new Date())
@@ -164,6 +175,7 @@ interface CanvasWithImageData {
   canvas: HTMLCanvasElement
   image: HTMLImageElement
   originalImageData: ImageData
+  imageData: ImageData
   context: CanvasRenderingContext2D
 }
 
@@ -216,13 +228,18 @@ function replaceNonTransparentPixelsWithBlack(
 
       // Convert the canvas to an image (or use the canvas as needed)
       // const blackedImageSrc = canvas.toDataURL()
-      resolve({ canvas, image: img, originalImageData, context: ctx })
-      return
+      return resolve({
+        canvas,
+        image: img,
+        originalImageData,
+        context: ctx,
+        imageData: imageData,
+      })
     }
   })
 }
 
-function showAnswerFunc(ctx: any, originalImageData: any) {
+function showAnswerImage(ctx: any, originalImageData: any) {
   const data = originalImageData.data
   const width = originalImageData.width
   const height = originalImageData.height
@@ -243,4 +260,72 @@ function showAnswerFunc(ctx: any, originalImageData: any) {
       clearInterval(interval)
     }
   }, SHOW_ANIMATION_TIME / height) // Duration divided by the number of lines
+}
+
+function showHintImage(imageData: any, ctx: any, originalImageData: any) {
+  const data = imageData.data
+  const originalData = originalImageData.data
+  const width = imageData.width
+  const height = imageData.height
+
+  const rectWidth = 10
+  const rectHeight = 10
+
+  let foundValidRectangle = false
+  let attempts = 0
+
+  while (!foundValidRectangle && attempts < 1000) {
+    attempts++
+
+    const randomPixelIndex = Math.floor(Math.random() * (width * height))
+    const x = randomPixelIndex % width
+    const y = Math.floor(randomPixelIndex / width)
+
+    const topLeftIndex = (y * width + x) * 4
+    const topRightX = x + rectWidth - 1
+    const topRightY = y
+    const bottomLeftX = x
+    const bottomLeftY = y + rectHeight - 1
+    const bottomRightX = x + rectWidth - 1
+    const bottomRightY = y + rectHeight - 1
+
+    if (topRightX < width && bottomRightY < height) {
+      const topRightIndex = (topRightY * width + topRightX) * 4
+      const bottomLeftIndex = (bottomLeftY * width + bottomLeftX) * 4
+      const bottomRightIndex = (bottomRightY * width + bottomRightX) * 4
+
+      const topLeftAlpha = data[topLeftIndex + 3]
+      const topRightAlpha = data[topRightIndex + 3]
+      const bottomLeftAlpha = data[bottomLeftIndex + 3]
+      const bottomRightAlpha = data[bottomRightIndex + 3]
+
+      if (
+        topLeftAlpha !== 0 &&
+        topRightAlpha !== 0 &&
+        bottomLeftAlpha !== 0 &&
+        bottomRightAlpha !== 0
+      ) {
+        foundValidRectangle = true
+
+        for (let i = 0; i < rectHeight; i++) {
+          for (let j = 0; j < rectWidth; j++) {
+            const pixelX = x + j
+            const pixelY = y + i
+            const pixelIndex = (pixelY * width + pixelX) * 4
+
+            // Get original pixel color from originalImageData
+            data[pixelIndex] = Math.floor(originalData[pixelIndex])
+            data[pixelIndex + 1] = Math.floor(
+              originalData[pixelIndex + 1] 
+            )
+            data[pixelIndex + 2] = Math.floor(
+              originalData[pixelIndex + 2] 
+            )
+          }
+        }
+
+        ctx.putImageData(imageData, 0, 0)
+      }
+    }
+  }
 }
