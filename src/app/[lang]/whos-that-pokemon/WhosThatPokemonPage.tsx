@@ -3,12 +3,18 @@
 import * as React from "react"
 import NextImage from "next/image"
 import { useFetchPokemonData } from "@/api/query"
+import { getI18nIds } from "@/utils/getI18nIds"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
+import { toPokemon2 } from "@/utils/toPokemon2"
 import { Trans } from "@lingui/macro"
+import { useLingui } from "@lingui/react"
+import { TypeAnimation } from "react-type-animation"
 import * as R from "remeda"
 
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Button } from "@/components/ui/button"
+
+const SHOW_ANIMATION_TIME = 2000
 
 export function WhosThatPokemonPage() {
   useLoadPokemonLingui({ targets: ["name"] })
@@ -17,12 +23,27 @@ export function WhosThatPokemonPage() {
 
   const [randomSeed, setRandomSeed] = React.useState(new Date())
 
+  const lingui = useLingui()
   const randomPokemon = React.useMemo(
     () =>
       query.data && randomSeed
-        ? R.sample(query.data?.data.pokemon_v2_pokemon, 1)[0]
+        ? (() => {
+            const sampled = R.sample(query.data?.data.pokemon_v2_pokemon, 1)[0]
+            if (sampled) {
+              return toPokemon2({
+                pokemon: sampled,
+                pokemon_v2_ability: query.data.data.pokemon_v2_ability,
+                pokemon_v2_type: query.data.data.pokemon_v2_type,
+                pokemon_v2_move: query.data.data.pokemon_v2_move,
+                pokemon_v2_evolutionchain:
+                  query.data.data.pokemon_v2_evolutionchain,
+                t: lingui._,
+              })
+            }
+            return null
+          })()
         : null,
-    [query.data, randomSeed]
+    [lingui._, query.data, randomSeed]
   )
 
   const canvasResultRef = React.useRef<CanvasWithImageData | null>(null)
@@ -36,7 +57,7 @@ export function WhosThatPokemonPage() {
     )
     canvasResultRef.current = result
     result.canvas.id = "pokemon-image"
-    result.canvas.style = "width: 300px; height: 300px;"
+    result.canvas.setAttribute("style", "width: 300px; height: 300px;")
     const canvasContainer = document.querySelector("#canvas-container")
     if (canvasContainer) {
       canvasContainer.replaceChildren()
@@ -64,15 +85,19 @@ export function WhosThatPokemonPage() {
     <div className="md:container flex flex-col gap-2 py-6">
       <div className="flex flex-col justify-center items-center">
         <div id="canvas-container"></div>
-        {showAnswer ? (
-          <div>
-            <Trans>answer</Trans>: {randomPokemon?.name}
+        {showAnswer && randomPokemon ? (
+          <div className="py-2">
+            <PkmTypeAnimation
+              nameDisplay={randomPokemon.nameDisplay}
+              defaultFormNameDisplay={randomPokemon.defaultFormNameDisplay}
+            />
           </div>
         ) : (
-          <div className="h-[24px]"></div>
+          <div className="text-4xl invisible py-2">placeholder</div>
         )}
       </div>
       <div className="flex gap-2">
+        <Button>Hint</Button>
         <Button
           onClick={() => {
             setRandomSeed(new Date())
@@ -88,6 +113,50 @@ export function WhosThatPokemonPage() {
         </Button>
       </div>
     </div>
+  )
+}
+
+function PkmTypeAnimation({
+  nameDisplay,
+  defaultFormNameDisplay,
+}: {
+  nameDisplay: string
+  defaultFormNameDisplay: string
+}) {
+  const ref = React.useRef<HTMLSpanElement | null>(null)
+  const [nameDisplayDone, setNameDisplayDone] = React.useState(false)
+  return (
+    <>
+      <TypeAnimation
+        ref={ref}
+        sequence={[
+          500,
+          nameDisplay,
+          () => {
+            if (ref.current) {
+              ref.current.className =
+                "scroll-m-20 text-4xl font-bold tracking-tight"
+            }
+            setNameDisplayDone(true)
+          },
+        ]}
+        cursor
+        speed={1}
+        wrapper="span"
+        repeat={0}
+        className="scroll-m-20 text-4xl font-bold tracking-tight"
+      />
+      {defaultFormNameDisplay && nameDisplayDone && (
+        <TypeAnimation
+          sequence={[defaultFormNameDisplay]}
+          cursor={false}
+          speed={1}
+          wrapper="span"
+          repeat={0}
+          className="text-base text-muted-foreground pl-2"
+        />
+      )}
+    </>
   )
 }
 
@@ -152,6 +221,7 @@ function replaceNonTransparentPixelsWithBlack(
     }
   })
 }
+
 function showAnswerFunc(ctx: any, originalImageData: any) {
   const data = originalImageData.data
   const width = originalImageData.width
@@ -172,5 +242,5 @@ function showAnswerFunc(ctx: any, originalImageData: any) {
     } else {
       clearInterval(interval)
     }
-  }, 1000 / height) // Duration divided by the number of lines
+  }, SHOW_ANIMATION_TIME / height) // Duration divided by the number of lines
 }
