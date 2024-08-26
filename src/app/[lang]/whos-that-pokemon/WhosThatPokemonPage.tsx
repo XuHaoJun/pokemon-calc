@@ -1,32 +1,46 @@
 "use client"
 
 import * as React from "react"
-import NextImage from "next/image"
 import { useFetchPokemonData } from "@/api/query"
-import { getI18nIds } from "@/utils/getI18nIds"
+import { flexsearchAtom } from "@/atoms"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import { toPokemon2 } from "@/utils/toPokemon2"
-import { Trans } from "@lingui/macro"
+import { msg, Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
+import * as DialogPrimitive from "@radix-ui/react-dialog"
+import { useDebounce } from "ahooks"
+import type { SimpleDocumentSearchResultSetUnit } from "flexsearch"
+import { useAtom } from "jotai"
+import { ExternalLinkIcon, X } from "lucide-react"
 import { TypeAnimation } from "react-type-animation"
 import * as R from "remeda"
 
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Button } from "@/components/ui/button"
+import { Command, CommandInput, CommandList } from "@/components/ui/command"
+import { Link } from "@/components/Link"
+import {
+  PokemonCommandItem,
+  PokemonCommandItemSelected,
+} from "@/components/pokemon/PokemonCommandItem"
 
 const SHOW_ANIMATION_TIME = 2000
 
+const INIT_SEED = new Date()
+
 export function WhosThatPokemonPage() {
-  useLoadPokemonLingui({ targets: ["name"] })
+  const { isPkmLinguiLoaded } = useLoadPokemonLingui({
+    targets: ["name"],
+  })
 
   const query = useFetchPokemonData()
 
-  const [randomSeed, setRandomSeed] = React.useState(new Date())
+  const [randomSeed, setRandomSeed] = React.useState(INIT_SEED)
 
   const lingui = useLingui()
   const randomPokemon = React.useMemo(
     () =>
-      query.data && randomSeed
+      query.data && randomSeed && isPkmLinguiLoaded
         ? (() => {
             const sampled = R.sample(query.data?.data.pokemon_v2_pokemon, 1)[0]
             if (sampled) {
@@ -43,7 +57,7 @@ export function WhosThatPokemonPage() {
             return null
           })()
         : null,
-    [lingui._, query.data, randomSeed]
+    [lingui._, query.data, randomSeed, isPkmLinguiLoaded]
   )
 
   const canvasResultRef = React.useRef<CanvasWithImageData | null>(null)
@@ -80,6 +94,53 @@ export function WhosThatPokemonPage() {
     }
   }, [showAnswer, updateCanvas])
 
+  const [searchText, setSearchText] = React.useState<string>("")
+  const debouncedSearchText = useDebounce(searchText, {
+    wait: 250,
+    maxWait: 250 * 3,
+  })
+  const [isSearching, setIsSearching] = React.useState(false)
+  const [searchResult, setSearchResult] = React.useState<
+    SimpleDocumentSearchResultSetUnit[]
+  >([])
+  const [{ index: flexsearchIndex }] = useAtom(flexsearchAtom)
+  React.useEffect(() => {
+    async function run() {
+      if (flexsearchIndex) {
+        setIsSearching(true)
+        console.log("debouncedSearchText", debouncedSearchText)
+        const nextSearchResult =
+          await flexsearchIndex.searchAsync(debouncedSearchText)
+        setSearchResult(nextSearchResult)
+        setIsSearching(false)
+      }
+    }
+    run()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchText, flexsearchIndex])
+
+  const [ansewerPokemonId, setAnsewerPokemonId] = React.useState<number | null>(
+    null
+  )
+  const handlePokemonSelect = (selected: PokemonCommandItemSelected) => {
+    setAnsewerPokemonId(selected.id)
+    setSearchText(
+      selected.nameDisplay +
+        (selected.defaultFormNameDisplay ? " " : "") +
+        selected.defaultFormNameDisplay
+    )
+  }
+
+  const handleSubmit = () => {}
+
+  const pass = React.useMemo<boolean | null>(() => {
+    if (!randomPokemon) {
+      return null
+    } else {
+      return randomPokemon.id === ansewerPokemonId
+    }
+  }, [ansewerPokemonId, randomPokemon])
+
   return (
     <div className="md:container flex flex-col gap-2 py-6">
       <div className="flex flex-col justify-center items-center">
@@ -87,6 +148,7 @@ export function WhosThatPokemonPage() {
         {showAnswer && randomPokemon ? (
           <div className="py-2 flex justify-center items-center">
             <PkmTypeAnimation
+              id={randomPokemon.id}
               nameDisplay={randomPokemon.nameDisplay}
               defaultFormNameDisplay={randomPokemon.defaultFormNameDisplay}
             />
@@ -95,7 +157,8 @@ export function WhosThatPokemonPage() {
           <div className="text-4xl invisible py-2">placeholder</div>
         )}
       </div>
-      <div className="flex gap-2">
+
+      <div className="flex gap-2 justify-end">
         <Button
           onClick={() => {
             if (canvasResultRef.current) {
@@ -112,6 +175,8 @@ export function WhosThatPokemonPage() {
         <Button
           onClick={() => {
             setRandomSeed(new Date())
+            setSearchText("")
+            setSearchResult([])
             if (showAnswer) {
               setShowAnswer(false)
             }
@@ -123,19 +188,62 @@ export function WhosThatPokemonPage() {
           {showAnswer ? <Trans>Hide Answer</Trans> : <Trans>Show Answer</Trans>}
         </Button>
       </div>
+      <div className="flex justify-center items-baseline">
+        <Command
+          className="rounded-lg border shadow-md md:max-w-[450px] relative"
+          shouldFilter={false}
+        >
+          <CommandInput
+            value={searchText}
+            onValueChange={setSearchText}
+            placeholder={lingui._(msg`Who's That Pokemon?`)}
+          />
+          <CommandList>
+            {searchResult
+              .flatMap((x) => x.result)
+              .map((id) => (
+                <PokemonCommandItem
+                  key={id}
+                  id={id as number}
+                  showImage={false}
+                  wrapLink={false}
+                  onSelect={handlePokemonSelect}
+                />
+              ))}
+          </CommandList>
+          <button
+            className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+            onClick={() => {
+              setSearchText("")
+              setAnsewerPokemonId(null)
+            }}
+          >
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </button>
+        </Command>
+        <Button className="ml-2" onClick={handleSubmit}>
+          <Trans>Submit</Trans>
+        </Button>
+      </div>
     </div>
   )
 }
 
 function PkmTypeAnimation({
+  id,
   nameDisplay,
   defaultFormNameDisplay,
 }: {
+  id: number
   nameDisplay: string
   defaultFormNameDisplay: string
 }) {
   const ref = React.useRef<HTMLSpanElement | null>(null)
   const [nameDisplayDone, setNameDisplayDone] = React.useState(false)
+  const [defaultFormNameDisplayDone, setDefaultFormNameDisplayDone] =
+    React.useState(defaultFormNameDisplay === "" ? true : false)
+  const href = `/pokedex/${id}`
   return (
     <>
       <TypeAnimation
@@ -155,17 +263,27 @@ function PkmTypeAnimation({
         speed={1}
         wrapper="span"
         repeat={0}
-        className="scroll-m-20 text-4xl font-bold tracking-tight"
+        className="scroll-m-20 text-4xl font-bold tracking-tight ml-2"
       />
       {defaultFormNameDisplay && nameDisplayDone && (
         <TypeAnimation
-          sequence={[defaultFormNameDisplay]}
+          sequence={[
+            defaultFormNameDisplay,
+            () => setDefaultFormNameDisplayDone(true),
+          ]}
           cursor={false}
           speed={1}
           wrapper="span"
           repeat={0}
           className="text-base text-muted-foreground pl-2"
         />
+      )}
+      {nameDisplayDone && defaultFormNameDisplayDone && (
+        <Link href={href} target="_blank">
+          <Button variant="outline" size="sm" className="ml-2">
+            <ExternalLinkIcon className="h-3 w-3" />
+          </Button>
+        </Link>
       )}
     </>
   )
@@ -189,7 +307,7 @@ function replaceNonTransparentPixelsWithBlack(
     img.onload = function () {
       // Create a canvas and set its dimensions to the image's dimensions
       const canvas = document.createElement("canvas")
-      const ctx = canvas.getContext("2d")
+      const ctx = canvas.getContext("2d", { willReadFrequently: true })
       if (!ctx) {
         reject(new Error("Failed to get 2d context"))
         return
@@ -315,12 +433,8 @@ function showHintImage(imageData: any, ctx: any, originalImageData: any) {
 
             // Get original pixel color from originalImageData
             data[pixelIndex] = Math.floor(originalData[pixelIndex])
-            data[pixelIndex + 1] = Math.floor(
-              originalData[pixelIndex + 1] 
-            )
-            data[pixelIndex + 2] = Math.floor(
-              originalData[pixelIndex + 2] 
-            )
+            data[pixelIndex + 1] = Math.floor(originalData[pixelIndex + 1])
+            data[pixelIndex + 2] = Math.floor(originalData[pixelIndex + 2])
           }
         }
 

@@ -1,9 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useFetchPokemonData } from "@/api/query"
-import { flexsearchAtom, flexsearchIsIndexingAtom } from "@/atoms"
-import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
+import { flexsearchAtom } from "@/atoms"
 import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import { getRandomInt } from "@/utils/remebdaExt"
 import { msg, Trans } from "@lingui/macro"
@@ -11,8 +9,8 @@ import { useLingui } from "@lingui/react"
 import { DialogTitle } from "@radix-ui/react-dialog"
 import { useDebounce } from "ahooks"
 import { CommandLoading } from "cmdk"
-import type { Document, SimpleDocumentSearchResultSetUnit } from "flexsearch"
-import { useAtom, useSetAtom } from "jotai"
+import type { SimpleDocumentSearchResultSetUnit } from "flexsearch"
+import { useAtom } from "jotai"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import * as R from "remeda"
 
@@ -223,7 +221,9 @@ function PokemonCommandItem({
           src={getPokemonImageSrc(id)}
         />
         <span className="ml-2">{lingui._(`pkm.name.${id}`)}</span>
-        <small className="ml-1 text-muted-foreground">{defaultFormNameDisplay}</small>
+        <small className="ml-1 text-muted-foreground">
+          {defaultFormNameDisplay}
+        </small>
       </CommandItem>
     </Link>
   )

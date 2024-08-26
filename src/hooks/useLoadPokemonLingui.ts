@@ -3,6 +3,7 @@ import { useFetchPokemonData } from "@/api/query"
 import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
 import { getPokemonDefaultFormName } from "@/utils/getPokemonDefaultFormName"
 import { useLingui } from "@lingui/react"
+import { atom, useAtom } from "jotai"
 
 export type PokemonLinguiType = "name"
 
@@ -12,15 +13,22 @@ export interface UsePokemonLinguiParams {
   enableForceRender?: boolean
 }
 
+export const isPkmLinguiLoadedAtom = atom<boolean>(false)
+
 export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
   const { targets, enabled = true, enableForceRender = false } = params
 
-  const [updateOnce, setUpdateOnce] = React.useState<boolean>(false)
+  const [isPkmLinguiLoaded, setIsPkmLinguiLoaded] = useAtom(
+    isPkmLinguiLoadedAtom
+  )
 
   const query = useFetchPokemonData()
   const lingui = useLingui()
   React.useEffect(() => {
-    if (enabled === false) {
+    setIsPkmLinguiLoaded(false)
+  }, [lingui.i18n.locale, setIsPkmLinguiLoaded])
+  React.useEffect(() => {
+    if (enabled === false || isPkmLinguiLoaded) {
       return
     }
     let loaded = false
@@ -60,13 +68,8 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
       loaded = true
     }
 
-    if (loaded) {
-      setUpdateOnce(true)
-    }
-    // TODO
-    // should watch lingui.messages[<YOUR_TARGET>] update and then trigger render
-    if (updateOnce === false) {
-      setUpdateOnce(true)
+    if (loaded && isPkmLinguiLoaded === false) {
+      setIsPkmLinguiLoaded(true)
     }
   }, [
     query.data,
@@ -75,10 +78,11 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
     targets,
     enabled,
     enableForceRender,
-    updateOnce,
+    isPkmLinguiLoaded,
     lingui,
+    setIsPkmLinguiLoaded,
   ])
   return {
-    updateOnce,
+    isPkmLinguiLoaded,
   }
 }

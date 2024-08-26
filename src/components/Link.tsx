@@ -3,7 +3,13 @@ import NextLink, { LinkProps as NextLinkProps } from "next/link"
 
 import { useLocalePath } from "@/hooks/useLocalePath"
 
-export interface LinkProps extends NextLinkProps {
+type FinalNextLinkProps = Omit<
+  React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  keyof NextLinkProps
+> &
+  NextLinkProps
+
+export interface LinkProps extends FinalNextLinkProps {
   disableLocale?: boolean
   className?: string
 }
