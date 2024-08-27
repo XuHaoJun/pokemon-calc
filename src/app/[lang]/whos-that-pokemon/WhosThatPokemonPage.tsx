@@ -7,11 +7,11 @@ import { getPokemonImageSrc } from "@/utils/getPokemonImageSrc"
 import { toPokemon2 } from "@/utils/toPokemon2"
 import { msg, Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { useDebounce } from "ahooks"
 import type { SimpleDocumentSearchResultSetUnit } from "flexsearch"
 import { useAtom } from "jotai"
 import { ExternalLinkIcon, X } from "lucide-react"
+import { unstable_batchedUpdates } from "react-dom"
 import { TypeAnimation } from "react-type-animation"
 import * as R from "remeda"
 
@@ -122,57 +122,55 @@ export function WhosThatPokemonPage() {
 
   React.useEffect(() => {
     async function run() {
-      if (ansewerPokemon) {
-        console.log("?")
-        return
-      } else {
-        if (flexsearchIndex) {
+      if (flexsearchIndex) {
+        unstable_batchedUpdates(async () => {
           setIsSearching(true)
           const nextSearchResult =
             await flexsearchIndex.searchAsync(debouncedSearchText)
           setSearchResult(nextSearchResult)
           setIsSearching(false)
-        }
+        })
       }
     }
     run()
-  }, [
-    debouncedSearchText,
-    ansewerPokemon,
-    flexsearchIndex,
-    searchResult.length,
-  ])
+  }, [debouncedSearchText, ansewerPokemon, flexsearchIndex])
 
   React.useEffect(() => {
-    setAnsewerPokemon(null)
-  }, [searchText])
-
-  React.useEffect(() => {
-    if (ansewerPokemon && searchResult.length > 0) {
-      setSearchResult([])
+    if (ansewerPokemon) {
+      const answerSearchText = getSearchTextByPkm(ansewerPokemon)
+      if (searchText !== answerSearchText) {
+        unstable_batchedUpdates(() => {
+          setShowWrongResult(false)
+          setAnsewerPokemon(null)
+        })
+      }
     }
-  }, [searchResult.length, ansewerPokemon])
+  }, [searchText, ansewerPokemon])
 
   const handlePokemonSelect = (selected: PokemonCommandItemSelected) => {
-    setSearchText(
-      selected.nameDisplay +
-        (selected.defaultFormNameDisplay ? " " : "") +
-        selected.defaultFormNameDisplay
-    )
-    setAnsewerPokemon(selected)
+    unstable_batchedUpdates(() => {
+      setAnsewerPokemon(selected)
+      const nextSearchText = getSearchTextByPkm(selected)
+      setSearchText(nextSearchText)
+    })
   }
 
-  const handleSubmit = () => {
-    setShowAnswer(true)
-  }
-
-  const isPass = React.useMemo<boolean | null>(() => {
+  const isPass = React.useMemo<boolean>(() => {
     if (R.isNullish(randomPokemon) || R.isNullish(ansewerPokemon)) {
-      return null
+      return false
     } else {
       return randomPokemon.id === ansewerPokemon.id
     }
   }, [ansewerPokemon, randomPokemon])
+
+  const [showWrongResult, setShowWrongResult] = React.useState<boolean>(false)
+  const handleSubmit = () => {
+    if (isPass) {
+      setShowAnswer(true)
+    } else {
+      setShowWrongResult(true)
+    }
+  }
 
   const handleHint = () => {
     if (canvasResultRef.current) {
@@ -185,8 +183,8 @@ export function WhosThatPokemonPage() {
   }
 
   const submitDisabled = React.useMemo(() => {
-    return R.isNullish(ansewerPokemon)
-  }, [ansewerPokemon])
+    return R.isNullish(ansewerPokemon) || isPass
+  }, [ansewerPokemon, isPass])
 
   return (
     <div className="md:container flex flex-col gap-2 py-6">
@@ -224,12 +222,14 @@ export function WhosThatPokemonPage() {
         <Button
           variant="secondary"
           onClick={() => {
-            setRandomSeed(new Date())
-            setSearchText("")
-            setSearchResult([])
-            if (showAnswer) {
+            unstable_batchedUpdates(() => {
+              setRandomSeed(new Date())
+              setSearchText("")
+              setSearchResult([])
+              setAnsewerPokemon(null)
               setShowAnswer(false)
-            }
+              setShowWrongResult(false)
+            })
           }}
         >
           <Trans>Random</Trans>
@@ -249,36 +249,51 @@ export function WhosThatPokemonPage() {
             placeholder={lingui._(msg`Who's That Pokémon?`)}
           />
           <CommandList>
-            {searchResult
-              .flatMap((x) => x.result)
-              .map((id) => (
-                <PokemonCommandItem
-                  key={id}
-                  id={id as number}
-                  showImage={false}
-                  wrapLink={false}
-                  onSelect={handlePokemonSelect}
-                />
-              ))}
+            {!ansewerPokemon && searchText
+              ? searchResult
+                  .flatMap((x) => x.result)
+                  .map((id) => (
+                    <PokemonCommandItem
+                      key={id}
+                      id={id as number}
+                      showImage={false}
+                      wrapLink={false}
+                      onSelect={handlePokemonSelect}
+                    />
+                  ))
+              : null}
           </CommandList>
           <button
             className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
             onClick={() => {
-              setSearchText("")
-              setAnsewerPokemon(null)
+              unstable_batchedUpdates(() => {
+                setSearchText("")
+                setSearchResult([])
+                setAnsewerPokemon(null)
+                setShowWrongResult(false)
+              })
             }}
+            disabled={isPass !== null ? isPass : false}
           >
             <X className="h-4 w-4" />
             <span className="sr-only">Close</span>
           </button>
         </Command>
-        <Button
-          className="ml-2"
-          onClick={handleSubmit}
-          disabled={submitDisabled}
-        >
-          <Trans>Submit</Trans>
-        </Button>
+        <Tooltip open={showWrongResult}>
+          <TooltipTrigger asChild>
+            <Button
+              className="ml-2"
+              onClick={handleSubmit}
+            >
+              <Trans>Submit</Trans>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>
+              <Trans>Wrong!</Trans>
+            </p>
+          </TooltipContent>
+        </Tooltip>
       </div>
     </div>
   )
@@ -496,4 +511,12 @@ function showHintImage(imageData: any, ctx: any, originalImageData: any) {
       }
     }
   }
+}
+
+function getSearchTextByPkm(selected: PokemonCommandItemSelected) {
+  return (
+    selected.nameDisplay +
+    (selected.defaultFormNameDisplay ? " " : "") +
+    selected.defaultFormNameDisplay
+  )
 }
