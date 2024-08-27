@@ -26,7 +26,7 @@ export function MainNav() {
           href="/type-calc"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/type-calc" ? "text-foreground" : "text-foreground/60"
+            pathname === "/type-calc" ? "text-foreground" : "text-foreground/50"
           )}
         >
           <Trans>Type Calculator</Trans>
@@ -37,7 +37,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname.startsWith("/pokedex")
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-foreground/50"
           )}
         >
           <Trans>Pokédex</Trans>
@@ -48,10 +48,10 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname.startsWith("/whos-that-pokemon")
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-foreground/50"
           )}
         >
-          <Trans>Who&apos;s That Pokemon</Trans>
+          <Trans>Who&apos;s That Pokémon?</Trans>
         </Link>
       </nav>
     </div>

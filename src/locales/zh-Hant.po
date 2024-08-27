@@ -35,14 +35,21 @@ msgstr "English"
 msgid "Envolution"
 msgstr "進化"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:83
-#: src/hooks/useLoadPokemonLingui.ts:70
+#: src/utils/getPokemonDefaultFormName.ts:19
 msgid "gmax"
 msgstr "極巨化"
 
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:151
 msgid "Hidden Ability"
 msgstr "隱藏特性"
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:203
+msgid "Hide Answer"
+msgstr "隱藏答案"
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:180
+msgid "Hint"
+msgstr "提示"
 
 #: src/app/[lang]/pokedex/PokedexPage.tsx:97
 #: src/app/[lang]/pokedex/PokedexPage.tsx:104
@@ -53,44 +60,52 @@ msgstr "HP"
 msgid "Level Up Moves"
 msgstr "從升級學會的招式"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:81
-#: src/hooks/useLoadPokemonLingui.ts:68
+#: src/utils/getPokemonDefaultFormName.ts:17
 msgid "mega"
 msgstr "Mega"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:78
-#: src/hooks/useLoadPokemonLingui.ts:65
+#: src/utils/getPokemonDefaultFormName.ts:14
 msgid "mega-x"
 msgstr "Mega-X"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:80
-#: src/hooks/useLoadPokemonLingui.ts:67
+#: src/utils/getPokemonDefaultFormName.ts:16
 msgid "mega-y"
 msgstr "Mega-Y"
 
-#: src/components/CommandMenu.tsx:152
+#: src/components/CommandMenu.tsx:150
 msgid "No results found."
 msgstr "查無結果"
 
 #: src/components/MainNav.tsx:43
-#: src/components/MobileNav.tsx:68
 msgid "Pokédex"
 msgstr "寶可夢圖鑑"
 
-#: src/app/[lang]/layout.tsx:32
-#: src/app/[lang]/pokedex/[id]/page.tsx:39
+#: src/app/[lang]/layout.tsx:33
+#: src/app/[lang]/pokedex/[id]/page.tsx:40
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr "寶可夢計算機"
 
-#: src/components/CommandMenu.tsx:127
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:200
+msgid "Random"
+msgstr "隨機"
+
+#: src/components/CommandMenu.tsx:125
 msgid "Search Pokemon..."
 msgstr "搜尋寶可夢..."
 
-#: src/components/CommandMenu.tsx:130
-#: src/components/CommandMenu.tsx:142
+#: src/components/CommandMenu.tsx:128
+#: src/components/CommandMenu.tsx:140
 msgid "Search..."
 msgstr "搜尋..."
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:203
+msgid "Show Answer"
+msgstr "顯示答案"
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:185
+msgid "Show partial original image"
+msgstr "顯示部分原始圖片"
 
 #: src/app/[lang]/pokedex/PokedexPage.tsx:151
 msgid "Sp.Atk"
@@ -116,6 +131,10 @@ msgstr "速度"
 msgid "Speed"
 msgstr "速度"
 
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:241
+msgid "Submit"
+msgstr "提交"
+
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:226
 msgid "TM/HM Moves"
 msgstr "從招式機學會的招式"
@@ -128,7 +147,7 @@ msgstr "總和"
 msgid "Total"
 msgstr "總和"
 
-#: src/components/CommandMenu.tsx:147
+#: src/components/CommandMenu.tsx:145
 msgid "Type a search..."
 msgstr "搜尋..."
 
@@ -141,8 +160,10 @@ msgstr "屬性計算機"
 msgid "Type Defensive"
 msgstr ""
 
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:214
 #: src/components/MainNav.tsx:54
-msgid "Who's That Pokemon"
+#: src/components/MobileNav.tsx:68
+msgid "Who's That Pokémon?"
 msgstr "猜猜我是誰？"
 
 #: src/components/SiteLanguageSelect.tsx:28

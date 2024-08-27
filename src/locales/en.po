@@ -35,14 +35,21 @@ msgstr "English"
 msgid "Envolution"
 msgstr "Envolution"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:83
-#: src/hooks/useLoadPokemonLingui.ts:70
+#: src/utils/getPokemonDefaultFormName.ts:19
 msgid "gmax"
 msgstr "Gmax"
 
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:151
 msgid "Hidden Ability"
 msgstr "Hidden Ability"
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:203
+msgid "Hide Answer"
+msgstr "Hide Answer"
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:180
+msgid "Hint"
+msgstr "Hint"
 
 #: src/app/[lang]/pokedex/PokedexPage.tsx:97
 #: src/app/[lang]/pokedex/PokedexPage.tsx:104
@@ -53,44 +60,52 @@ msgstr "HP"
 msgid "Level Up Moves"
 msgstr "Level Up Moves"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:81
-#: src/hooks/useLoadPokemonLingui.ts:68
+#: src/utils/getPokemonDefaultFormName.ts:17
 msgid "mega"
 msgstr "mega"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:78
-#: src/hooks/useLoadPokemonLingui.ts:65
+#: src/utils/getPokemonDefaultFormName.ts:14
 msgid "mega-x"
 msgstr "Mega-X"
 
-#: src/app/[lang]/pokedex/[id]/page.tsx:80
-#: src/hooks/useLoadPokemonLingui.ts:67
+#: src/utils/getPokemonDefaultFormName.ts:16
 msgid "mega-y"
 msgstr "Mega-Y"
 
-#: src/components/CommandMenu.tsx:152
+#: src/components/CommandMenu.tsx:150
 msgid "No results found."
 msgstr "No results found."
 
 #: src/components/MainNav.tsx:43
-#: src/components/MobileNav.tsx:68
 msgid "Pokédex"
 msgstr "Pokédex"
 
-#: src/app/[lang]/layout.tsx:32
-#: src/app/[lang]/pokedex/[id]/page.tsx:39
+#: src/app/[lang]/layout.tsx:33
+#: src/app/[lang]/pokedex/[id]/page.tsx:40
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr "Pokemon Calc"
 
-#: src/components/CommandMenu.tsx:127
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:200
+msgid "Random"
+msgstr "Random"
+
+#: src/components/CommandMenu.tsx:125
 msgid "Search Pokemon..."
 msgstr "Search Pokemon..."
 
-#: src/components/CommandMenu.tsx:130
-#: src/components/CommandMenu.tsx:142
+#: src/components/CommandMenu.tsx:128
+#: src/components/CommandMenu.tsx:140
 msgid "Search..."
 msgstr "Search..."
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:203
+msgid "Show Answer"
+msgstr "Show Answer"
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:185
+msgid "Show partial original image"
+msgstr "Show partial original image"
 
 #: src/app/[lang]/pokedex/PokedexPage.tsx:151
 msgid "Sp.Atk"
@@ -116,6 +131,10 @@ msgstr "Spe"
 msgid "Speed"
 msgstr "Speed"
 
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:241
+msgid "Submit"
+msgstr "Submit"
+
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:226
 msgid "TM/HM Moves"
 msgstr "TM/HM Moves"
@@ -128,7 +147,7 @@ msgstr "Tot"
 msgid "Total"
 msgstr "Total"
 
-#: src/components/CommandMenu.tsx:147
+#: src/components/CommandMenu.tsx:145
 msgid "Type a search..."
 msgstr "Type a search..."
 
@@ -141,9 +160,11 @@ msgstr "Type Calculator"
 msgid "Type Defensive"
 msgstr "Type Defensive"
 
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:214
 #: src/components/MainNav.tsx:54
-msgid "Who's That Pokemon"
-msgstr "Who's That Pokemon"
+#: src/components/MobileNav.tsx:68
+msgid "Who's That Pokémon?"
+msgstr "Who's That Pokémon?"
 
 #: src/components/SiteLanguageSelect.tsx:28
 msgid "한국어"

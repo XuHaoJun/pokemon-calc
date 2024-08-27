@@ -18,6 +18,12 @@ import * as R from "remeda"
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Button } from "@/components/ui/button"
 import { Command, CommandInput, CommandList } from "@/components/ui/command"
+import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { Link } from "@/components/Link"
 import {
   PokemonCommandItem,
@@ -62,6 +68,8 @@ export function WhosThatPokemonPage() {
 
   const canvasResultRef = React.useRef<CanvasWithImageData | null>(null)
 
+  const [isCanvasFirstUpdated, setIsCanvasFirstUpdated] =
+    React.useState<boolean>(false)
   const updateCanvas = React.useCallback(async () => {
     if (!randomPokemon) {
       return
@@ -75,7 +83,11 @@ export function WhosThatPokemonPage() {
     if (canvasContainer) {
       canvasContainer.replaceChildren()
       canvasContainer.appendChild(result.canvas)
+      if (!isCanvasFirstUpdated) {
+        setIsCanvasFirstUpdated(true)
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [randomPokemon])
 
   React.useEffect(() => {
@@ -104,46 +116,84 @@ export function WhosThatPokemonPage() {
     SimpleDocumentSearchResultSetUnit[]
   >([])
   const [{ index: flexsearchIndex }] = useAtom(flexsearchAtom)
+
+  const [ansewerPokemon, setAnsewerPokemon] =
+    React.useState<PokemonCommandItemSelected | null>(null)
+
   React.useEffect(() => {
     async function run() {
-      if (flexsearchIndex) {
-        setIsSearching(true)
-        console.log("debouncedSearchText", debouncedSearchText)
-        const nextSearchResult =
-          await flexsearchIndex.searchAsync(debouncedSearchText)
-        setSearchResult(nextSearchResult)
-        setIsSearching(false)
+      if (ansewerPokemon) {
+        console.log("?")
+        return
+      } else {
+        if (flexsearchIndex) {
+          setIsSearching(true)
+          const nextSearchResult =
+            await flexsearchIndex.searchAsync(debouncedSearchText)
+          setSearchResult(nextSearchResult)
+          setIsSearching(false)
+        }
       }
     }
     run()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSearchText, flexsearchIndex])
+  }, [
+    debouncedSearchText,
+    ansewerPokemon,
+    flexsearchIndex,
+    searchResult.length,
+  ])
 
-  const [ansewerPokemonId, setAnsewerPokemonId] = React.useState<number | null>(
-    null
-  )
+  React.useEffect(() => {
+    setAnsewerPokemon(null)
+  }, [searchText])
+
+  React.useEffect(() => {
+    if (ansewerPokemon && searchResult.length > 0) {
+      setSearchResult([])
+    }
+  }, [searchResult.length, ansewerPokemon])
+
   const handlePokemonSelect = (selected: PokemonCommandItemSelected) => {
-    setAnsewerPokemonId(selected.id)
     setSearchText(
       selected.nameDisplay +
         (selected.defaultFormNameDisplay ? " " : "") +
         selected.defaultFormNameDisplay
     )
+    setAnsewerPokemon(selected)
   }
 
-  const handleSubmit = () => {}
+  const handleSubmit = () => {
+    setShowAnswer(true)
+  }
 
-  const pass = React.useMemo<boolean | null>(() => {
-    if (!randomPokemon) {
+  const isPass = React.useMemo<boolean | null>(() => {
+    if (R.isNullish(randomPokemon) || R.isNullish(ansewerPokemon)) {
       return null
     } else {
-      return randomPokemon.id === ansewerPokemonId
+      return randomPokemon.id === ansewerPokemon.id
     }
-  }, [ansewerPokemonId, randomPokemon])
+  }, [ansewerPokemon, randomPokemon])
+
+  const handleHint = () => {
+    if (canvasResultRef.current) {
+      showHintImage(
+        canvasResultRef.current.imageData,
+        canvasResultRef.current.context,
+        canvasResultRef.current.originalImageData
+      )
+    }
+  }
+
+  const submitDisabled = React.useMemo(() => {
+    return R.isNullish(ansewerPokemon)
+  }, [ansewerPokemon])
 
   return (
     <div className="md:container flex flex-col gap-2 py-6">
       <div className="flex flex-col justify-center items-center">
+        {isCanvasFirstUpdated === false && (
+          <Skeleton className="h-[300px] w-[300px] rounded-xl" />
+        )}
         <div id="canvas-container"></div>
         {showAnswer && randomPokemon ? (
           <div className="py-2 flex justify-center items-center">
@@ -159,20 +209,20 @@ export function WhosThatPokemonPage() {
       </div>
 
       <div className="flex gap-2 justify-end">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="secondary" onClick={handleHint}>
+              <Trans>Hint</Trans>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>
+              <Trans>Show partial original image</Trans>
+            </p>
+          </TooltipContent>
+        </Tooltip>
         <Button
-          onClick={() => {
-            if (canvasResultRef.current) {
-              showHintImage(
-                canvasResultRef.current.imageData,
-                canvasResultRef.current.context,
-                canvasResultRef.current.originalImageData
-              )
-            }
-          }}
-        >
-          Hint
-        </Button>
-        <Button
+          variant="secondary"
           onClick={() => {
             setRandomSeed(new Date())
             setSearchText("")
@@ -182,9 +232,9 @@ export function WhosThatPokemonPage() {
             }
           }}
         >
-          Random
+          <Trans>Random</Trans>
         </Button>
-        <Button onClick={() => setShowAnswer(!showAnswer)}>
+        <Button variant="secondary" onClick={() => setShowAnswer(!showAnswer)}>
           {showAnswer ? <Trans>Hide Answer</Trans> : <Trans>Show Answer</Trans>}
         </Button>
       </div>
@@ -196,7 +246,7 @@ export function WhosThatPokemonPage() {
           <CommandInput
             value={searchText}
             onValueChange={setSearchText}
-            placeholder={lingui._(msg`Who's That Pokemon?`)}
+            placeholder={lingui._(msg`Who's That Pokémon?`)}
           />
           <CommandList>
             {searchResult
@@ -215,14 +265,18 @@ export function WhosThatPokemonPage() {
             className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
             onClick={() => {
               setSearchText("")
-              setAnsewerPokemonId(null)
+              setAnsewerPokemon(null)
             }}
           >
             <X className="h-4 w-4" />
             <span className="sr-only">Close</span>
           </button>
         </Command>
-        <Button className="ml-2" onClick={handleSubmit}>
+        <Button
+          className="ml-2"
+          onClick={handleSubmit}
+          disabled={submitDisabled}
+        >
           <Trans>Submit</Trans>
         </Button>
       </div>

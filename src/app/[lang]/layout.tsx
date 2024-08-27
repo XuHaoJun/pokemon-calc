@@ -3,17 +3,18 @@ import { t } from "@lingui/macro"
 
 import "../globals.css"
 
+import { FlexsearchProvider } from "@/providers/FlexsearchProvider"
 import { QueryClientProvider } from "@/providers/QueryClientProvider"
 import { ThemeProvider } from "@/providers/ThemeProvider"
 
 import { cn } from "@/lib/utils"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { StandardSiteLayout } from "@/components/layouts/StandardSiteLayout"
 import { LinguiClientProvider } from "@/components/LinguiClientProvider"
 
 import linguiConfig from "../../../lingui.config"
 import { getAllI18nInstances, getAllMessages } from "../../appRouterI18n"
 import { PageLangParam, withLinguiLayout } from "../../withLingui"
-import { FlexsearchProvider } from "@/providers/FlexsearchProvider"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -64,9 +65,11 @@ export default withLinguiLayout(async function RootLayout(
               enableSystem
               disableTransitionOnChange
             >
-              <FlexsearchProvider>
-                <StandardSiteLayout>{children}</StandardSiteLayout>
-              </FlexsearchProvider>
+              <TooltipProvider>
+                <FlexsearchProvider>
+                  <StandardSiteLayout>{children}</StandardSiteLayout>
+                </FlexsearchProvider>
+              </TooltipProvider>
             </ThemeProvider>
           </LinguiClientProvider>
         </QueryClientProvider>
