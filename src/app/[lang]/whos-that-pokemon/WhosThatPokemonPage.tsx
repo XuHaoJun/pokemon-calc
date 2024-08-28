@@ -15,6 +15,7 @@ import { unstable_batchedUpdates } from "react-dom"
 import { TypeAnimation } from "react-type-animation"
 import * as R from "remeda"
 
+import { cn } from "@/lib/utils"
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Button } from "@/components/ui/button"
 import { Command, CommandInput, CommandList } from "@/components/ui/command"
@@ -163,14 +164,36 @@ export function WhosThatPokemonPage() {
     }
   }, [ansewerPokemon, randomPokemon])
 
+  const [isSubmited, setIsSubmited] = React.useState<boolean>(false)
   const [showWrongResult, setShowWrongResult] = React.useState<boolean>(false)
   const handleSubmit = () => {
-    if (isPass) {
-      setShowAnswer(true)
-    } else {
-      setShowWrongResult(true)
-    }
+    unstable_batchedUpdates(() => {
+      setIsSubmited(true)
+      if (isPass) {
+        setShowAnswer(true)
+      } else {
+        setShowWrongResult(true)
+      }
+    })
   }
+  React.useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (showWrongResult) {
+      timer = setTimeout(() => {
+        setShowWrongResult(false)
+      }, 3000)
+    }
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+  }, [showWrongResult])
+  React.useEffect(() => {
+    if (isSubmited) {
+      setIsSubmited(false)
+    }
+  }, [isSubmited, searchText])
 
   const handleHint = () => {
     if (canvasResultRef.current) {
@@ -183,8 +206,8 @@ export function WhosThatPokemonPage() {
   }
 
   const submitDisabled = React.useMemo(() => {
-    return R.isNullish(ansewerPokemon) || isPass
-  }, [ansewerPokemon, isPass])
+    return showAnswer ? showAnswer : isSubmited && isPass
+  }, [isSubmited, isPass, showAnswer])
 
   return (
     <div className="md:container flex flex-col gap-2 py-6">
@@ -207,18 +230,6 @@ export function WhosThatPokemonPage() {
       </div>
 
       <div className="flex gap-2 justify-end">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="secondary" onClick={handleHint}>
-              <Trans>Hint</Trans>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>
-              <Trans>Show partial original image</Trans>
-            </p>
-          </TooltipContent>
-        </Tooltip>
         <Button
           variant="secondary"
           onClick={() => {
@@ -229,24 +240,41 @@ export function WhosThatPokemonPage() {
               setAnsewerPokemon(null)
               setShowAnswer(false)
               setShowWrongResult(false)
+              setIsSubmited(false)
             })
           }}
         >
           <Trans>Random</Trans>
         </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="secondary" onClick={handleHint} disabled={showAnswer}>
+              <Trans>Hint</Trans>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>
+              <Trans>Show partial original image</Trans>
+            </p>
+          </TooltipContent>
+        </Tooltip>
         <Button variant="secondary" onClick={() => setShowAnswer(!showAnswer)}>
           {showAnswer ? <Trans>Hide Answer</Trans> : <Trans>Show Answer</Trans>}
         </Button>
       </div>
       <div className="flex justify-center items-baseline">
         <Command
-          className="rounded-lg border shadow-md md:max-w-[450px] relative"
+          className={cn(
+            "rounded-lg border md:max-w-[450px] relative",
+            { "shadow-md": !submitDisabled }
+          )}
           shouldFilter={false}
         >
           <CommandInput
             value={searchText}
             onValueChange={setSearchText}
             placeholder={lingui._(msg`Who's That Pokémon?`)}
+            disabled={submitDisabled}
           />
           <CommandList>
             {!ansewerPokemon && searchText
@@ -284,6 +312,7 @@ export function WhosThatPokemonPage() {
             <Button
               className="ml-2"
               onClick={handleSubmit}
+              disabled={submitDisabled}
             >
               <Trans>Submit</Trans>
             </Button>
