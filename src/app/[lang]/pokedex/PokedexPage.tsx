@@ -38,7 +38,7 @@ export function PokedexPage() {
 export function PokedexPageBase() {
   const query = useFetchPokemonData()
   const lingui = useLingui()
-  const { updateOnce } = useLoadPokemonLingui({ targets: ["name"] })
+  const { isPkmLinguiLoaded  } = useLoadPokemonLingui({ targets: ["name"] })
   const columns: ColumnDef<Pokemon2>[] = React.useMemo(
     () => [
       {
@@ -242,7 +242,7 @@ export function PokedexPageBase() {
             })
           ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [query.data, lingui, updateOnce]
+    [query.data, lingui, isPkmLinguiLoaded]
   )
 
   const [filter] = useAtom(pokdexAtoms.siftFilterAtom)

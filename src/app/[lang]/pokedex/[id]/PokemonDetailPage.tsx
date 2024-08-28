@@ -117,7 +117,7 @@ export function PokemonDetailPage(props: PokemonDetailPageProps) {
                 <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
                   {pokemon.nameDisplay}
                 </h1>
-                <span className="text-muted-foreground pl-2">
+                <span className="text-base text-muted-foreground">
                   {pokemon.defaultFormNameDisplay}
                 </span>
                 <div className="flex flex-col mt-3">

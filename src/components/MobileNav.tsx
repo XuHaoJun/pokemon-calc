@@ -56,16 +56,16 @@ export function MobileNav() {
               <Trans>Type Calculator</Trans>
             </MobileLink>
             <MobileLink
-              href="/pokedex"
+              href="/whos-that-pokemon"
               className={cn(
                 "transition-colors hover:text-foreground/80",
-                pathname.startsWith("/pokedex")
+                pathname.startsWith("/whos-that-pokemon")
                   ? "text-foreground"
                   : "text-foreground/60"
               )}
               onOpenChange={setOpen}
             >
-              <Trans>Pokédex</Trans>
+              <Trans>Who&apos;s That Pokémon?</Trans>
             </MobileLink>
           </div>
           <div className="flex flex-col space-y-2"></div>

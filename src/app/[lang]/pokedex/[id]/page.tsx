@@ -1,6 +1,7 @@
 import { fetchPokemonDataWithOptions } from "@/api"
 import { getAllI18nInstances } from "@/appRouterI18n"
 import { getLocaleByPokeApiLangId } from "@/utils/getLocaleByPokeApiLangId"
+import { getPokemonDefaultFormName } from "@/utils/getPokemonDefaultFormName"
 import { toPokemon2 } from "@/utils/toPokemon2"
 import { msg, t } from "@lingui/macro"
 import { setI18n } from "@lingui/react/server"
@@ -68,26 +69,8 @@ export default async function PokemonDetailPageServer(props: any) {
   const defaultFormNameI18nMessages: any = {}
   for (const x of pokemonData.data.pokemon_v2_pokemon) {
     const i18nId = `pkm.defaultFormName.${x.id}`
-    const defaultForm = (() => {
-      const foundDefault = x.pokemon_v2_pokemonforms.find((x) => x.is_default)
-      return foundDefault || x.pokemon_v2_pokemonforms[0]
-    })()
-    if (defaultForm.is_mega) {
-      defaultFormNameI18nMessages[i18nId] =
-        defaultForm.form_name === "mega-x"
-          ? i18n._(msg`mega-x`)
-          : defaultForm.form_name === "mega-y"
-            ? i18n._(msg`mega-y`)
-            : i18n._(msg`mega`)
-    } else if (defaultForm.form_name === "gmax") {
-      defaultFormNameI18nMessages[i18nId] = i18n._(msg`gmax`)
-    } else {
-      for (const xx of defaultForm.pokemon_v2_pokemonformnames) {
-        if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
-          defaultFormNameI18nMessages[i18nId] = xx.name
-        }
-      }
-    }
+    const defaultFormName = getPokemonDefaultFormName(x, i18n)
+    defaultFormNameI18nMessages[i18nId] = defaultFormName
   }
   i18n.load(i18n.locale, defaultFormNameI18nMessages)
 
