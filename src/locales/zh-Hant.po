@@ -43,11 +43,11 @@ msgstr "極巨化"
 msgid "Hidden Ability"
 msgstr "隱藏特性"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:203
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:262
 msgid "Hide Answer"
 msgstr "隱藏答案"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:180
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:252
 msgid "Hint"
 msgstr "提示"
 
@@ -86,7 +86,7 @@ msgstr "寶可夢圖鑑"
 msgid "Pokemon Calc"
 msgstr "寶可夢計算機"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:200
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:247
 msgid "Random"
 msgstr "隨機"
 
@@ -99,11 +99,11 @@ msgstr "搜尋寶可夢..."
 msgid "Search..."
 msgstr "搜尋..."
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:203
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:262
 msgid "Show Answer"
 msgstr "顯示答案"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:185
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:257
 msgid "Show partial original image"
 msgstr "顯示部分原始圖片"
 
@@ -131,7 +131,7 @@ msgstr "速度"
 msgid "Speed"
 msgstr "速度"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:241
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:317
 msgid "Submit"
 msgstr "提交"
 
@@ -160,11 +160,15 @@ msgstr "屬性計算機"
 msgid "Type Defensive"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:214
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:276
 #: src/components/MainNav.tsx:54
 #: src/components/MobileNav.tsx:68
 msgid "Who's That Pokémon?"
 msgstr "猜猜我是誰？"
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:322
+msgid "Wrong!"
+msgstr "答錯!"
 
 #: src/components/SiteLanguageSelect.tsx:28
 msgid "한국어"

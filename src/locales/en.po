@@ -43,11 +43,11 @@ msgstr "Gmax"
 msgid "Hidden Ability"
 msgstr "Hidden Ability"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:203
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:262
 msgid "Hide Answer"
 msgstr "Hide Answer"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:180
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:252
 msgid "Hint"
 msgstr "Hint"
 
@@ -86,7 +86,7 @@ msgstr "Pokédex"
 msgid "Pokemon Calc"
 msgstr "Pokemon Calc"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:200
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:247
 msgid "Random"
 msgstr "Random"
 
@@ -99,11 +99,11 @@ msgstr "Search Pokemon..."
 msgid "Search..."
 msgstr "Search..."
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:203
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:262
 msgid "Show Answer"
 msgstr "Show Answer"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:185
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:257
 msgid "Show partial original image"
 msgstr "Show partial original image"
 
@@ -131,7 +131,7 @@ msgstr "Spe"
 msgid "Speed"
 msgstr "Speed"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:241
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:317
 msgid "Submit"
 msgstr "Submit"
 
@@ -160,11 +160,15 @@ msgstr "Type Calculator"
 msgid "Type Defensive"
 msgstr "Type Defensive"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:214
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:276
 #: src/components/MainNav.tsx:54
 #: src/components/MobileNav.tsx:68
 msgid "Who's That Pokémon?"
 msgstr "Who's That Pokémon?"
+
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:322
+msgid "Wrong!"
+msgstr "Wrong!"
 
 #: src/components/SiteLanguageSelect.tsx:28
 msgid "한국어"
