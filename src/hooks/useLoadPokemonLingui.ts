@@ -28,10 +28,9 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
     setIsPkmLinguiLoaded(false)
   }, [lingui.i18n.locale, setIsPkmLinguiLoaded])
   React.useEffect(() => {
-    if (enabled === false || isPkmLinguiLoaded) {
+    if (enabled === false) {
       return
     }
-    let loaded = false
     if (
       targets.includes("name") &&
       query.data &&
@@ -49,7 +48,6 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
         }
       }
       lingui.i18n.load(lingui.i18n.locale, nameI18nMessages)
-      loaded = true
     }
 
     const { i18n } = lingui
@@ -65,10 +63,9 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
         defaultFormNameI18nMessages[i18nId] = defaultFormName
       }
       i18n.load(i18n.locale, defaultFormNameI18nMessages)
-      loaded = true
     }
 
-    if (loaded && isPkmLinguiLoaded === false) {
+    if (isPkmLinguiLoaded === false) {
       setIsPkmLinguiLoaded(true)
     }
   }, [

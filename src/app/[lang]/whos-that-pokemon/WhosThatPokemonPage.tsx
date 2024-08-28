@@ -34,8 +34,6 @@ import {
 
 const SHOW_ANIMATION_TIME = 2000
 
-const INIT_SEED = new Date()
-
 export function WhosThatPokemonPage() {
   const { isPkmLinguiLoaded } = useLoadPokemonLingui({
     targets: ["name"],
@@ -43,7 +41,7 @@ export function WhosThatPokemonPage() {
 
   const query = useFetchPokemonData()
 
-  const [randomSeed, setRandomSeed] = React.useState(INIT_SEED)
+  const [randomSeed, setRandomSeed] = React.useState(new Date())
 
   const lingui = useLingui()
   const randomPokemon = React.useMemo(
