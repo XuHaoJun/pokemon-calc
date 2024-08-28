@@ -11,6 +11,7 @@ import { useDebounce } from "ahooks"
 import type { SimpleDocumentSearchResultSetUnit } from "flexsearch"
 import { useAtom } from "jotai"
 import { ExternalLinkIcon, X } from "lucide-react"
+import { useTheme } from "next-themes"
 import { unstable_batchedUpdates } from "react-dom"
 import { TypeAnimation } from "react-type-animation"
 import * as R from "remeda"
@@ -71,12 +72,29 @@ export function WhosThatPokemonPage() {
 
   const [isCanvasFirstUpdated, setIsCanvasFirstUpdated] =
     React.useState<boolean>(false)
+
+  const { theme } = useTheme()
+
   const updateCanvas = React.useCallback(async () => {
     if (!randomPokemon) {
       return
     }
-    const result = await replaceNonTransparentPixelsWithBlack(
-      getPokemonImageSrc(randomPokemon.id)
+    const blackColor = {
+      r: 0,
+      g: 0,
+      b: 0,
+      a: 0,
+    }
+    const whiteColor = {
+      r: 255,
+      g: 255,
+      b: 255,
+      a: 0,
+    }
+    const finalColor = theme === "light" ? blackColor : whiteColor
+    const result = await replaceNonTransparentPixelsWithColor(
+      getPokemonImageSrc(randomPokemon.id),
+      finalColor
     )
     canvasResultRef.current = result
     result.canvas.setAttribute("style", "width: 300px; height: 300px;")
@@ -89,7 +107,7 @@ export function WhosThatPokemonPage() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [randomPokemon])
+  }, [randomPokemon, theme])
 
   React.useEffect(() => {
     updateCanvas()
@@ -248,7 +266,11 @@ export function WhosThatPokemonPage() {
         </Button>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="secondary" onClick={handleHint} disabled={showAnswer}>
+            <Button
+              variant="secondary"
+              onClick={handleHint}
+              disabled={showAnswer}
+            >
               <Trans>Hint</Trans>
             </Button>
           </TooltipTrigger>
@@ -264,10 +286,9 @@ export function WhosThatPokemonPage() {
       </div>
       <div className="flex justify-center items-baseline">
         <Command
-          className={cn(
-            "rounded-lg border md:max-w-[450px] relative",
-            { "shadow-md": !submitDisabled }
-          )}
+          className={cn("rounded-lg border md:max-w-[450px] relative", {
+            "shadow-md": !submitDisabled,
+          })}
           shouldFilter={false}
         >
           <CommandInput
@@ -395,8 +416,16 @@ interface CanvasWithImageData {
   context: CanvasRenderingContext2D
 }
 
-function replaceNonTransparentPixelsWithBlack(
-  imageSrc: string
+interface RgbaColor {
+  r: number
+  g: number
+  b: number
+  a: number
+}
+
+function replaceNonTransparentPixelsWithColor(
+  imageSrc: string,
+  color: RgbaColor
 ): Promise<CanvasWithImageData> {
   return new Promise((resolve, reject) => {
     const img = new Image()
@@ -433,9 +462,9 @@ function replaceNonTransparentPixelsWithBlack(
 
         // If the pixel is not transparent, replace the color with black
         if (alpha !== 0) {
-          data[i] = 0 // Red
-          data[i + 1] = 0 // Green
-          data[i + 2] = 0 // Blue
+          data[i] = color.r ?? 0 // Red
+          data[i + 1] = color.g ?? 0 // Green
+          data[i + 2] = color.b ?? 0 // Blue
         }
       }
 
