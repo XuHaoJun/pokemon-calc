@@ -40,7 +40,7 @@
     "memoizee": "^0.4.17",
     "mutative": "^1.0.8",
     "negotiator": "^0.6.3",
-    "next": "14.2.6",
+    "next": "14.2.7",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
@@ -65,19 +65,19 @@
     "@types/d3": "^7.4.3",
     "@types/memoizee": "^0.4.11",
     "@types/negotiator": "^0.6.3",
-    "@types/node": "^22.5.0",
+    "@types/node": "^22.5.1",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18",
     "@types/react-lazy-load-image-component": "^1.6.4",
     "eslint": "^8",
-    "eslint-config-next": "14.2.6",
+    "eslint-config-next": "14.2.7",
     "graphqurl": "^1.0.3",
     "postcss": "^8.4.41",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4"
   },
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@9.9.0",
   "engines": {
     "node": "^20 || ^22"
   }
