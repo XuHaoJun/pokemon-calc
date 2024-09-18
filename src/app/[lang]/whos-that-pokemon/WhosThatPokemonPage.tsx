@@ -298,8 +298,8 @@ export function WhosThatPokemonPage() {
           <CommandList>
             {!ansewerPokemon && searchText
               ? searchResult
-                  .flatMap((x) => x.result)
-                  .map((id) => (
+                  .flatMap((x: any) => x.result)
+                  .map((id: any) => (
                     <PokemonCommandItem
                       key={id}
                       id={id as number}

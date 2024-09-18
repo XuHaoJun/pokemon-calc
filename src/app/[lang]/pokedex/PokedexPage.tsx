@@ -17,6 +17,7 @@ import { create } from "mutative"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import sift from "sift"
 
+import { useDownloadJSON } from "@/hooks/useDownloadJSON"
 import { useLoadPokemonLingui } from "@/hooks/useLoadPokemonLingui"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -38,7 +39,9 @@ export function PokedexPage() {
 export function PokedexPageBase() {
   const query = useFetchPokemonData()
   const lingui = useLingui()
-  const { isPkmLinguiLoaded  } = useLoadPokemonLingui({ targets: ["name"] })
+  const { isPkmLinguiLoaded } = useLoadPokemonLingui({
+    targets: ["name", "ability", "move"],
+  })
   const columns: ColumnDef<Pokemon2>[] = React.useMemo(
     () => [
       {
@@ -294,6 +297,8 @@ export function PokedexPageBase() {
     [dataFilterByFlexsearch, filterTester]
   )
 
+  const { downloadJSON } = useDownloadJSON(data, "pokedex")
+
   if (query.isLoading) {
     return <Skeleton className="w-100% h-[500px]" />
   }
@@ -301,6 +306,11 @@ export function PokedexPageBase() {
   return (
     <div className="md:container flex flex-col gap-2 py-6">
       <PokemonDataTable columns={columns} data={finalData} />
+      <div>
+        <Button onClick={downloadJSON}>
+          <Trans>Export All</Trans>
+        </Button>
+      </div>
     </div>
   )
 }

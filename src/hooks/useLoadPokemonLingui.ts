@@ -5,7 +5,7 @@ import { getPokemonDefaultFormName } from "@/utils/getPokemonDefaultFormName"
 import { useLingui } from "@lingui/react"
 import { atom, useAtom } from "jotai"
 
-export type PokemonLinguiType = "name"
+export type PokemonLinguiType = "name" | "ability" | "move"
 
 export interface UsePokemonLinguiParams {
   targets: PokemonLinguiType[]
@@ -63,6 +63,56 @@ export function useLoadPokemonLingui(params: UsePokemonLinguiParams) {
         defaultFormNameI18nMessages[i18nId] = defaultFormName
       }
       i18n.load(i18n.locale, defaultFormNameI18nMessages)
+    }
+
+    if (
+      targets.includes("ability") &&
+      query.data &&
+      Boolean(i18n.messages["pkm.ability.1"]) === false
+    ) {
+      const ablitiesI18nMessages: any = {}
+      for (const x of query.data.data.pokemon_v2_ability) {
+        const i18nId = `pkm.ability.${x.id}`
+        for (const xx of x.pokemon_v2_abilitynames) {
+          if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
+            ablitiesI18nMessages[i18nId] = xx.name
+          }
+        }
+        const i18nId2 = `pkm.abilityFlavorText.${x.id}`
+        for (const xx of x.pokemon_v2_abilityflavortexts) {
+          if (getLocaleByPokeApiLangId(xx.language_id) === i18n.locale) {
+            ablitiesI18nMessages[i18nId2] = xx.flavor_text
+          }
+        }
+      }
+      i18n.load(i18n.locale, ablitiesI18nMessages)
+    }
+
+    if (
+      targets.includes("move") &&
+      query.data &&
+      Boolean(i18n.messages["pkm.move.1"]) === false
+    ) {
+      const moveI18nMessages: any = {}
+      for (const x of query.data.data.pokemon_v2_move) {
+        const i18nId = `pkm.move.${x.id}`
+        for (const xx of x.pokemon_v2_movenames) {
+          if (
+            getLocaleByPokeApiLangId(xx.language_id as number) === i18n.locale
+          ) {
+            moveI18nMessages[i18nId] = xx.name
+          }
+        }
+        const i18nId2 = `pkm.moveFlavorTexts.${x.id}`
+        for (const xx of x.pokemon_v2_moveflavortexts) {
+          if (
+            getLocaleByPokeApiLangId(xx.language_id as number) === i18n.locale
+          ) {
+            moveI18nMessages[i18nId2] = xx.flavor_text
+          }
+        }
+      }
+      i18n.load(i18n.locale, moveI18nMessages)
     }
 
     if (isPkmLinguiLoaded === false) {
