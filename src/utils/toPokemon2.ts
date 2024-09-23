@@ -66,6 +66,15 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
       move: moveNoI18n,
     }
   })
+  const types = pkm.pokemon_v2_pokemontypes.map(
+      (x) =>
+        binaraySearch(
+          pokemon_v2_type || [],
+          x.type_id,
+          (typeId, x) => typeId - x.id,
+          { firstMiddle: x.type_id - 1 }
+        ) as PokemonType
+    )
   return {
     ...pkm,
     hp: pkm.pokemon_v2_pokemonstats[0].base_stat,
@@ -81,15 +90,8 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
       getI18nIds.pokemon.defaultFormName(pkm.id)
         ? ""
         : t(getI18nIds.pokemon.defaultFormName(pkm.id)),
-    types: pkm.pokemon_v2_pokemontypes.map(
-      (x) =>
-        binaraySearch(
-          pokemon_v2_type || [],
-          x.type_id,
-          (typeId, x) => typeId - x.id,
-          { firstMiddle: x.type_id - 1 }
-        ) as PokemonType
-    ),
+    types,
+    typesV2: types.map(x => x.name),
     abilities: pkm.pokemon_v2_pokemonabilities.map((x) => {
       return {
         ...x,

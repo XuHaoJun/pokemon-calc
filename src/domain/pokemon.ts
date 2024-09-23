@@ -64,6 +64,7 @@ export interface Pokemon2 extends Pokemon {
   nameDisplay: string
   defaultFormNameDisplay: string
   types: PokemonType[]
+  typesV2: string[]
   abilities: PokemonAbilityFk2[]
   evolutionchain?: PokemonEvolutionchain
   evolutionTree?: PokemonEvolutionTreeNode
