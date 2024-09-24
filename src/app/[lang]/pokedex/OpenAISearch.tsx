@@ -43,7 +43,7 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
         <Input
           type="search"
           placeholder={i18n._(msg`Find pokemons by question...`)}
-          className="max-w-[40%]"
+          className="md:max-w-[40%]"
           value={question}
           onChange={(e) => {
             setEnableQuery(false)
@@ -58,7 +58,7 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
           {query.isLoading ? <Loader2 /> : <Search />}
         </Button>
       </div>
-      <div>
+      <div className="flex gap-1">
         {sampleQuestions.map((question, i) => (
           <Button
             key={`sampleQuestions[${i}]`}
