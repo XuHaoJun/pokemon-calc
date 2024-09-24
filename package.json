@@ -76,7 +76,7 @@
     "graphqurl": "^1.0.3",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.12",
+    "tailwindcss": "^3.4.13",
     "typescript": "^5.6.2"
   },
   "packageManager": "pnpm@9.9.0",
