@@ -1,4 +1,10 @@
 import { PokemonAllData } from "@/domain/pokemon"
+import axios from "axios"
+
+export const axiosMainInstance = axios.create({
+  adapter: "fetch",
+  baseURL: "http://127.0.0.1:8000",
+})
 
 // TODO
 // import from nextjs config?
@@ -19,5 +25,16 @@ export async function fetchPokemonDataWithOptions(
   }
   return fetch(`${basePath}/data/pokemon-data.json`).then(
     (res) => res.json() as Promise<PokemonAllData>
+  )
+}
+
+export async function fetchPokemonMquery({ question }: { question: string }) {
+  return axiosMainInstance.get<{ questionNumTokens: number; mquery: string }>(
+    "/mquery",
+    {
+      params: {
+        question,
+      },
+    }
   )
 }

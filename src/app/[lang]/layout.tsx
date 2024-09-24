@@ -3,6 +3,7 @@ import { t } from "@lingui/macro"
 
 import "../globals.css"
 
+import { AxiosProvider } from "@/providers/AxiosProvider"
 import { FlexsearchProvider } from "@/providers/FlexsearchProvider"
 import { QueryClientProvider } from "@/providers/QueryClientProvider"
 import { ThemeProvider } from "@/providers/ThemeProvider"
@@ -54,6 +55,7 @@ export default withLinguiLayout(async function RootLayout(
           fontSans.variable
         )}
       >
+        <AxiosProvider apiBase={process.env.API_BASE} />
         <QueryClientProvider>
           <LinguiClientProvider
             initialLocale={lang}

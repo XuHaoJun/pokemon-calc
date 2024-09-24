@@ -25,6 +25,7 @@ import { DebouncedInput } from "@/components/DebouncedInput"
 import { Link } from "@/components/Link"
 import { TypeBadge } from "@/components/TypeBadge"
 
+import { OpenAISearch } from "./OpenAISearch"
 import * as pokdexAtoms from "./pokedexAtoms"
 import { PokemonDataTable } from "./PokemonDataTable"
 
@@ -293,7 +294,44 @@ export function PokedexPageBase() {
   }, [data, flexsearchFilter.name, flexsearchIndex, flexsearchIsIndexing])
 
   const finalData = React.useMemo(
-    () => dataFilterByFlexsearch.filter(filterTester),
+    () =>
+      dataFilterByFlexsearch.filter(
+        (v) =>
+          filterTester(v) &&
+          sift({
+            $and: [
+              {
+                typesV2: {
+                  $all: ["fairy", "psychic"],
+                },
+              },
+              {
+                spAtk: {
+                  $gte: 125,
+                },
+              },
+              {
+                spDef: {
+                  $gte: 100,
+                },
+              },
+              {
+                moves: {
+                  $elemMatch: {
+                    $or: [
+                      {
+                        nameDisplay: "精神強念",
+                      },
+                      {
+                        nameDisplay: "月亮之力",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+          })(v)
+      ),
     [dataFilterByFlexsearch, filterTester]
   )
 
@@ -305,6 +343,7 @@ export function PokedexPageBase() {
 
   return (
     <div className="md:container flex flex-col gap-2 py-6">
+      <OpenAISearch />
       <PokemonDataTable columns={columns} data={finalData} />
       <div>
         <Button onClick={downloadJSON}>
