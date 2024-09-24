@@ -13,13 +13,13 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:115
-#: src/app/[lang]/pokedex/PokedexPage.tsx:122
+#: src/app/[lang]/pokedex/PokedexPage.tsx:119
+#: src/app/[lang]/pokedex/PokedexPage.tsx:126
 msgid "Atk"
 msgstr "攻擊"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:133
-#: src/app/[lang]/pokedex/PokedexPage.tsx:140
+#: src/app/[lang]/pokedex/PokedexPage.tsx:137
+#: src/app/[lang]/pokedex/PokedexPage.tsx:144
 msgid "Def"
 msgstr "防禦"
 
@@ -35,6 +35,18 @@ msgstr "English"
 msgid "Envolution"
 msgstr "進化"
 
+#: src/app/[lang]/pokedex/PokedexPage.tsx:319
+msgid "Export All"
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:36
+msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
+msgstr "雙屬性：妖精和超能力，特攻至少125，特防至少100，要會精神強念或月亮之力。"
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:46
+msgid "Find pokemons by question..."
+msgstr "輸入寶可夢查詢..."
+
 #: src/utils/getPokemonDefaultFormName.ts:19
 msgid "gmax"
 msgstr "極巨化"
@@ -43,16 +55,16 @@ msgstr "極巨化"
 msgid "Hidden Ability"
 msgstr "隱藏特性"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:262
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:282
 msgid "Hide Answer"
 msgstr "隱藏答案"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:252
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:272
 msgid "Hint"
 msgstr "提示"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:97
-#: src/app/[lang]/pokedex/PokedexPage.tsx:104
+#: src/app/[lang]/pokedex/PokedexPage.tsx:101
+#: src/app/[lang]/pokedex/PokedexPage.tsx:108
 msgid "HP"
 msgstr "HP"
 
@@ -76,17 +88,21 @@ msgstr "Mega-Y"
 msgid "No results found."
 msgstr "查無結果"
 
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:37
+msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
+msgstr "不是火屬性，但會噴射火焰，特攻起碼有90,速度>=80"
+
 #: src/components/MainNav.tsx:43
 msgid "Pokédex"
 msgstr "寶可夢圖鑑"
 
-#: src/app/[lang]/layout.tsx:33
+#: src/app/[lang]/layout.tsx:34
 #: src/app/[lang]/pokedex/[id]/page.tsx:40
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr "寶可夢計算機"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:247
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:263
 msgid "Random"
 msgstr "隨機"
 
@@ -99,39 +115,39 @@ msgstr "搜尋寶可夢..."
 msgid "Search..."
 msgstr "搜尋..."
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:262
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:282
 msgid "Show Answer"
 msgstr "顯示答案"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:257
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:277
 msgid "Show partial original image"
 msgstr "顯示部分原始圖片"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:151
+#: src/app/[lang]/pokedex/PokedexPage.tsx:155
 msgid "Sp.Atk"
 msgstr "特攻"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:169
+#: src/app/[lang]/pokedex/PokedexPage.tsx:173
 msgid "Sp.Def"
 msgstr "特防"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:158
+#: src/app/[lang]/pokedex/PokedexPage.tsx:162
 msgid "SpA"
 msgstr "特攻"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:176
+#: src/app/[lang]/pokedex/PokedexPage.tsx:180
 msgid "SpD"
 msgstr "特防"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:194
+#: src/app/[lang]/pokedex/PokedexPage.tsx:198
 msgid "Spe"
 msgstr "速度"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:187
+#: src/app/[lang]/pokedex/PokedexPage.tsx:191
 msgid "Speed"
 msgstr "速度"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:317
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:336
 msgid "Submit"
 msgstr "提交"
 
@@ -139,11 +155,11 @@ msgstr "提交"
 msgid "TM/HM Moves"
 msgstr "從招式機學會的招式"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:216
+#: src/app/[lang]/pokedex/PokedexPage.tsx:220
 msgid "Tot"
 msgstr "總和"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:209
+#: src/app/[lang]/pokedex/PokedexPage.tsx:213
 msgid "Total"
 msgstr "總和"
 
@@ -160,13 +176,13 @@ msgstr "屬性計算機"
 msgid "Type Defensive"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:276
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:295
 #: src/components/MainNav.tsx:54
 #: src/components/MobileNav.tsx:68
 msgid "Who's That Pokémon?"
 msgstr "猜猜我是誰？"
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:322
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:341
 msgid "Wrong!"
 msgstr "答錯!"
 

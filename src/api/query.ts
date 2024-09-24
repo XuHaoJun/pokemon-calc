@@ -12,15 +12,19 @@ export function useFetchPokemonData() {
   })
 }
 
-export function useFetchPokemonMquery(body: { question: string }, queryOptions?: any) {
-  return useQuery({
+export function useFetchPokemonMquery(
+  body: { question: string },
+  queryOptions?: any
+) {
+  const queryFn = () => Apis.fetchPokemonMquery(body)
+  return useQuery<Awaited<ReturnType<typeof queryFn>>>({
     queryKey: ["fetchPokemonMquery", body],
-    queryFn: () => Apis.fetchPokemonMquery(body),
+    queryFn,
     placeholderData: keepPreviousData,
     staleTime: 30 * 60 * 1000,
     gcTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
     retry: false,
-    ...queryOptions
+    ...queryOptions,
   })
 }

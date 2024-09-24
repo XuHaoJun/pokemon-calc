@@ -251,6 +251,7 @@ export function PokedexPageBase() {
 
   const [filter] = useAtom(pokdexAtoms.siftFilterAtom)
   const filterTester = React.useMemo(() => sift(filter), [filter])
+
   // const finalQueryString = React.useMemo(() => {
   //   if (!R.isDeepEqual(filter, pokdexAtoms.defaultSiftFilter)) {
   //     const params = new URLSearchParams({
@@ -293,46 +294,14 @@ export function PokedexPageBase() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, flexsearchFilter.name, flexsearchIndex, flexsearchIsIndexing])
 
+  const [mquery, setMquery] = React.useState<any>(null)
+
   const finalData = React.useMemo(
     () =>
-      dataFilterByFlexsearch.filter(
-        (v) => filterTester(v)
-        //  &&
-        // sift({
-        //   $and: [
-        //     {
-        //       typesV2: {
-        //         $all: ["fairy", "psychic"],
-        //       },
-        //     },
-        //     {
-        //       spAtk: {
-        //         $gte: 125,
-        //       },
-        //     },
-        //     {
-        //       spDef: {
-        //         $gte: 100,
-        //       },
-        //     },
-        //     {
-        //       moves: {
-        //         $elemMatch: {
-        //           $or: [
-        //             {
-        //               nameDisplay: "精神強念",
-        //             },
-        //             {
-        //               nameDisplay: "月亮之力",
-        //             },
-        //           ],
-        //         },
-        //       },
-        //     },
-        //   ],
-        // })(v)
+      dataFilterByFlexsearch.filter((v) =>
+        mquery ? filterTester(v) && sift(mquery)(v) : filterTester(v)
       ),
-    [dataFilterByFlexsearch, filterTester]
+    [dataFilterByFlexsearch, filterTester, mquery]
   )
 
   const { downloadJSON } = useDownloadJSON(data, "pokedex")
@@ -343,7 +312,7 @@ export function PokedexPageBase() {
 
   return (
     <div className="md:container flex flex-col gap-2 py-6">
-      <OpenAISearch />
+      <OpenAISearch mquery={mquery} onChange={setMquery} />
       <PokemonDataTable columns={columns} data={finalData} />
       <div>
         <Button onClick={downloadJSON}>

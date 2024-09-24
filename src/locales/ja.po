@@ -13,13 +13,13 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:115
-#: src/app/[lang]/pokedex/PokedexPage.tsx:122
+#: src/app/[lang]/pokedex/PokedexPage.tsx:119
+#: src/app/[lang]/pokedex/PokedexPage.tsx:126
 msgid "Atk"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:133
-#: src/app/[lang]/pokedex/PokedexPage.tsx:140
+#: src/app/[lang]/pokedex/PokedexPage.tsx:137
+#: src/app/[lang]/pokedex/PokedexPage.tsx:144
 msgid "Def"
 msgstr ""
 
@@ -35,6 +35,18 @@ msgstr "English"
 msgid "Envolution"
 msgstr ""
 
+#: src/app/[lang]/pokedex/PokedexPage.tsx:319
+msgid "Export All"
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:36
+msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:46
+msgid "Find pokemons by question..."
+msgstr ""
+
 #: src/utils/getPokemonDefaultFormName.ts:19
 msgid "gmax"
 msgstr ""
@@ -43,16 +55,16 @@ msgstr ""
 msgid "Hidden Ability"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:262
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:282
 msgid "Hide Answer"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:252
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:272
 msgid "Hint"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:97
-#: src/app/[lang]/pokedex/PokedexPage.tsx:104
+#: src/app/[lang]/pokedex/PokedexPage.tsx:101
+#: src/app/[lang]/pokedex/PokedexPage.tsx:108
 msgid "HP"
 msgstr ""
 
@@ -76,17 +88,21 @@ msgstr ""
 msgid "No results found."
 msgstr ""
 
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:37
+msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
+msgstr ""
+
 #: src/components/MainNav.tsx:43
 msgid "Pokédex"
 msgstr ""
 
-#: src/app/[lang]/layout.tsx:33
+#: src/app/[lang]/layout.tsx:34
 #: src/app/[lang]/pokedex/[id]/page.tsx:40
 #: src/config/site.ts:4
 msgid "Pokemon Calc"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:247
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:263
 msgid "Random"
 msgstr ""
 
@@ -99,39 +115,39 @@ msgstr ""
 msgid "Search..."
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:262
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:282
 msgid "Show Answer"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:257
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:277
 msgid "Show partial original image"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:151
+#: src/app/[lang]/pokedex/PokedexPage.tsx:155
 msgid "Sp.Atk"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:169
+#: src/app/[lang]/pokedex/PokedexPage.tsx:173
 msgid "Sp.Def"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:158
+#: src/app/[lang]/pokedex/PokedexPage.tsx:162
 msgid "SpA"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:176
+#: src/app/[lang]/pokedex/PokedexPage.tsx:180
 msgid "SpD"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:194
+#: src/app/[lang]/pokedex/PokedexPage.tsx:198
 msgid "Spe"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:187
+#: src/app/[lang]/pokedex/PokedexPage.tsx:191
 msgid "Speed"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:317
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:336
 msgid "Submit"
 msgstr ""
 
@@ -139,11 +155,11 @@ msgstr ""
 msgid "TM/HM Moves"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:216
+#: src/app/[lang]/pokedex/PokedexPage.tsx:220
 msgid "Tot"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:209
+#: src/app/[lang]/pokedex/PokedexPage.tsx:213
 msgid "Total"
 msgstr ""
 
@@ -160,13 +176,13 @@ msgstr ""
 msgid "Type Defensive"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:276
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:295
 #: src/components/MainNav.tsx:54
 #: src/components/MobileNav.tsx:68
 msgid "Who's That Pokémon?"
 msgstr ""
 
-#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:322
+#: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:341
 msgid "Wrong!"
 msgstr ""
 

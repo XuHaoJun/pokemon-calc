@@ -29,12 +29,11 @@ export async function fetchPokemonDataWithOptions(
 }
 
 export async function fetchPokemonMquery({ question }: { question: string }) {
-  return axiosMainInstance.get<{ questionNumTokens: number; mquery: string }>(
-    "/mquery",
-    {
+  return axiosMainInstance
+    .get<{ questionNumTokens: number; mquery: string }>("/mquery", {
       params: {
         question,
       },
-    }
-  )
+    })
+    .then((res) => res.data)
 }
