@@ -296,41 +296,41 @@ export function PokedexPageBase() {
   const finalData = React.useMemo(
     () =>
       dataFilterByFlexsearch.filter(
-        (v) =>
-          filterTester(v) &&
-          sift({
-            $and: [
-              {
-                typesV2: {
-                  $all: ["fairy", "psychic"],
-                },
-              },
-              {
-                spAtk: {
-                  $gte: 125,
-                },
-              },
-              {
-                spDef: {
-                  $gte: 100,
-                },
-              },
-              {
-                moves: {
-                  $elemMatch: {
-                    $or: [
-                      {
-                        nameDisplay: "精神強念",
-                      },
-                      {
-                        nameDisplay: "月亮之力",
-                      },
-                    ],
-                  },
-                },
-              },
-            ],
-          })(v)
+        (v) => filterTester(v)
+        //  &&
+        // sift({
+        //   $and: [
+        //     {
+        //       typesV2: {
+        //         $all: ["fairy", "psychic"],
+        //       },
+        //     },
+        //     {
+        //       spAtk: {
+        //         $gte: 125,
+        //       },
+        //     },
+        //     {
+        //       spDef: {
+        //         $gte: 100,
+        //       },
+        //     },
+        //     {
+        //       moves: {
+        //         $elemMatch: {
+        //           $or: [
+        //             {
+        //               nameDisplay: "精神強念",
+        //             },
+        //             {
+        //               nameDisplay: "月亮之力",
+        //             },
+        //           ],
+        //         },
+        //       },
+        //     },
+        //   ],
+        // })(v)
       ),
     [dataFilterByFlexsearch, filterTester]
   )
