@@ -1,0 +1,141 @@
+[
+  {
+    "id": 1,
+    "order": 1,
+    "name": "bulbasaur",
+    "height": 7,
+    "weight": 69,
+    "pokemon_v2_pokemonspecy": {
+      "id": 1,
+      "name": "bulbasaur",
+      "evolution_chain_id": 1,
+      "pokemon_v2_pokemonspeciesnames": [
+        {
+          "id": 1,
+          "language_id": 1,
+          "name": "フシギダネ"
+        },
+        {
+          "id": 3,
+          "language_id": 3,
+          "name": "이상해씨"
+        },
+        {
+          "id": 4,
+          "language_id": 4,
+          "name": "妙蛙種子"
+        },
+        {
+          "id": 5,
+          "language_id": 5,
+          "name": "Bulbizarre"
+        }
+      ]
+    },
+    "pokemon_v2_pokemonforms": [
+      {
+        "id": 1,
+        "is_battle_only": false,
+        "is_default": true,
+        "is_mega": false,
+        "form_name": "",
+        "pokemon_v2_pokemonformnames": []
+      }
+    ],
+    "hp": 45,
+    "attack": 49,
+    "defense": 49,
+    "spAtk": 65,
+    "spDef": 65,
+    "speed": 45,
+    "total": 318,
+    "nameDisplay": "Bulbasaur",
+    "defaultFormNameDisplay": "",
+    "typesV2": ["poison", "grass"],
+    "abilities": [
+      {
+        "is_hidden": false,
+        "slot": 1,
+        "ability_id": 65,
+        "nameDisplay": "Overgrow",
+        "abilityFlavorTextDisplay": "Powers up Grass-type moves when the Pokémon's HP is low."
+      }
+    ],
+    "evolutionchain": {
+      "id": 1,
+      "pokemon_v2_pokemonspecies": [
+        {
+          "id": 1,
+          "evolves_from_species_id": null
+        },
+        {
+          "id": 2,
+          "evolves_from_species_id": 1
+        },
+        {
+          "id": 3,
+          "evolves_from_species_id": 2
+        }
+      ]
+    },
+    "evolutionTree": {
+      "data": {
+        "id": 1,
+        "evolves_from_species_id": null
+      },
+      "children": [
+        {
+          "data": {
+            "id": 2,
+            "evolves_from_species_id": 1
+          },
+          "parent": "[Circular]",
+          "children": [
+            {
+              "data": {
+                "id": 3,
+                "evolves_from_species_id": 2
+              },
+              "parent": "[Circular]"
+            }
+          ]
+        }
+      ]
+    },
+    "moves": [
+      {
+        "id": 1015,
+        "move_id": 14,
+        "version_group_id": 25,
+        "level": 0,
+        "order": null,
+        "pokemon_v2_movelearnmethod": {
+          "id": 4,
+          "name": "machine"
+        },
+        "pokemon_v2_versiongroup": {
+          "id": 25,
+          "generation_id": 9
+        },
+        "nameDisplay": "Swords Dance",
+        "flavorTextDisplay": "A frenetic dance to uplift the fighting spirit.\nThis sharply raises the user’s Attack stat.",
+        "move": {
+          "id": 14,
+          "name": "swords-dance",
+          "accuracy": null,
+          "power": null,
+          "pp": 20,
+          "move_effect_chance": null,
+          "pokemon_v2_type": {
+            "id": 1,
+            "name": "normal"
+          },
+          "pokemon_v2_movedamageclass": {
+            "name": "status",
+            "id": 1
+          }
+        }
+      }
+    ]
+  }
+]
