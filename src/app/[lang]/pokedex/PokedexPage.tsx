@@ -307,7 +307,11 @@ export function PokedexPageBase() {
   const { downloadJSON } = useDownloadJSON(data, "pokedex")
 
   if (query.isLoading) {
-    return <Skeleton className="w-100% h-[500px]" />
+    return (
+      <div className="md:container flex flex-col gap-2 py-6">
+        <Skeleton className="w-100% h-[500px]" />
+      </div>
+    )
   }
 
   return (

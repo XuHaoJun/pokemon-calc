@@ -2,11 +2,12 @@ import * as React from "react"
 import { useFetchPokemonMquery } from "@/api/query"
 import { msg } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
-import { Loader2, Search } from "lucide-react"
+import { Search } from "lucide-react"
 import * as R from "remeda"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { LoadingSpinner } from "@/components/ui/loading-spinner"
 
 export interface OpenAISearchProps {
   mquery?: any
@@ -34,7 +35,7 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
 
   const sampleQuestions = [
     msg`Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast.`,
-    msg`Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher`
+    msg`Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher`,
   ]
 
   return (
@@ -55,13 +56,14 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
           disabled={query.isLoading}
         />
         <Button disabled={query.isLoading} onClick={() => setEnableQuery(true)}>
-          {query.isLoading ? <Loader2 /> : <Search />}
+          {query.isLoading ? <LoadingSpinner /> : <Search />}
         </Button>
       </div>
-      <div className="flex gap-1">
+      <div className="flex flex-wrap gap-1">
         {sampleQuestions.map((question, i) => (
           <Button
             key={`sampleQuestions[${i}]`}
+            className="md:max-w-[50%] whitespace-normal"
             variant="outline"
             onClick={() => {
               setEnableQuery(true)
