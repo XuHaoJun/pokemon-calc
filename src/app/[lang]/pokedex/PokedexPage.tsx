@@ -317,6 +317,11 @@ export function PokedexPageBase() {
   return (
     <div className="md:container flex flex-col gap-2 py-6">
       <OpenAISearch mquery={mquery} onChange={setMquery} />
+      <div className="rounded-md border p-5">
+        <Trans>
+          Found <strong>{finalData.length}</strong> pokemons
+        </Trans>
+      </div>
       <PokemonDataTable columns={columns} data={finalData} />
       <div>
         <Button onClick={downloadJSON}>

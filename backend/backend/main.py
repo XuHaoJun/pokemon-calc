@@ -32,7 +32,7 @@ app.add_middleware(
 )
 
 @app.get("/mquery")
-# @limiter.limit("1/2minute")
+@limiter.limit("1/1minute")
 async def get_mquery(request: Request, question: str = Query(..., description="Question to translate")):
     num_tokens = get_num_tokens(question)
     if not question or not question.strip():

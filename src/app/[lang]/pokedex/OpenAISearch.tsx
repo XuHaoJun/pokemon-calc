@@ -1,7 +1,9 @@
 import * as React from "react"
-import { useFetchPokemonMquery } from "@/api/query"
+import { QueryKeys, useFetchPokemonMquery } from "@/api/query"
+import { formatResponseError } from "@/utils/formatResponseError"
 import { msg } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
+import { useQueryClient } from "@tanstack/react-query"
 import { Search } from "lucide-react"
 import * as R from "remeda"
 
@@ -33,10 +35,16 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query.data, query.error, query.isFetched])
 
-  const sampleQuestions = [
-    msg`Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast.`,
-    msg`Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher`,
-  ]
+  const sampleQuestions = React.useMemo(
+    () => [
+      msg`Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast.`,
+      msg`Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher`,
+      msg`Name contain "cat", Ability is "Intimidate"`,
+    ],
+    []
+  )
+
+  const queryClient = useQueryClient()
 
   return (
     <div className="flex flex-col gap-2">
@@ -53,12 +61,25 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
               onChange?.(null)
             }
           }}
-          disabled={query.isLoading}
+          disabled={query.isFetching}
         />
-        <Button disabled={query.isLoading} onClick={() => setEnableQuery(true)}>
-          {query.isLoading ? <LoadingSpinner /> : <Search />}
+        <Button
+          disabled={query.isFetching}
+          onClick={() => {
+            setEnableQuery(true)
+            if ((query.error as any)?.status >= 400) {
+              queryClient.invalidateQueries({
+                queryKey: QueryKeys._useFetchPokemonMquery(),
+              })
+            }
+          }}
+        >
+          {query.isFetching ? <LoadingSpinner /> : <Search />}
         </Button>
       </div>
+      {query.error && (
+        <div className="text-red-500">{formatResponseError(query.error)}</div>
+      )}
       <div className="flex flex-wrap gap-1">
         {sampleQuestions.map((question, i) => (
           <Button

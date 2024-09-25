@@ -35,16 +35,20 @@ msgstr "English"
 msgid "Envolution"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:319
+#: src/app/[lang]/pokedex/PokedexPage.tsx:328
 msgid "Export All"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:36
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:40
 msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:46
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:54
 msgid "Find pokemons by question..."
+msgstr ""
+
+#: src/app/[lang]/pokedex/PokedexPage.tsx:321
+msgid "Found <0>{0}</0> pokemons"
 msgstr ""
 
 #: src/utils/getPokemonDefaultFormName.ts:19
@@ -84,15 +88,20 @@ msgstr ""
 msgid "mega-y"
 msgstr ""
 
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:42
+msgid "Name contain \"cat\", Ability is \"Intimidate\""
+msgstr ""
+
 #: src/components/CommandMenu.tsx:150
 msgid "No results found."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:37
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:41
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 msgstr ""
 
 #: src/components/MainNav.tsx:43
+#: src/components/MobileNav.tsx:66
 msgid "Pokédex"
 msgstr ""
 
@@ -168,7 +177,7 @@ msgid "Type a search..."
 msgstr ""
 
 #: src/components/MainNav.tsx:32
-#: src/components/MobileNav.tsx:56
+#: src/components/MobileNav.tsx:55
 msgid "Type Calculator"
 msgstr ""
 
@@ -178,7 +187,7 @@ msgstr ""
 
 #: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:295
 #: src/components/MainNav.tsx:54
-#: src/components/MobileNav.tsx:68
+#: src/components/MobileNav.tsx:78
 msgid "Who's That Pokémon?"
 msgstr ""
 
