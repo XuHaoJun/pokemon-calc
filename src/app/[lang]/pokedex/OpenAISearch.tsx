@@ -25,16 +25,28 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
     { question: question },
     { enabled: enableQuery && Boolean(question) }
   )
+
+  const siftError = React.useMemo<any>(() => {
+    if (query.data?.mquery) {
+      try {
+        sift(query.data?.mquery)
+      } catch (error) {
+        return error
+      }
+    }
+    return null
+  }, [query.data?.mquery])
+
   React.useEffect(() => {
     if (query.isFetched) {
-      if (query.error) {
+      if (query.error || siftError) {
         onChange?.(null)
       } else if (!R.isDeepEqual(mquery, query.data?.mquery)) {
         onChange?.(query.data?.mquery)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query.data, query.error, query.isFetched])
+  }, [query.data, query.error, query.isFetched, siftError])
 
   const sampleQuestions = React.useMemo(
     () => [
@@ -47,17 +59,6 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
   )
 
   const queryClient = useQueryClient()
-
-  const siftError = React.useMemo<any>(() => {
-    if (query.data?.mquery) {
-      try {
-        sift(query.data?.mquery)
-      } catch (error) {
-        return error
-      }
-    }
-    return null
-  }, [query.data?.mquery])
 
   return (
     <div className="flex flex-col gap-2">
