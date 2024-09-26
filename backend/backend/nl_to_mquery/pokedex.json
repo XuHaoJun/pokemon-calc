@@ -52,6 +52,80 @@
     "nameDisplay": "Bulbasaur",
     "defaultFormNameDisplay": "",
     "typesV2": ["poison", "grass"],
+    "typeDefensives": [
+      {
+        "attackType": "normal",
+        "effective": 1
+      },
+      {
+        "attackType": "fighting",
+        "effective": 2
+      },
+      {
+        "attackType": "flying",
+        "effective": 4
+      },
+      {
+        "attackType": "poison",
+        "effective": 0
+      },
+      {
+        "attackType": "ground",
+        "effective": 0.25
+      },
+      {
+        "attackType": "rock",
+        "effective": 0.5 
+      },
+      {
+        "attackType": "bug",
+        "effective": 1
+      },
+      {
+        "attackType": "ghost",
+        "effective": 0
+      },
+      {
+        "attackType": "steel",
+        "effective": 1
+      },
+      {
+        "attackType": "fire",
+        "effective": 1
+      },
+      {
+        "attackType": "water",
+        "effective": 1
+      },
+      {
+        "attackType": "grass",
+        "effective": 1
+      },
+      {
+        "attackType": "electric",
+        "effective": 1
+      },
+      {
+        "attackType": "psychic",
+        "effective": 1
+      },
+      {
+        "attackType": "ice",
+        "effective": 1
+      },
+      {
+        "attackType": "dragon",
+        "effective": 1
+      },
+      {
+        "attackType": "dark",
+        "effective": 1
+      },
+      {
+        "attackType": "fairy",
+        "effective": 1
+      }
+    ],
     "abilities": [
       {
         "is_hidden": false,

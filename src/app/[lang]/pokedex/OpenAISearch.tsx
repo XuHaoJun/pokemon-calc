@@ -6,6 +6,7 @@ import { useLingui } from "@lingui/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Search } from "lucide-react"
 import * as R from "remeda"
+import sift from "sift"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -40,19 +41,31 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
       msg`Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast.`,
       msg`Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher`,
       msg`Name contain "cat", Ability is "Intimidate"`,
+      msg`Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher`,
     ],
     []
   )
 
   const queryClient = useQueryClient()
 
+  const siftError = React.useMemo<any>(() => {
+    if (query.data?.mquery) {
+      try {
+        sift(query.data?.mquery)
+      } catch (error) {
+        return error
+      }
+    }
+    return null
+  }, [query.data?.mquery])
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-1">
         <Input
           type="search"
+          className="min-h-[40px] md:max-w-[40%]"
           placeholder={i18n._(msg`Find pokemons by question...`)}
-          className="md:max-w-[40%]"
           value={question}
           onChange={(e) => {
             setEnableQuery(false)
@@ -80,7 +93,10 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
       {query.error && (
         <div className="text-red-500">{formatResponseError(query.error)}</div>
       )}
-      <div className="flex flex-wrap gap-1">
+      {!query.error && siftError && (
+        <div className="text-red-500">can not find pokemon</div>
+      )}
+      <div className="flex flex-wrap gap-3">
         {sampleQuestions.map((question, i) => (
           <Button
             key={`sampleQuestions[${i}]`}
@@ -90,6 +106,7 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
               setEnableQuery(true)
               setQuestion(i18n._(question))
             }}
+            disabled={query.isFetching}
           >
             <Search className="mr-2 h-4 w-4" />
             {i18n._(question)}

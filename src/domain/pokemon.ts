@@ -81,6 +81,12 @@ export interface Pokemon2 extends Pokemon {
       >
     }
   >
+  typeDefensives: TypeDefensive[]
+}
+
+interface TypeDefensive {
+  attackType: string
+  effective: number
 }
 
 export interface PokemonAbilityFk2 extends PokemonAbilityFk {

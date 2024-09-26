@@ -2,7 +2,6 @@ import { SamplePokeApIqueryQuery } from "@/domain/generated/pokeapi-schema"
 import type {
   Pokemon,
   Pokemon2,
-  PokemonAbilityFk2,
   PokemonAllData,
   PokemonType,
   Unarray,
@@ -13,6 +12,7 @@ import * as R from "remeda"
 
 import { binaraySearch } from "./binarySearch"
 import { getI18nIds } from "./getI18nIds"
+import { getTypeEffectiveMemo } from "./getTypeEffective"
 
 export interface ToPokemon2Params {
   pokemon: Pokemon
@@ -66,15 +66,33 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
       move: moveNoI18n,
     }
   })
+
   const types = pkm.pokemon_v2_pokemontypes.map(
-      (x) =>
-        binaraySearch(
-          pokemon_v2_type || [],
-          x.type_id,
-          (typeId, x) => typeId - x.id,
-          { firstMiddle: x.type_id - 1 }
-        ) as PokemonType
-    )
+    (x) =>
+      binaraySearch(
+        pokemon_v2_type || [],
+        x.type_id,
+        (typeId, x) => typeId - x.id,
+        { firstMiddle: x.type_id - 1 }
+      ) as PokemonType
+  )
+
+  const noI18nTypes = R.pipe(
+    pokemon_v2_type,
+    R.map((x) => ({
+      id: x.id,
+      name: x.name,
+    })),
+    R.filter(R.isNot((t) => ["stellar", "unknown", "shadow"].includes(t.name)))
+  )
+  const typeDefensives = noI18nTypes.map((x) => ({
+    attackType: x.name,
+    effective: getTypeEffectiveMemo({
+      offensiveType: x.name,
+      defensiveTypes: types,
+    }),
+  }))
+
   return {
     ...pkm,
     hp: pkm.pokemon_v2_pokemonstats[0].base_stat,
@@ -91,7 +109,8 @@ export function toPokemon2(params: ToPokemon2Params): Pokemon2 {
         ? ""
         : t(getI18nIds.pokemon.defaultFormName(pkm.id)),
     types,
-    typesV2: types.map(x => x.name),
+    typesV2: types.map((x) => x.name),
+    typeDefensives,
     abilities: pkm.pokemon_v2_pokemonabilities.map((x) => {
       return {
         ...x,

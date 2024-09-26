@@ -38,6 +38,8 @@ def create_prompt(question: str) -> str:
   parts.append('3. Translated Mongodb Query, do not include db.*.find, just json, and do not include any description or explaintion.')
   parts.append('4. Should not duplicate key, put conditions to "$and" query')
   parts.append('5. Column "typesV2" is same thing to pokemon "types"')
+  parts.append('6. Pokemon has resitance(or strengths) to some attack types, is meaning column "typeDefensives" effective < 1 (include 0), else if weaknesses is effective > 1, effective == 1 is meaing no strengths or weaknesses')
+  parts.append('7. Someone ask 4x type resitance is meaning effective 0.25, 2x type resitance is meaning effective 0.5; 4x type weakness is meaning effective 4, 2x type weakness is meaning effective 2')
   parts.append('Translate this question into Mongodb Query:')
   parts.append(question)
   return '\n'.join(parts)
