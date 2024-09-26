@@ -39,7 +39,10 @@ async def get_mquery(request: Request, question: str = Query(..., description="Q
         raise HTTPException(status_code=400, detail="question is required")
     if num_tokens > 300:
         raise HTTPException(status_code=400, detail="question tokens over limit 300")
-    return {"questionNumTokens": num_tokens, "mquery": nl_to_mquery(question)}   
+    mquery = nl_to_mquery(question)
+    if not mquery:
+        raise HTTPException(status_code=400, detail="Can not find pokemon")
+    return {"questionNumTokens": num_tokens, "mquery": mquery}
 
 @app.get("/health")
 async def get_mquery(request: Request):
