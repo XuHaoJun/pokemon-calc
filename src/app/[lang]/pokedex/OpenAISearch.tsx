@@ -54,6 +54,7 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
       msg`Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher`,
       msg`Name contain "cat", Ability is "Intimidate"`,
       msg`Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher`,
+      msg`No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up`
     ],
     []
   )

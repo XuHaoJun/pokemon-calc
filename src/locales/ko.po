@@ -39,11 +39,11 @@ msgstr ""
 msgid "Export All"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:41
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:53
 msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:68
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
 msgid "Find pokemons by question..."
 msgstr ""
 
@@ -55,7 +55,7 @@ msgstr ""
 msgid "gmax"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:45
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:56
 msgid "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 msgid "mega-y"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:43
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:55
 msgid "Name contain \"cat\", Ability is \"Intimidate\""
 msgstr ""
 
@@ -100,7 +100,11 @@ msgstr ""
 msgid "No results found."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:42
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:57
+msgid "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:54
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 msgstr ""
 
