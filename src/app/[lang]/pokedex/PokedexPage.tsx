@@ -349,6 +349,7 @@ function MyNameHeader({
       <DebouncedInput
         className="h-7"
         value={filter.name}
+        autoComplete="off"
         onChange={(v) =>
           setFilter(
             create(filter, (draft) => {

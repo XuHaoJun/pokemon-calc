@@ -23,6 +23,10 @@ msgstr ""
 msgid "Def"
 msgstr ""
 
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:193
+msgid "Edit MongoDB query"
+msgstr ""
+
 #: src/app/[lang]/pokedex/[id]/PokemonDetailPage.tsx:213
 msgid "Egg Moves"
 msgstr ""
@@ -39,11 +43,11 @@ msgstr ""
 msgid "Export All"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:53
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:63
 msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:84
 msgid "Find pokemons by question..."
 msgstr ""
 
@@ -55,7 +59,7 @@ msgstr ""
 msgid "gmax"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:56
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
 msgid "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
 msgstr ""
 
@@ -92,7 +96,7 @@ msgstr ""
 msgid "mega-y"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:55
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
 msgid "Name contain \"cat\", Ability is \"Intimidate\""
 msgstr ""
 
@@ -100,11 +104,11 @@ msgstr ""
 msgid "No results found."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:57
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
 msgid "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:54
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:64
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 msgstr ""
 
@@ -121,6 +125,14 @@ msgstr ""
 
 #: src/app/[lang]/whos-that-pokemon/WhosThatPokemonPage.tsx:263
 msgid "Random"
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:217
+msgid "Reset"
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:225
+msgid "Save"
 msgstr ""
 
 #: src/components/CommandMenu.tsx:125
