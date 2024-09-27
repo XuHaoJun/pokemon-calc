@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { QueryKeys, useFetchPokemonMquery } from "@/api/query"
 import { formatResponseError } from "@/utils/formatResponseError"
