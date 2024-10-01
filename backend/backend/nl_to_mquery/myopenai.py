@@ -78,6 +78,7 @@ def create_prompt(question: str) -> str:
   parts.append('10. If someone ask with "a, b, c or d" list-like expression and then not explict condition "oneOf" or "allOf", then should suppose it is "allOf".')
   parts.append('11. moves column is array, moves[0].move is not array, do not generate incorrect query like: "{"moves": {"$elemMatch": {"move": {"$elemMatch": {}}}}}".')
   parts.append('12. if your do not know pokemon.type-related question is want search column "typeDefensives" or "typesV2", then should suppose it is "typeDefensives" if contain "resistance" or "weakness" or "strengths" else "typesV2".')
+  parts.append('13. Do not generate MongoDB query like: "{"$elemMatch": {"$and": []}}" should use "$all" ')
   parts.append('Translate this question into MongoDB Query:')
   parts.append(question)
   return '\n'.join(parts)
