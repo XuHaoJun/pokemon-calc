@@ -85,7 +85,7 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
               minRows={2}
               placeholder={i18n._(msg`Find pokemons by question...`)}
               value={question}
-              onChange={(e) => {
+              onChange={(e: { target: { value: React.SetStateAction<string> } }) => {
                 setEnableQuery(false)
                 setQuestion(e.target.value)
                 if (!Boolean(e.target.value)) {
