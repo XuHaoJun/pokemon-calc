@@ -90,8 +90,8 @@ importers:
         specifier: ^0.7.2
         version: 0.7.2(jotai@2.10.0(@types/react@18.3.10)(react@18.3.1))(react@18.3.1)
       json-edit-react:
-        specifier: ^1.16.3
-        version: 1.16.3(react@18.3.1)
+        specifier: ^1.17.0
+        version: 1.17.0(react@18.3.1)
       lucide-react:
         specifier: ^0.446.0
         version: 0.446.0(react@18.3.1)
@@ -3218,8 +3218,8 @@ packages:
   json-buffer@3.0.1:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==}
 
-  json-edit-react@1.16.3:
-    resolution: {integrity: sha512-TXmqwTxQeJ+5I13KVBw5i6Irik6C7O4sYXTggMdRJZCnosQRb/C24vWh+FVHdsi6txeZkLd2uCx5euUsZhWQPw==}
+  json-edit-react@1.17.0:
+    resolution: {integrity: sha512-kIDsPuCLDBJtECVastgQgKvPta2w8FI4az74W4ghsy4pkBQI2tyBx886g8N5w7IqYe1hGG/9hz0ZWvCmLW2GFA==}
     peerDependencies:
       react: '>=16.0.0'
 
@@ -8190,7 +8190,7 @@ snapshots:
 
   json-buffer@3.0.1: {}
 
-  json-edit-react@1.16.3(react@18.3.1):
+  json-edit-react@1.17.0(react@18.3.1):
     dependencies:
       object-property-assigner: 1.3.1
       object-property-extractor: 1.0.12
