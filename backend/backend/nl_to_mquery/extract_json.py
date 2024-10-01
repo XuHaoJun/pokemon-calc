@@ -20,8 +20,8 @@ def extract_json(response) -> dict | None:
         except json.JSONDecodeError:
             pass
 
-    # Look for a JSON object directly in the text
-    json_object_match = re.search(r'{[^{}]+}', response)
+    # Look for a JSON object that is not enclosed in triple backticks
+    json_object_match = re.search(r'\{.*\}', response, re.DOTALL)
     if json_object_match:
         json_text = json_object_match.group(0)
         try:

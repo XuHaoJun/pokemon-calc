@@ -5,8 +5,8 @@ import tiktoken
 from .extract_json import extract_json
 
 client = AzureOpenAI(
-  azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT"),
-  api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+  azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT") or "https://openai.openai.azure.com/",
+  api_key=os.getenv("AZURE_OPENAI_API_KEY") or "<AZURE_OPENAI_API_KEY>",
   api_version="2024-02-01"
 )
 
