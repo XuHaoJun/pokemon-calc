@@ -22,6 +22,18 @@ def get_pokedex_json() -> str:
     pokedex_json = file.read()
   return pokedex_json
 
+""" https://github.com/NeoVertex1/SuperPrompt """
+super_prompt_txt = None
+def get_super_prompt() -> str:
+  global super_prompt_txt
+  if super_prompt_txt:
+    return super_prompt_txt
+  current_code_path = os.path.dirname(__file__)
+  data_path = os.path.join(current_code_path, 'super_prompt.txt')
+  with open(data_path, 'r', encoding='utf-8') as file:
+    pokedex_json = file.read()
+  return pokedex_json
+
 def create_prompt(question: str) -> str:
   parts = []
   parts.append('Task: Translate natural language to find pokemons MongoDB Query.')
@@ -56,6 +68,7 @@ def call_llm(prompt: str) -> str:
     :return: The response from the LLM.
     """
     messages = [
+        {'content': get_super_prompt(), 'role': 'system'},
         {'content': prompt, 'role': 'user'}
     ]
     reply = client.chat.completions.create(model='gpt-4o', messages=messages)
