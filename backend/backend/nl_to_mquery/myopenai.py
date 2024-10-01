@@ -22,6 +22,19 @@ def get_pokedex_json() -> str:
     pokedex_json = file.read()
   return pokedex_json
 
+pokedex_json_schema = None
+
+def get_pokedex_json_schema() -> str:
+  global pokedex_json_schema
+  if pokedex_json_schema:
+    return pokedex_json_schema
+  current_code_path = os.path.dirname(__file__)
+  data_path = os.path.join(current_code_path, 'pokedex_schema.json')
+  with open(data_path, 'r', encoding='utf-8') as file:
+    pokedex_json_schema = file.read()
+  return pokedex_json_schema
+
+
 """ https://github.com/NeoVertex1/SuperPrompt """
 super_prompt_txt = None
 def get_super_prompt() -> str:
@@ -42,9 +55,15 @@ def create_prompt(question: str) -> str:
   parts.append('```json')
   parts.append(get_pokedex_json())
   parts.append('```')
+  parts.append('MongoDB Pokemon Collection JSON Schema:')
+  parts.append('```json')
+  parts.append(get_pokedex_json_schema())
+  parts.append('```')
   parts.append('Columns name has suffix "*Display"(ex: nameDisplay) is alerdy i18n translated, so it is not need to translate, following is a question to MongoDB Query example:')
   parts.append('Question:招式劍舞, Translated: {"moves": {"$elemMatch": {"nameDisplay": "劍舞"}}}.')
   parts.append('Question:招式噴射火焰, Translated: {"moves": {"$elemMatch": {"nameDisplay": "噴射火焰"}}}.')
+  parts.append('Alias:')
+  parts.append('1. "特功" or "特功" is meaning special attack')
   parts.append('Tips:')
   parts.append('1. Every Question should suppose it is try find pokemons.')
   parts.append('2. If you confirm it is not find pokemon question or it is can not one MongoDB query found it, then response should include "Can not find pokemon" in start.')
@@ -56,7 +75,7 @@ def create_prompt(question: str) -> str:
   parts.append('8. Sometime generate incorrect "moves" MongoDB query, each item no "pokemon_v2_move" column, use "move" column instead.')
   parts.append('9. If someone ask with string type column that contain or include some string, example: "pkmName" text, use regex ".*pkmName.*" and with options "i" to ignore case.')
   parts.append('10. If someone ask with "a, b, c or d" list-like expression and then not explict condition "oneOf" or "allOf", then should suppose it is "allOf"')
-  parts.append('11. moves column is array, moves[0].move is not array, do not generate incorrect query like: "{"moves": {"$elemMatch": {"move": {"$elemMatch": {}}}}}" ')
+  parts.append('11. moves column is array, moves[0].move is not array, do not generate incorrect query like: "{"moves": {"$elemMatch": {"move": {"$elemMatch": {}}}}}"')
   parts.append('Translate this question into MongoDB Query:')
   parts.append(question)
   return '\n'.join(parts)

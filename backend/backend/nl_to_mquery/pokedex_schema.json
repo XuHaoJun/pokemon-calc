@@ -1,0 +1,359 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": { 
+        "type": "integer",
+        "description": "The unique identifier for the Pokémon"
+      },
+      "order": { 
+        "type": "integer",
+        "description": "The order of this Pokémon in the Pokédex"
+      },
+      "name": { 
+        "type": "string",
+        "description": "The name of the Pokémon"
+      },
+      "height": { 
+        "type": "integer",
+        "description": "The height of the Pokémon in decimetres"
+      },
+      "weight": { 
+        "type": "integer",
+        "description": "The weight of the Pokémon in hectograms"
+      },
+      "pokemon_v2_pokemonspecy": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "evolution_chain_id": { "type": "integer" },
+          "pokemon_v2_pokemonspeciesnames": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "integer" },
+                "language_id": { 
+                  "type": "integer",
+                  "description": "The ID of the language",
+                  "enum": [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                  "enumDescriptions": {
+                    "1": "Japanese",
+                    "3": "Korean",
+                    "4": "Chinese",
+                    "5": "French",
+                    "6": "German",
+                    "7": "Spanish",
+                    "8": "Italian",
+                    "9": "English",
+                    "10": "Czech",
+                    "11": "Japanese",
+                    "12": "Chinese"
+                  }
+                },
+                "name": { "type": "string" }
+              },
+              "required": ["id", "language_id", "name"]
+            }
+          }
+        },
+        "required": ["id", "name", "evolution_chain_id", "pokemon_v2_pokemonspeciesnames"]
+      },
+      "pokemon_v2_pokemonforms": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "integer" },
+            "is_battle_only": { 
+              "type": "boolean",
+              "description": "Whether this form can only be taken during battle"
+            },
+            "is_default": { 
+              "type": "boolean",
+              "description": "Whether this is the default form of the Pokémon"
+            },
+            "is_mega": { 
+              "type": "boolean",
+              "description": "Whether this form is a Mega Evolution"
+            },
+            "form_name": { 
+              "type": "string",
+              "description": "The name of this form"
+            },
+            "pokemon_v2_pokemonformnames": { "type": "array" }
+          },
+          "required": ["id", "is_battle_only", "is_default", "is_mega", "form_name", "pokemon_v2_pokemonformnames"]
+        }
+      },
+      "hp": { 
+        "type": "integer",
+        "description": "The base HP stat of the Pokémon"
+      },
+      "attack": { 
+        "type": "integer",
+        "description": "The base Attack stat of the Pokémon"
+      },
+      "defense": { 
+        "type": "integer",
+        "description": "The base Defense stat of the Pokémon"
+      },
+      "spAtk": { 
+        "type": "integer",
+        "description": "The base Special Attack stat of the Pokémon"
+      },
+      "spDef": { 
+        "type": "integer",
+        "description": "The base Special Defense stat of the Pokémon"
+      },
+      "speed": { 
+        "type": "integer",
+        "description": "The base Speed stat of the Pokémon"
+      },
+      "total": { 
+        "type": "integer",
+        "description": "The sum of all base stats of the Pokémon"
+      },
+      "nameDisplay": { 
+        "type": "string",
+        "description": "The display name of the Pokémon"
+      },
+      "defaultFormNameDisplay": { 
+        "type": "string",
+        "description": "The display name of the default form of the Pokémon"
+      },
+      "typesV2": {
+        "type": "array",
+        "items": { 
+          "type": "string",
+          "enum": ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy"],
+          "description": "The type(s) of the Pokémon"
+        }
+      },
+      "typeDefensives": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "attackType": { 
+              "type": "string",
+              "enum": ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy"],
+              "description": "The type of the attack"
+            },
+            "effective": { 
+              "type": "number",
+              "description": "The effectiveness multiplier of the attack against this Pokémon",
+              "enum": [0, 0.25, 0.5, 1, 2, 4]
+            }
+          },
+          "required": ["attackType", "effective"]
+        }
+      },
+      "abilities": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "is_hidden": { 
+              "type": "boolean",
+              "description": "Whether this is a hidden ability"
+            },
+            "slot": { 
+              "type": "integer",
+              "description": "The slot this ability occupies",
+              "enum": [1, 2, 3]
+            },
+            "ability_id": { "type": "integer" },
+            "nameDisplay": { 
+              "type": "string",
+              "description": "The display name of the ability"
+            },
+            "abilityFlavorTextDisplay": { 
+              "type": "string",
+              "description": "A brief description of the ability's effect"
+            }
+          },
+          "required": ["is_hidden", "slot", "ability_id", "nameDisplay", "abilityFlavorTextDisplay"]
+        }
+      },
+      "evolutionchain": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "pokemon_v2_pokemonspecies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "integer" },
+                "evolves_from_species_id": { 
+                  "type": ["integer", "null"],
+                  "description": "The ID of the species this Pokémon evolves from, or null if it's the first in its evolutionary line"
+                }
+              },
+              "required": ["id", "evolves_from_species_id"]
+            }
+          }
+        },
+        "required": ["id", "pokemon_v2_pokemonspecies"]
+      },
+      "evolutionTree": {
+        "type": "object",
+        "description": "A tree structure representing the evolution chain of the Pokémon",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer" },
+              "evolves_from_species_id": { "type": ["integer", "null"] }
+            },
+            "required": ["id", "evolves_from_species_id"]
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "evolves_from_species_id": { "type": "integer" }
+                  },
+                  "required": ["id", "evolves_from_species_id"]
+                },
+                "parent": { "type": "string" },
+                "children": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "integer" },
+                          "evolves_from_species_id": { "type": "integer" }
+                        },
+                        "required": ["id", "evolves_from_species_id"]
+                      },
+                      "parent": { "type": "string" }
+                    },
+                    "required": ["data", "parent"]
+                  }
+                }
+              },
+              "required": ["data", "parent", "children"]
+            }
+          }
+        },
+        "required": ["data", "children"]
+      },
+      "moves": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "integer" },
+            "move_id": { "type": "integer" },
+            "version_group_id": { "type": "integer" },
+            "level": { 
+              "type": "integer",
+              "description": "The level at which the Pokémon learns this move"
+            },
+            "order": { "type": ["integer", "null"] },
+            "pokemon_v2_movelearnmethod": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "integer" },
+                "name": { 
+                  "type": "string",
+                  "enum": ["level-up", "egg", "tutor", "machine", "stadium-surfing-pikachu", "light-ball-egg", "colosseum-purification", "xd-shadow", "xd-purification", "form-change"],
+                  "description": "The method by which the Pokémon learns this move"
+                }
+              },
+              "required": ["id", "name"]
+            },
+            "pokemon_v2_versiongroup": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "integer" },
+                "generation_id": { 
+                  "type": "integer",
+                  "enum": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                  "description": "The generation in which this version group belongs"
+                }
+              },
+              "required": ["id", "generation_id"]
+            },
+            "nameDisplay": { 
+              "type": "string",
+              "description": "The display name of the move"
+            },
+            "flavorTextDisplay": { 
+              "type": "string",
+              "description": "A brief description of the move's effect"
+            },
+            "move": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" },
+                "accuracy": { 
+                  "type": ["integer", "null"],
+                  "description": "The accuracy of the move, or null if it always hits"
+                },
+                "power": { 
+                  "type": ["integer", "null"],
+                  "description": "The power of the move, or null for status moves"
+                },
+                "pp": { 
+                  "type": "integer",
+                  "description": "The base Power Points (PP) of the move"
+                },
+                "move_effect_chance": { 
+                  "type": ["integer", "null"],
+                  "description": "The chance of the move's secondary effect occurring, or null if it always occurs"
+                },
+                "pokemon_v2_type": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "integer" },
+                    "name": { 
+                      "type": "string",
+                      "enum": ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy"],
+                      "description": "The type of the move"
+                    }
+                  },
+                  "required": ["id", "name"]
+                },
+                "pokemon_v2_movedamageclass": {
+                  "type": "object",
+                  "properties": {
+                    "name": { 
+                      "type": "string",
+                      "enum": ["physical", "special", "status"],
+                      "description": "The damage class of the move"
+                    },
+                    "id": { "type": "integer" }
+                  },
+                  "required": ["name", "id"]
+                }
+              },
+              "required": ["id", "name", "accuracy", "power", "pp", "move_effect_chance", "pokemon_v2_type", "pokemon_v2_movedamageclass"]
+            }
+          },
+          "required": ["id", "move_id", "version_group_id", "level", "order", "pokemon_v2_movelearnmethod", "pokemon_v2_versiongroup", "nameDisplay", "flavorTextDisplay", "move"]
+        }
+      }
+    },
+    "required": [
+      "id", "order", "name", "height", "weight", "pokemon_v2_pokemonspecy",
+      "pokemon_v2_pokemonforms", "hp", "attack", "defense", "spAtk", "spDef",
+      "speed", "total", "nameDisplay", "defaultFormNameDisplay", "typesV2",
+      "typeDefensives", "abilities", "evolutionchain", "evolutionTree", "moves"
+    ]
+  }
+}
