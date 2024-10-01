@@ -106,7 +106,7 @@ msgstr "查無結果"
 
 #: src/app/[lang]/pokedex/OpenAISearch.tsx:67
 msgid "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
-msgstr "沒有火、草、冰屬性弱點，速度要>=100，要能透過升級的方式學會任一格鬥招式"
+msgstr "沒有火、草、冰屬性弱點，速度要>=100，要能透過升級的方式學會任一格鬥屬性招式"
 
 #: src/app/[lang]/pokedex/OpenAISearch.tsx:64
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
