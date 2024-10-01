@@ -56,6 +56,7 @@ def create_prompt(question: str) -> str:
   parts.append('8. Sometime generate incorrect "moves" MongoDB query, each item no "pokemon_v2_move" column, use "move" column instead.')
   parts.append('9. If someone ask with string type column that contain or include some string, example: "pkmName" text, use regex ".*pkmName.*" and with options "i" to ignore case.')
   parts.append('10. If someone ask with "a, b, c or d" list-like expression and then not explict condition "oneOf" or "allOf", then should suppose it is "allOf"')
+  parts.append('11. moves column is array, moves[0].move is not array, do not generate incorrect query like: "{"moves": {"$elemMatch": {"move": {"$elemMatch": {}}}}}" ')
   parts.append('Translate this question into MongoDB Query:')
   parts.append(question)
   return '\n'.join(parts)
