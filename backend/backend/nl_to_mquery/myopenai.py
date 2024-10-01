@@ -64,6 +64,7 @@ def create_prompt(question: str) -> str:
   parts.append('Question:招式噴射火焰, Translated: {"moves": {"$elemMatch": {"nameDisplay": "噴射火焰"}}}.')
   parts.append('Alias:')
   parts.append('1. "特功" or "特功" is meaning special attack')
+  parts.append('2. "物功" or "物功" is meaning physical attack')
   parts.append('Tips:')
   parts.append('1. Every Question should suppose it is try find pokemons.')
   parts.append('2. If you confirm it is not find pokemon question or it is can not one MongoDB query found it, then response should include "Can not find pokemon" in start.')
