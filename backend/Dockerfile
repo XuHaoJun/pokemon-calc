@@ -1,4 +1,4 @@
-FROM python:3.12.6-slim-bookworm AS builder
+FROM python:3.12.7-slim-bookworm AS builder
 
 # --- Install Poetry ---
 ARG POETRY_VERSION=1.8.3
