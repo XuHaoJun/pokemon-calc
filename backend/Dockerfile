@@ -28,7 +28,7 @@ RUN poetry install --no-root && rm -rf $POETRY_CACHE_DIR
 
 # Now let's build the runtime image from the builder.
 #   We'll just copy the env and the PATH reference.
-FROM python:3.12.6-slim-bookworm AS runtime
+FROM python:3.12.7-slim-bookworm AS runtime
 
 ENV VIRTUAL_ENV=/app/.venv
 ENV PATH="/app/.venv/bin:$PATH"
