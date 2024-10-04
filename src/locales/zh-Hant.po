@@ -23,7 +23,7 @@ msgstr "攻擊"
 msgid "Def"
 msgstr "防禦"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:193
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:196
 msgid "Edit MongoDB query"
 msgstr "編輯 MongoDB query"
 
@@ -43,11 +43,11 @@ msgstr "進化"
 msgid "Export All"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:63
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
 msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 msgstr "雙屬性：妖精和超能力，特攻至少125，特防至少100，要會精神強念或月亮之力。"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:84
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:87
 msgid "Find pokemons by question..."
 msgstr "輸入寶可夢查詢..."
 
@@ -59,7 +59,11 @@ msgstr "總共 <0>{0}</0> 隻寶可夢"
 msgid "gmax"
 msgstr "極巨化"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
+msgid "Has dragon type, but not have dragon dance move"
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:68
 msgid "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
 msgstr "對火、草、妖精、格鬥屬性有抗性，要有地面屬性的特攻招式威力70up"
 
@@ -96,7 +100,7 @@ msgstr "Mega-X"
 msgid "mega-y"
 msgstr "Mega-Y"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
 msgid "Name contain \"cat\", Ability is \"Intimidate\""
 msgstr "名字包含\"貓\"，特性是威嚇"
 
@@ -104,11 +108,11 @@ msgstr "名字包含\"貓\"，特性是威嚇"
 msgid "No results found."
 msgstr "查無結果"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:69
 msgid "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
 msgstr "沒有火、草、冰屬性弱點，速度要>=100，要能透過升級的方式學會任一格鬥屬性招式"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:64
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 msgstr "不是火屬性，但會噴射火焰，特攻起碼有90,速度>=80"
 
@@ -127,11 +131,11 @@ msgstr "寶可夢計算機"
 msgid "Random"
 msgstr "隨機"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:217
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:220
 msgid "Reset"
 msgstr "重設"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:225
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:229
 msgid "Save"
 msgstr "儲存"
 

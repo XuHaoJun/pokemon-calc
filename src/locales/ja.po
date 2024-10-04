@@ -23,7 +23,7 @@ msgstr ""
 msgid "Def"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:193
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:196
 msgid "Edit MongoDB query"
 msgstr ""
 
@@ -43,11 +43,11 @@ msgstr ""
 msgid "Export All"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:63
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
 msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:84
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:87
 msgid "Find pokemons by question..."
 msgstr ""
 
@@ -59,7 +59,11 @@ msgstr ""
 msgid "gmax"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
+msgid "Has dragon type, but not have dragon dance move"
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:68
 msgid "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
 msgstr ""
 
@@ -96,7 +100,7 @@ msgstr ""
 msgid "mega-y"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
 msgid "Name contain \"cat\", Ability is \"Intimidate\""
 msgstr ""
 
@@ -104,11 +108,11 @@ msgstr ""
 msgid "No results found."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:69
 msgid "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:64
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 msgstr ""
 
@@ -127,11 +131,11 @@ msgstr ""
 msgid "Random"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:217
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:220
 msgid "Reset"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:225
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:229
 msgid "Save"
 msgstr ""
 

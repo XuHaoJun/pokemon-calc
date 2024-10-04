@@ -23,7 +23,7 @@ msgstr "Atk"
 msgid "Def"
 msgstr "Def"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:193
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:196
 msgid "Edit MongoDB query"
 msgstr "Edit MongoDB query"
 
@@ -43,11 +43,11 @@ msgstr "Envolution"
 msgid "Export All"
 msgstr "Export All"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:63
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
 msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 msgstr "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:84
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:87
 msgid "Find pokemons by question..."
 msgstr "Find pokemons by question..."
 
@@ -59,7 +59,11 @@ msgstr "Found <0>{0}</0> pokemons"
 msgid "gmax"
 msgstr "Gmax"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
+msgid "Has dragon type, but not have dragon dance move"
+msgstr "Has dragon type, but not have dragon dance move"
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:68
 msgid "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
 msgstr "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
 
@@ -96,7 +100,7 @@ msgstr "Mega-X"
 msgid "mega-y"
 msgstr "Mega-Y"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
 msgid "Name contain \"cat\", Ability is \"Intimidate\""
 msgstr "Name contain \"cat\", Ability is \"Intimidate\""
 
@@ -104,11 +108,11 @@ msgstr "Name contain \"cat\", Ability is \"Intimidate\""
 msgid "No results found."
 msgstr "No results found."
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:69
 msgid "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
 msgstr "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:64
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 msgstr "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 
@@ -127,11 +131,11 @@ msgstr "Pokemon Calc"
 msgid "Random"
 msgstr "Random"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:217
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:220
 msgid "Reset"
 msgstr "Reset"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:225
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:229
 msgid "Save"
 msgstr "Save"
 
