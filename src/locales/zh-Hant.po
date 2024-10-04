@@ -61,7 +61,7 @@ msgstr "極巨化"
 
 #: src/app/[lang]/pokedex/OpenAISearch.tsx:70
 msgid "Has dragon type, but not have dragon dance move"
-msgstr ""
+msgstr "龍屬性，但不會龍之舞招式"
 
 #: src/app/[lang]/pokedex/OpenAISearch.tsx:68
 msgid "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
