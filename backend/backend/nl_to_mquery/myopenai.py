@@ -98,7 +98,7 @@ def call_llm(prompt: str) -> str:
     :return: The response from the LLM.
     """
     messages = [
-        {'content': get_super_prompt(), 'role': 'system'},
+        # {'content': get_super_prompt(), 'role': 'system'},
         {'content': create_system_prompt(), 'role': 'system'},
         {'content': prompt, 'role': 'user'}
     ]
