@@ -47,7 +47,7 @@ def get_super_prompt() -> str:
     pokedex_json = file.read()
   return pokedex_json
 
-def create_prompt(question: str) -> str:
+def create_system_prompt() -> str:
   parts = []
   parts.append('Task: Translate natural language to find pokemons MongoDB Query.')
   parts.append('MongoDB Pokemon Collection Sample Data:')
@@ -81,6 +81,10 @@ def create_prompt(question: str) -> str:
   parts.append('11. If your do not know pokemon.type-related question is want search column "typeDefensives" or "typesV2", then should suppose it is "typeDefensives" if contain "resistance" or "weakness" or "strengths" else "typesV2".')
   parts.append('12. Use mutiple items in "$and" query, do not use "$and" in "$elemMatch" query, sample: correct: "{"$and": [{"$elemMatch": {"name": "abc"}}, {"$elemMatch": {"name": "efg"}}]}", incorrect: "{"$elemMatch": {"$and": [{"name": "abc"}, {"name": "efg"}]}}".')
   parts.append('13. Do not full object match should partial match properties, sample: correct: "{"move.name": "abc"}", incorrect: "{"move": {"name": "abc"}}".')
+  return '\n'.join(parts)
+
+def create_user_prompt(question: str) -> str:
+  parts = []
   parts.append('Translate this question into MongoDB Query:')
   parts.append(question)
   return '\n'.join(parts)
@@ -94,6 +98,7 @@ def call_llm(prompt: str) -> str:
     """
     messages = [
         {'content': get_super_prompt(), 'role': 'system'},
+        {'content': create_system_prompt(), 'role': 'system'},
         {'content': prompt, 'role': 'user'}
     ]
     reply = client.chat.completions.create(model='gpt-4o', messages=messages)
@@ -104,7 +109,7 @@ def get_num_tokens(text: str) -> int:
   return len(tiktoken.encoding_for_model('gpt-4o').encode(text))
 
 def nl_to_mquery(question: str) -> dict | None:
-  prompt = create_prompt(question)
+  prompt = create_user_prompt(question)
   answer = call_llm(prompt)
   return extract_json(answer)
 
@@ -113,7 +118,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('question', type=str, help='Question to translate')
   args = parser.parse_args()
-  prompt = create_prompt(args.question)
+  prompt = create_system_prompt(args.question)
   print('prompt tokens:', get_num_tokens(prompt))
   answer = call_llm(prompt)
   print(answer)
