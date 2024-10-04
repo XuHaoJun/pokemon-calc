@@ -3,13 +3,12 @@
 import * as React from "react"
 import { QueryKeys, useFetchPokemonMquery } from "@/api/query"
 import { formatResponseError } from "@/utils/formatResponseError"
+import { mysift as sift } from "@/utils/mysift"
 import { msg, Trans } from "@lingui/macro"
 import { useLingui } from "@lingui/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Edit, Search } from "lucide-react"
 import * as R from "remeda"
-// import sift from "sift"
-import { filter as sift } from "uqry/full"
 
 import { Button } from "@/components/ui/button"
 import {
