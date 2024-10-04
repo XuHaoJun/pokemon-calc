@@ -8,7 +8,8 @@ import { useLingui } from "@lingui/react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Edit, Search } from "lucide-react"
 import * as R from "remeda"
-import sift from "sift"
+// import sift from "sift"
+import { filter as sift } from "uqry/full"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -67,7 +68,8 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
       msg`Name contain "cat", Ability is "Intimidate"`,
       msg`Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher`,
       msg`No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up`,
-      msg`Has dragon type, but not have dragon dance move`
+      msg`Has dragon type, but not have dragon dance move`,
+      msg`Defense and Special Defense must add up to 120, with Defense being at least 50. Attack and Speed must add up to at least 180.`,
     ],
     []
   )
@@ -86,7 +88,9 @@ export const OpenAISearch = ({ mquery, onChange }: OpenAISearchProps) => {
               minRows={2}
               placeholder={i18n._(msg`Find pokemons by question...`)}
               value={question}
-              onChange={(e: { target: { value: React.SetStateAction<string> } }) => {
+              onChange={(e: {
+                target: { value: React.SetStateAction<string> }
+              }) => {
                 setEnableQuery(false)
                 setQuestion(e.target.value)
                 if (!Boolean(e.target.value)) {

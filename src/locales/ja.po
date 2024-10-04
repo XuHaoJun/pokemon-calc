@@ -13,17 +13,21 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:119
-#: src/app/[lang]/pokedex/PokedexPage.tsx:126
+#: src/app/[lang]/pokedex/PokedexPage.tsx:120
+#: src/app/[lang]/pokedex/PokedexPage.tsx:127
 msgid "Atk"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:137
-#: src/app/[lang]/pokedex/PokedexPage.tsx:144
+#: src/app/[lang]/pokedex/PokedexPage.tsx:138
+#: src/app/[lang]/pokedex/PokedexPage.tsx:145
 msgid "Def"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:196
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:72
+msgid "Defense and Special Defense must add up to 120, with Defense being at least 50. Attack and Speed must add up to at least 180."
+msgstr ""
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:201
 msgid "Edit MongoDB query"
 msgstr ""
 
@@ -39,19 +43,19 @@ msgstr "English"
 msgid "Envolution"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:328
+#: src/app/[lang]/pokedex/PokedexPage.tsx:329
 msgid "Export All"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
 msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:87
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:90
 msgid "Find pokemons by question..."
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:321
+#: src/app/[lang]/pokedex/PokedexPage.tsx:322
 msgid "Found <0>{0}</0> pokemons"
 msgstr ""
 
@@ -59,11 +63,11 @@ msgstr ""
 msgid "gmax"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:71
 msgid "Has dragon type, but not have dragon dance move"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:68
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:69
 msgid "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
 msgstr ""
 
@@ -79,8 +83,8 @@ msgstr ""
 msgid "Hint"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:101
-#: src/app/[lang]/pokedex/PokedexPage.tsx:108
+#: src/app/[lang]/pokedex/PokedexPage.tsx:102
+#: src/app/[lang]/pokedex/PokedexPage.tsx:109
 msgid "HP"
 msgstr ""
 
@@ -100,7 +104,7 @@ msgstr ""
 msgid "mega-y"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:68
 msgid "Name contain \"cat\", Ability is \"Intimidate\""
 msgstr ""
 
@@ -108,11 +112,11 @@ msgstr ""
 msgid "No results found."
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:69
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
 msgid "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 msgstr ""
 
@@ -131,11 +135,11 @@ msgstr ""
 msgid "Random"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:220
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:225
 msgid "Reset"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:229
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:234
 msgid "Save"
 msgstr ""
 
@@ -156,27 +160,27 @@ msgstr ""
 msgid "Show partial original image"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:155
+#: src/app/[lang]/pokedex/PokedexPage.tsx:156
 msgid "Sp.Atk"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:173
+#: src/app/[lang]/pokedex/PokedexPage.tsx:174
 msgid "Sp.Def"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:162
+#: src/app/[lang]/pokedex/PokedexPage.tsx:163
 msgid "SpA"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:180
+#: src/app/[lang]/pokedex/PokedexPage.tsx:181
 msgid "SpD"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:198
+#: src/app/[lang]/pokedex/PokedexPage.tsx:199
 msgid "Spe"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:191
+#: src/app/[lang]/pokedex/PokedexPage.tsx:192
 msgid "Speed"
 msgstr ""
 
@@ -188,11 +192,11 @@ msgstr ""
 msgid "TM/HM Moves"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:220
+#: src/app/[lang]/pokedex/PokedexPage.tsx:221
 msgid "Tot"
 msgstr ""
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:213
+#: src/app/[lang]/pokedex/PokedexPage.tsx:214
 msgid "Total"
 msgstr ""
 

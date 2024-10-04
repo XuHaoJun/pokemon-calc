@@ -13,17 +13,21 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:119
-#: src/app/[lang]/pokedex/PokedexPage.tsx:126
+#: src/app/[lang]/pokedex/PokedexPage.tsx:120
+#: src/app/[lang]/pokedex/PokedexPage.tsx:127
 msgid "Atk"
 msgstr "攻擊"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:137
-#: src/app/[lang]/pokedex/PokedexPage.tsx:144
+#: src/app/[lang]/pokedex/PokedexPage.tsx:138
+#: src/app/[lang]/pokedex/PokedexPage.tsx:145
 msgid "Def"
 msgstr "防禦"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:196
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:72
+msgid "Defense and Special Defense must add up to 120, with Defense being at least 50. Attack and Speed must add up to at least 180."
+msgstr "防禦和特防加起來要120，其中防禦至少要50。攻擊和速度總和要>=180。"
+
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:201
 msgid "Edit MongoDB query"
 msgstr "編輯 MongoDB query"
 
@@ -39,19 +43,19 @@ msgstr "English"
 msgid "Envolution"
 msgstr "進化"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:328
+#: src/app/[lang]/pokedex/PokedexPage.tsx:329
 msgid "Export All"
 msgstr ""
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:65
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
 msgid "Fairy and Psychic dual-type with at least 125 Special Attack and 100 Special Defense, knowing Psychic or Moonblast."
 msgstr "雙屬性：妖精和超能力，特攻至少125，特防至少100，要會精神強念或月亮之力。"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:87
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:90
 msgid "Find pokemons by question..."
 msgstr "輸入寶可夢查詢..."
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:321
+#: src/app/[lang]/pokedex/PokedexPage.tsx:322
 msgid "Found <0>{0}</0> pokemons"
 msgstr "總共 <0>{0}</0> 隻寶可夢"
 
@@ -59,11 +63,11 @@ msgstr "總共 <0>{0}</0> 隻寶可夢"
 msgid "gmax"
 msgstr "極巨化"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:71
 msgid "Has dragon type, but not have dragon dance move"
 msgstr "龍屬性，但不會龍之舞招式"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:68
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:69
 msgid "Have type resistance to fire, grass, fairy, fighting types, and have move that is ground type and special attack power is 70 or higher"
 msgstr "對火、草、妖精、格鬥屬性有抗性，要有地面屬性的特攻招式威力70up"
 
@@ -79,8 +83,8 @@ msgstr "隱藏答案"
 msgid "Hint"
 msgstr "提示"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:101
-#: src/app/[lang]/pokedex/PokedexPage.tsx:108
+#: src/app/[lang]/pokedex/PokedexPage.tsx:102
+#: src/app/[lang]/pokedex/PokedexPage.tsx:109
 msgid "HP"
 msgstr "HP"
 
@@ -100,7 +104,7 @@ msgstr "Mega-X"
 msgid "mega-y"
 msgstr "Mega-Y"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:68
 msgid "Name contain \"cat\", Ability is \"Intimidate\""
 msgstr "名字包含\"貓\"，特性是威嚇"
 
@@ -108,11 +112,11 @@ msgstr "名字包含\"貓\"，特性是威嚇"
 msgid "No results found."
 msgstr "查無結果"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:69
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:70
 msgid "No weaknesses to Fire, Grass, or Ice types, a speed stat of 100 or higher, and learn any Fighting-type move through leveling up"
 msgstr "沒有火、草、冰屬性弱點，速度要>=100，要能透過升級的方式學會任一格鬥屬性招式"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:66
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:67
 msgid "Not a Fire-type, but can Flamethrower, Special Attack is at least 90, Speed is 80 or higher"
 msgstr "不是火屬性，但會噴射火焰，特攻起碼有90,速度>=80"
 
@@ -131,11 +135,11 @@ msgstr "寶可夢計算機"
 msgid "Random"
 msgstr "隨機"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:220
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:225
 msgid "Reset"
 msgstr "重設"
 
-#: src/app/[lang]/pokedex/OpenAISearch.tsx:229
+#: src/app/[lang]/pokedex/OpenAISearch.tsx:234
 msgid "Save"
 msgstr "儲存"
 
@@ -156,27 +160,27 @@ msgstr "顯示答案"
 msgid "Show partial original image"
 msgstr "顯示部分原始圖片"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:155
+#: src/app/[lang]/pokedex/PokedexPage.tsx:156
 msgid "Sp.Atk"
 msgstr "特攻"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:173
+#: src/app/[lang]/pokedex/PokedexPage.tsx:174
 msgid "Sp.Def"
 msgstr "特防"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:162
+#: src/app/[lang]/pokedex/PokedexPage.tsx:163
 msgid "SpA"
 msgstr "特攻"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:180
+#: src/app/[lang]/pokedex/PokedexPage.tsx:181
 msgid "SpD"
 msgstr "特防"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:198
+#: src/app/[lang]/pokedex/PokedexPage.tsx:199
 msgid "Spe"
 msgstr "速度"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:191
+#: src/app/[lang]/pokedex/PokedexPage.tsx:192
 msgid "Speed"
 msgstr "速度"
 
@@ -188,11 +192,11 @@ msgstr "提交"
 msgid "TM/HM Moves"
 msgstr "從招式機學會的招式"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:220
+#: src/app/[lang]/pokedex/PokedexPage.tsx:221
 msgid "Tot"
 msgstr "總和"
 
-#: src/app/[lang]/pokedex/PokedexPage.tsx:213
+#: src/app/[lang]/pokedex/PokedexPage.tsx:214
 msgid "Total"
 msgstr "總和"
 
