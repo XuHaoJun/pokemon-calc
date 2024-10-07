@@ -12,10 +12,6 @@
         "type": "integer",
         "description": "The order of this Pokémon in the Pokédex"
       },
-      "name": { 
-        "type": "string",
-        "description": "The name of the Pokémon"
-      },
       "height": { 
         "type": "integer",
         "description": "The height of the Pokémon in decimetres"

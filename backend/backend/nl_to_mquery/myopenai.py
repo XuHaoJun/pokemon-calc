@@ -82,6 +82,7 @@ def create_system_prompt() -> str:
   parts.append('12. Use mutiple items in "$and" query, do not use "$and" in "$elemMatch" query, sample: correct: "{"$and": [{"$elemMatch": {"name": "abc"}}, {"$elemMatch": {"name": "efg"}}]}", incorrect: "{"$elemMatch": {"$and": [{"name": "abc"}, {"name": "efg"}]}}".')
   parts.append('13. Do not full object match should partial match properties, sample: correct: "{"move.name": "abc"}", incorrect: "{"move": {"name": "abc"}}".')
   parts.append('14. Try replace $expr to $where possibly, sample: correct: "{"$where": "this.defense + this.spDef === 120"}", incorrect: "{"$expr": {"$eq": [{"$add": ["$defense", "$spDef"]}, 120]}}".')
+  parts.append('15. Use column "nameDisplay" replace "name".')
   return '\n'.join(parts)
 
 def create_user_prompt(question: str) -> str:
