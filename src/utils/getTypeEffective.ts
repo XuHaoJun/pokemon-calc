@@ -20,6 +20,6 @@ export function getTypeEffective({
 export const getTypeEffectiveMemo = memoize(getTypeEffective, {
   max: 100,
   normalizer: function (args) {
-    return `${args[0].offensiveType}-${args[0].defensiveTypes.map((x) => x.name).join(",")}`
+    return `${args[0].offensiveType}|${args[0].defensiveTypes.sort().map((x) => x.name).join(",")}`
   },
 })
