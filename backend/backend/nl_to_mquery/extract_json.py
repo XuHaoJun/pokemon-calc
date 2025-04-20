@@ -1,6 +1,24 @@
 import json
 import re
 
+def remove_think(response) -> str:
+    """
+    Remove thinking/reasoning blocks from model output.
+    
+    Args:
+        response (str): The model response text.
+        
+    Returns:
+        str: The response with thinking blocks removed.
+    """
+    # Remove <think>xxx</think> blocks
+    response = re.sub(r'<think>.*?</think>', '', response, flags=re.DOTALL)
+    
+    # Remove <thinking>xxx</thinking> blocks
+    response = re.sub(r'<thinking>.*?</thinking>', '', response, flags=re.DOTALL)
+    
+    return response
+
 def extract_json(response) -> dict | None:
     """
     Extract JSON from a GPT-4O response.

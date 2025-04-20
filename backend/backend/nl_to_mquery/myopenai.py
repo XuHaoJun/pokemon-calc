@@ -1,13 +1,12 @@
 import os
 import argparse
-from openai import AzureOpenAI
+from openai import OpenAI
 import tiktoken
-from .extract_json import extract_json
+from .extract_json import extract_json, remove_think
 
-client = AzureOpenAI(
-  azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT") or "https://openai.openai.azure.com/",
-  api_key=os.getenv("AZURE_OPENAI_API_KEY") or "<AZURE_OPENAI_API_KEY>",
-  api_version="2024-02-01"
+client = OpenAI(
+  api_key=os.getenv("OPENAI_API_KEY") or "<OPENAI_API_KEY>",
+  base_url=os.getenv("OPENAI_BASE_URL") or "https://api.openai.com/v1"
 )
 
 pokedex_json = None
@@ -34,18 +33,6 @@ def get_pokedex_json_schema() -> str:
     pokedex_json_schema = file.read()
   return pokedex_json_schema
 
-
-""" https://github.com/NeoVertex1/SuperPrompt """
-super_prompt_txt = None
-def get_super_prompt() -> str:
-  global super_prompt_txt
-  if super_prompt_txt:
-    return super_prompt_txt
-  current_code_path = os.path.dirname(__file__)
-  data_path = os.path.join(current_code_path, 'super_prompt.txt')
-  with open(data_path, 'r', encoding='utf-8') as file:
-    pokedex_json = file.read()
-  return pokedex_json
 
 def create_system_prompt() -> str:
   parts = []
@@ -99,11 +86,10 @@ def call_llm(prompt: str) -> str:
     :return: The response from the LLM.
     """
     messages = [
-        # {'content': get_super_prompt(), 'role': 'system'},
         {'content': create_system_prompt(), 'role': 'system'},
         {'content': prompt, 'role': 'user'}
     ]
-    reply = client.chat.completions.create(model='gpt-4o', messages=messages)
+    reply = client.chat.completions.create(model='qwq-32b', messages=messages)
     return reply.choices[0].message.content
 
 def get_num_tokens(text: str) -> int:
@@ -113,7 +99,8 @@ def get_num_tokens(text: str) -> int:
 def nl_to_mquery(question: str) -> dict | None:
   prompt = create_user_prompt(question)
   answer = call_llm(prompt)
-  return extract_json(answer)
+  removed_think = remove_think(answer)
+  return extract_json(removed_think)
 
 
 if __name__ == '__main__':
