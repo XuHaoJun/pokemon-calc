@@ -5,8 +5,8 @@ import tiktoken
 from .extract_json import extract_json, remove_think
 
 client = OpenAI(
-  api_key=os.getenv("OPENAI_API_KEY") or "<OPENAI_API_KEY>",
-  base_url=os.getenv("OPENAI_BASE_URL") or "https://api.openai.com/v1"
+  api_key=os.environ.get("OPENAI_API_KEY") or "<OPENAI_API_KEY>",
+  base_url=os.environ.get("OPENAI_BASE_URL") or "https://api.openai.com/v1"
 )
 
 pokedex_json = None

@@ -20,7 +20,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    os.getenv("CORS_URL") or "https://xuhaojun.github.io"
+    os.environ.get("CORS_URL") or "https://xuhaojun.github.io"
 ]
 
 app.add_middleware(
@@ -32,7 +32,7 @@ app.add_middleware(
 )
 
 @app.get("/mquery")
-@limiter.limit(os.getenv("MQUERY_LIMIT") or "1/1minute")
+@limiter.limit(os.environ.get("MQUERY_LIMIT") or "1/1minute")
 async def get_mquery(request: Request, question: str = Query(..., description="Question to translate")):
     num_tokens = get_num_tokens(question)
     if not question or not question.strip():
